@@ -9,10 +9,10 @@ img.src = "Grubworm.png";
 
 let grubwormSheet = new createjs.SpriteSheet({
     framerate: 24,
-    "images": [img],
+    "images": [img.src],
     "frames": [[3,3,850,893,0,-562.1,-21.05],[3,3,850,893,0,-562.1,-21.05],[3,3,850,893,0,-562.1,-21.05],[3,3,850,893,0,-562.1,-21.05],[3,3,850,893,0,-562.1,-21.05],[3,3,850,893,0,-562.1,-21.05],[3,896,850,893,0,-562.1,-21.05],[3,1789,850,893,0,-562.1,-21.05],[3,2682,850,893,0,-562.1,-21.05],[853,3,850,893,0,-562.1,-21.05],[1703,3,850,893,0,-562.1,-21.05],[1703,3,850,893,0,-562.1,-21.05],[2553,3,850,893,0,-562.1,-21.05],[2553,3,850,893,0,-562.1,-21.05],[853,896,850,893,0,-562.1,-21.05],[853,1789,850,893,0,-562.1,-21.05],[853,2682,850,893,0,-562.1,-21.05],[1703,896,850,893,0,-562.1,-21.05],[2553,896,850,893,0,-562.1,-21.05],[1703,1789,850,893,0,-562.1,-21.05],[1703,1789,850,893,0,-562.1,-21.05],[1703,1789,850,893,0,-562.1,-21.05],[1703,1789,850,893,0,-562.1,-21.05],[1703,1789,850,893,0,-562.1,-21.05]],
     "animations": {
-        "idle": 1
+        "idle": [0,23,'idle',1.0],
     }
     });
 
@@ -38,11 +38,7 @@ createjs.Ticker.addEventListener("tick", tick);//You need to add a ticker so tha
 
 
 function tick(event) {
-// this set makes it so the stage only re-renders when an event handler indicates a change has happened.
-if (update) {
-    update = false; // only update once
     stage.update(event);
-    }
 }
 
 
@@ -55,9 +51,6 @@ function init() {
     stageHeight = stageProperties.attributes.height.value;    
 
     
-    grubworm.x = stageWidth/2;
-    grubworm.y = stageHeight/2;
-    grubworm.scale = stageWidth/10000;
     
 
     backgroundColor.graphics.beginFill("blue").drawRect(0, 0, stageWidth, stageHeight);
@@ -80,6 +73,7 @@ function init() {
     
     
     stage.addChild(grubworm);
+    console.log(grubworm);
 
     //Now the circle is on the stage, but the stage displayed is a old version, so you need to update it with all the new stuff drawn on the stage
     stage.update(); //Clear the canvas, run through all the children that need to be added, and add them
