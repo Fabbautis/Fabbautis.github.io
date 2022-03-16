@@ -25,15 +25,21 @@ let table2 = new createjs.Shape();
 
 let backgroundColor = new createjs.Shape(); 
 
+let grubHeld = false;
+
 let offset;
-let update = false;
 
 let score;
 let totalClicks = 0;
 
 createjs.Ticker.addEventListener("tick", tick);//You need to add a ticker so that things can move in real time 
 function tick(event) {
-
+    if (grubworm.x >=650 && grubworm.x <= 950&&grubHeld){ 
+        grubworm.alpha = 0.2;
+        
+    } else {
+        grubworm.alpha = 1;
+    }
     stage.update(event);
 }
 
@@ -48,20 +54,24 @@ function init() {
 
     
     
-
+    grubworm.x = 0;
+    grubworm.y = 0;
+    grubworm.scaleX = 0.2;
+    grubworm.scaleY = 0.2;
+    
     backgroundColor.graphics.beginFill("blue").drawRect(0, 0, stageWidth, stageHeight);
     backgroundColor.x = 0;
     backgroundColor.y = 0;
 
     
     table.graphics.beginFill("cyan").drawCircle(0,0, 150)
-    table.x = stageWidth/4;
+    table.x = (stageWidth/4)*3;
     table.y = 200;
     
     
     table2.graphics.beginFill("cyan").drawCircle(0,0, 150)
     table2.x = (stageWidth/4)*3;
-    table2.y = 200;
+    table2.y = 600;
 
     stage.addChild(backgroundColor);
     stage.addChild(table2);
@@ -84,31 +94,33 @@ function handleClick(event){
 grubworm.on("mousedown", function (evt) {
         this.parent.addChild(this);
         this.offset = {x: this.x - evt.stageX, y: this.y - evt.stageY};
-        update = true;
+        grubHeld = true;
     });
 
 grubworm.on("pressmove", function (evt) {
         this.x = evt.stageX + this.offset.x;
 
-        if (this.x > stageWidth - 20)
-            this.x = stageWidth - 20;
+        if (this.x < -180)
+            this.x = -180;
 
-        else if (this.x < 0 + 20)
-            this.x = 0 + 20;
+        else if (this.x > 1150)
+            this.x = 1150;
 
 
         this.y = evt.stageY + this.offset.y;
 
-        if (this.y > stageHeight - 20)
-            this.y = stageHeight - 20;
+        if (this.y > 640)
+            this.y = 640;
 
-        else if (this.y < 0 + 20)
-            this.y = 0 + 20;
+       else if (this.y < -60)
+           this.y = -60;
         
-
         console.log('x = ' + this.x);
         console.log('y = ' + this.y);
-        update = true;
     });
 
+grubworm.on('pressup', function (){
+    grubHeld = false;
+    console.log(grubHeld)
+})
     
