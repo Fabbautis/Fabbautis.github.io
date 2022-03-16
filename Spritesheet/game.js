@@ -35,9 +35,8 @@ let score;
 let totalClicks = 0;
 
 createjs.Ticker.addEventListener("tick", tick);//You need to add a ticker so that things can move in real time 
-
-
 function tick(event) {
+
     stage.update(event);
 }
 
@@ -114,3 +113,5 @@ grubworm.on("pressmove", function (evt) {
         console.log('y = ' + this.y);
         update = true;
     });
+
+    
