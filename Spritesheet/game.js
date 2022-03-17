@@ -11,7 +11,7 @@ let grubwormSheet = new createjs.SpriteSheet({
     "animations": {
         "idle": [0,23,'idle',1.0],
     }
-    });
+});
 
 grubwormSheet.on("complete", function(event) {
     console.log("Complete", event);
@@ -19,6 +19,7 @@ grubwormSheet.on("complete", function(event) {
 grubwormSheet.on("error", function(event) {
     console.log("Error", event);
 });
+
 let grubworm = new createjs.Sprite(grubwormSheet, 'idle');
 let table = new createjs.Shape();
 let table2 = new createjs.Shape();
