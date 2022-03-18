@@ -33,11 +33,19 @@ function init() {
         stage.addChild(startButton);
         stage.addChild(startButtonText);
     }   
-    
-    
     stage.update();
 }
 
 startButton.on ('click', () =>{
-    fillStart();
+    stage.removeChild(backgroundMM);
+    stage.removeChild(introTextBackdrop)
+    stage.removeChild(introText);
+    stage.removeChild(startButton);
+    stage.removeChild(startButtonText);
+    
+    let randomizer = minigameObjects[Math.floor(Math.random() * minigameObjects.length)]
+    let chooseRandomGame = new Function(randomizer.function);
+    console.log(randomizer.number);
+    //Will have to add some code later on that ensures duplicate microgames can't be played in a row (e.g. oldMicrogame = minigameObjects[gameYou'reIn].game. If oldMicrogame = newMicrogame, then shuffle again)
+    chooseRandomGame();
 });

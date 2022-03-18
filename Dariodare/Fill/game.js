@@ -34,14 +34,7 @@ let professorSheet = new createjs.SpriteSheet ({
         "hurray": 0,
         "lose": 1,
     }
-})
-
-let background = new createjs.Bitmap("Fill/background.png");;
-    background.crossOrigin = "Anonymous";
-
-let gameBorder = new createjs.Bitmap("../border.png");
-    gameBorder.crossOrigin = "Anonymous";
-    
+}) 
 
 let pitcher = new createjs.Sprite(pitcherSheet, "start");
 let testtube = new createjs.Sprite(testtubeSheet, "idle");
@@ -54,7 +47,6 @@ let fillOffset = 300;
 let isOverPitcher = false;
 let dummyFlag = true;
 let waitToWin = false;
-let gameOver = false;
 let lastTimer;
 let TimePitcherStart = 0;
 let timePassed= 0;
@@ -65,11 +57,7 @@ let pitcherChangeTime = 1.5;
 
 
 function fillStart() {
-    stage.removeChild(backgroundMM);
-    stage.removeChild(introTextBackdrop)
-    stage.removeChild(introText);
-    stage.removeChild(startButton);
-    stage.removeChild(startButtonText);
+    background.image.src = minigameObjects[0].background; 
 
     gameOver = false;
     isOverPitcher = false;
@@ -81,7 +69,7 @@ function fillStart() {
     timeInPitcher = 0;
     pitcherChangeTime = 1.5;
     createjs.Ticker.reset();
-    createjs.Ticker.addEventListener("tick", tick);
+    createjs.Ticker.addEventListener("tick", fillTick);
     
     
     //background location / scaling
@@ -89,6 +77,8 @@ function fillStart() {
     background.y = 0;
     background.scaleX = 0.8;
     background.scaleY = 0.8;
+      
+    
 
     //professor yay / boo thingy.
     professor.x = 1600;
@@ -169,8 +159,9 @@ testtube.on ('pressup', function (event){
 });
 
 
-function tick(event) {
+function fillTick(event) {
 
+    console.log(timeInPitcher)
     timePassed = Math.floor(createjs.Ticker.getTime()/1000)
     if (isOverPitcher){
         timeInPitcher += (timePassed - TimePitcherStart)/24;
@@ -192,7 +183,7 @@ function tick(event) {
                 }
             }
         }        
-        if (timeInPitcher >= pitcherChangeTime*6){
+        if (timeInPitcher >= pitcherChangeTime*5.5){
             if (!gameOver){
                 winLose('lose'); 
             }
