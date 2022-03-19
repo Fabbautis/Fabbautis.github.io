@@ -1,6 +1,3 @@
-let backgroundMusic = new Audio('Fill/zmbgroov.wav');
-
-
 let pitcherSheet = new createjs.SpriteSheet({
     framerate: 24,
     "images": ["Fill/Pitcher.png"],
@@ -53,6 +50,8 @@ let timePassed= 0;
 let timeInPitcher = 0;
 let pitcherChangeTime = 1.5;
 
+let stupidTween;
+
 
 
 
@@ -86,7 +85,6 @@ function fillStart() {
     professor.scaleX = 0.7;
     professor.scaleY = 0.7;
     professor.gotoAndStop("hurray");
-    createjs.Tween.removeTweens(stage.children);
 
     //pitcher filling up thing
     pitcher.x = 700;
@@ -161,7 +159,6 @@ testtube.on ('pressup', function (event){
 
 function fillTick(event) {
 
-    console.log(timeInPitcher)
     timePassed = Math.floor(createjs.Ticker.getTime()/1000)
     if (isOverPitcher){
         timeInPitcher += (timePassed - TimePitcherStart)/24;
@@ -208,19 +205,31 @@ function winLose (status){
         case 'win':
             pitcher.gotoAndPlay('hurray');
             professor.gotoAndStop("hurray");
-            
+            let gameOverSfxGoodPath = gameOverSfxPath + gameOverSfxGood[Math.floor(Math.random()*gameOverSfxGood.length)];
+            gameOverSfx.src = gameOverSfxGoodPath;      
         break;
         case 'lose':
             pitcher.gotoAndStop("lose");
             professor.gotoAndStop("lose");
+            let gameOverSfxBadPath = gameOverSfxPath + gameOverSfxBad[Math.floor(Math.random()*gameOverSfxBad.length)];
+            gameOverSfx.src = gameOverSfxBadPath;
         break;
     }
         
     gameOver = true;
+    gameOverSfx.play();  
     stage.removeChild(testtube);
-    createjs.Tween.get(professor, { loop: false }) 
+    stupidTween = createjs.Tween.get(professor, {rawPosition:0}) 
         .to({x: 700 }, 400, createjs.Ease.linear)
+        .set({x: 700})
+    createjs.Tween.removeTweens(stupidTween);
+    
 
+    stupidTween.on("complete", function () {
+        professor.x = 700;
+    })
+
+    
     setTimeout(() => { returnHome(status) }, 2000);   
     
 }
@@ -240,7 +249,6 @@ function returnHome(status){
     stage.removeChild(pitcher);
     stage.removeChild(professor);
     stage.removeChild(gameBorder);
-    createjs.Tween.removeTweens(professor);
     
     backgroundMusic.pause();
     stage.update();

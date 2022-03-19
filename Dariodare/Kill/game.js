@@ -4,7 +4,7 @@ let playerSheet = new createjs.SpriteSheet({
     "frames": [[3,3,238,280,0,75.35,184.6],[241,3,238,280,0,75.35,184.6],[479,3,238,280,0,75.35,184.6],[717,3,238,280,0,75.35,184.6],[3,283,238,280,0,75.35,184.6],[241,283,238,280,0,75.35,184.6],[479,283,238,280,0,75.35,184.6],[3,3,238,280,0,75.35,184.6]],
     "animations": {
         "idle": 0, 
-        "attack": [1,6, "idle", 1.0],
+        "attack": [1,6, "idle", 0.75],
     }
 });
 
@@ -63,6 +63,7 @@ function killStart() {
     window.addEventListener("keydown", keysDown);
     window.addEventListener("keyup", keysUp);
     stage.addEventListener("stagemousemove", rotationStuff);
+    stage.addEventListener('mousedown', attackFunction);
 
     stage.addChild(background);
     stage.addChild(player);
@@ -96,10 +97,11 @@ function directionalMovement(event) {
         player.x += playerSpeed;
     else 
         player.x += 0;
-    
-    if (keysPressed['32']){
-        player.gotoAndPlay("attack");
-    }
+
+}
+
+function attackFunction(event){
+    player.gotoAndPlay("attack");
 }
 
 function rotationStuff(event){
@@ -108,16 +110,15 @@ function rotationStuff(event){
 	let dy = event.stageY - player.y;
 	player.direction = Math.atan2(dy, dx);
 
-    console.log(dx,dy,player.direction);
-    
-    console.log(player.rotation);
 }
 
 function killTick (event) {
     directionalMovement();
-    player.rotation = player.direction * 180 / Math.PI;
-    
+    player.rotation = (player.direction * 180 / Math.PI) +67.5;
+
     stage.update(event);
+
+    //temporary endgame code
     if (Math.floor(createjs.Ticker.getTime()/1000) >= 6){
         stage.removeChild(background);
         stage.removeChild(player);
