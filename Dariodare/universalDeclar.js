@@ -56,3 +56,36 @@ function keysUp(event)
 {
     keysPressed[event.keyCode] = false;
 }
+
+function winLoseSFX(status) {
+    if (status == 'lose')
+    {
+        let gameOverSfxBadPath = gameOverSfxPath + gameOverSfxBad[Math.floor(Math.random()*gameOverSfxBad.length)];
+        gameOverSfx.src = gameOverSfxBadPath;
+    }
+
+    if (status == 'win') 
+    {
+        let gameOverSfxGoodPath = gameOverSfxPath + gameOverSfxGood[Math.floor(Math.random()*gameOverSfxGood.length)];
+        gameOverSfx.src = gameOverSfxGoodPath;
+    }
+    
+        gameOverSfx.play();  
+}
+
+function returnHome(status){
+    switch (status)
+    {
+        case 'win':
+            console.log('good job');
+        break;
+        case 'lose':
+            health.innerText = parseInt(health.innerText)-1;
+        break;
+    }
+    stage.removeAllChildren(background);
+    
+    backgroundMusic.pause();
+    stage.update();
+    init();
+}

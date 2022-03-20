@@ -11,7 +11,7 @@ let playerSheet = new createjs.SpriteSheet({
 let dragonSheet = new createjs.SpriteSheet({
     framerate: 24,
     "images": ["Kill/dragon.png"],
-    "frames": [[3,3,1092,576,0,-363.7,8.7],[1095,3,1092,576,0,-363.7,8.7],[2187,3,1092,576,0,-363.7,8.7],[3,579,1092,576,0,-363.7,8.7],[1095,579,1092,576,0,-363.7,8.7],[2187,579,1092,576,0,-363.7,8.7],[3,1155,1092,576,0,-363.7,8.7],[3,1731,1092,576,0,-363.7,8.7],[3,2307,1092,576,0,-363.7,8.7],[3,2883,1092,576,0,-363.7,8.7],[3,3459,1092,576,0,-363.7,8.7],[1095,1155,1092,576,0,-363.7,8.7],[2187,1155,1092,576,0,-363.7,8.7],[1095,1731,1092,576,0,-363.7,8.7],[2187,1731,1092,576,0,-363.7,8.7],[1095,2307,1092,576,0,-363.7,8.7],[1095,2883,1092,576,0,-363.7,8.7],[1095,3459,1092,576,0,-363.7,8.7],[2187,2307,1092,576,0,-363.7,8.7],[1095,3,1092,576,0,-363.7,8.7]],
+    "frames": [[3,3,1092,576,0,573.65,280],[1095,3,1092,576,0,573.65,280],[2187,3,1092,576,0,573.65,280],[3,579,1092,576,0,573.65,280],[1095,579,1092,576,0,573.65,280],[2187,579,1092,576,0,573.65,280],[3,1155,1092,576,0,573.65,280],[3,1731,1092,576,0,573.65,280],[3,2307,1092,576,0,573.65,280],[3,2883,1092,576,0,573.65,280],[3,3459,1092,576,0,573.65,280],[1095,1155,1092,576,0,573.65,280],[2187,1155,1092,576,0,573.65,280],[1095,1731,1092,576,0,573.65,280],[2187,1731,1092,576,0,573.65,280],[1095,2307,1092,576,0,573.65,280],[1095,2883,1092,576,0,573.65,280],[1095,3459,1092,576,0,573.65,280],[2187,2307,1092,576,0,573.65,280],[2187,2883,1092,576,0,573.65,280]],
     "animations": {
         "idle": 0, 
         "walkcycle": [1,19, "walkcycle", 0.8],
@@ -19,23 +19,35 @@ let dragonSheet = new createjs.SpriteSheet({
 });
 
 let player = new createjs.Sprite(playerSheet, "idle");
-let dragon = new createjs.Sprite(dragonSheet, "idle");
+player.name = 'player'
+let dragon = new createjs.Sprite(dragonSheet, "walkcycle");
+dragon.name = 'dragon'
 
+let playerHP = 10;
+let dragonDirection ='';
+let dragonSpeed = 15;
+let dragonStepsNumber = 20;
+let dragonSteps = dragonStepsNumber;
+let dragonDirectionArray = [
+    'left',
+    'right',
+    'up',
+    'down'
+];
 
 function killStart() {
     background.image.src = minigameObjects[1].background;
-
     gameOver = false;
-    isOverPitcher = false;
-    dummyFlag = true;
-    waitToWin = false;
-    lastTimer = undefined;
-    TimePitcherStart = 0;
-    timePassed= 0;
-    timeInPitcher = 0;
-    pitcherChangeTime = 1.5;
+
     createjs.Ticker.reset();
+    createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
+    createjs.Ticker.framerate = 24;
+
+    createjs.Ticker.addEventListener("tick", stage);
     createjs.Ticker.addEventListener("tick", killTick);
+    createjs.Ticker.addEventListener("tick", checkCollision);
+    createjs.Ticker.addEventListener("tick", dragonMovement);
+    
     
     
     //background location / scaling
@@ -47,14 +59,16 @@ function killStart() {
 
 
     //randomize a dragon location
-    dragon.x = Math.floor(Math.random()*380) + 400;
-    dragon.y = Math.floor(Math.random()*640);
+    dragon.x = Math.floor(Math.random()*450) + 600; 
+    dragon.y = Math.floor(Math.random()*385) + 200;
+
     dragon.scaleX = 0.6;
     dragon.scaleY = 0.6;
 
     //player placement
     player.x = 100;
-    player.y = 100;
+    player.y = Math.floor(Math.random()*600) + 100;
+    console.log(player.y);
     player.scaleX = 0.45;
     player.scaleY = 0.45;
     player.rotation = 100;    
@@ -63,7 +77,7 @@ function killStart() {
     window.addEventListener("keydown", keysDown);
     window.addEventListener("keyup", keysUp);
     stage.addEventListener("stagemousemove", rotationStuff);
-    stage.addEventListener('mousedown', attackFunction);
+    stage.addEventListener('mousedown', () => {if (!gameOver){player.gotoAndPlay("attack")}});
 
     stage.addChild(background);
     stage.addChild(player);
@@ -72,8 +86,71 @@ function killStart() {
     backgroundMusic.currentTime = 6.3;
     backgroundMusic.play();
     stage.update();
+    
 }
 
+function dragonMovement (){
+    if (!gameOver){
+        let rect = new createjs.Rectangle(600, 200, 1050, 585);
+        switch (dragonDirection) { //edge detection. Change direction of dragon so it doesnt walk out of bounds
+            case 'left':
+                dragon.x-=dragonSpeed;
+
+                if (dragon.x < rect.x)
+                   changeDragonDirection(dragonDirection, true);
+                break;
+            case 'right':
+                dragon.x+=dragonSpeed;
+
+                if (dragon.x > rect.width)
+                    changeDragonDirection(dragonDirection, true);
+                break;
+            case 'up':
+                dragon.y -=dragonSpeed
+
+                if (dragon.y < rect.y)
+                    changeDragonDirection(dragonDirection, true);
+                break;
+            case 'down':
+                dragon.y +=dragonSpeed;
+
+                if (dragon.y > rect.height)
+                    changeDragonDirection(dragonDirection, true);
+                break;
+            default:
+                dragon.x+=dragonSpeed;
+                dragon.rotation = 180;
+        }
+        if (dragonSteps <=0){ //change direction after a certain number of steps
+            changeDragonDirection('', false)
+        }
+        dragonSteps--;
+        }
+    }
+
+function changeDragonDirection (oldDirection, edge) {
+    if (edge == false){
+        dragonDirection = dragonDirectionArray[Math.floor(Math.random()*dragonDirectionArray.length)]
+    } else {
+        let newDragonDirectionArray = dragonDirectionArray.filter(word => word != oldDirection)
+        dragonDirection = newDragonDirectionArray[Math.floor(Math.random()*dragonDirectionArray.length)]
+    }
+    switch (dragonDirection){
+        case 'left':
+            dragon.rotation = 0;
+        break;
+        case 'right':
+            dragon.rotation = 180;
+        break;
+        case 'up':
+            dragon.rotation = 90;
+        break;
+        case 'down':
+            dragon.rotation = 270;
+        break;
+    } 
+    dragonSteps = dragonStepsNumber;
+}
 
 function directionalMovement(event) {
     //I would make this a switch but then that means only one direction is possible at a time
@@ -100,10 +177,6 @@ function directionalMovement(event) {
 
 }
 
-function attackFunction(event){
-    player.gotoAndPlay("attack");
-}
-
 function rotationStuff(event){
     //rotation
     let dx = event.stageX - player.x;  
@@ -113,21 +186,79 @@ function rotationStuff(event){
 }
 
 function killTick (event) {
-    directionalMovement();
-    player.rotation = (player.direction * 180 / Math.PI) +67.5;
+    if (!gameOver){ //Basically if the game isn't over, then dont move or rotate the player
+        directionalMovement();
+        player.rotation = (player.direction * 180 / Math.PI) +67.5;
+    }
 
     stage.update(event);
 
     //temporary endgame code
-    if (Math.floor(createjs.Ticker.getTime()/1000) >= 6){
-        stage.removeChild(background);
-        stage.removeChild(player);
-        stage.removeChild(dragon);
-        stage.removeChild(gameBorder);
-        
-        backgroundMusic.pause();
-        stage.update();
-        init();
+    if (!gameOver){
+        if (Math.floor(createjs.Ticker.getTime()/1000) >= 6){
+            killWinLose('lose', false)
+        }
     }
     
+}
+
+function checkCollision() {
+    let leftX = player.x - player.regX + 5;
+    let leftY = player.y - player.regY + 5;
+    let playerPoints = [
+        new createjs.Point(leftX, leftY),
+        new createjs.Point(leftX + player.hitArea - 10, leftY),
+        new createjs.Point(leftX, leftY + player.hitArea - 10),
+        new createjs.Point(leftX + player.hitArea - 10, leftY + player.hitArea - 10)
+    ];
+
+    /*polygon.graphics.clear().beginStroke("black");
+    polygon.graphics.moveTo(points[0].x, points[0].y).lineTo(points[2].x, points[2].y).lineTo(points[3].x, points[3].y)
+    .lineTo(points[1].x, points[1].y).lineTo(points[0].x, points[0].y);*/
+
+    for (let i = 0; i < playerPoints.length; i++) {
+        let objects = stage.getObjectsUnderPoint(playerPoints[i].x, playerPoints[i].y);
+        if (objects.filter((object) => object.name == "dragon").length > 0) {
+            if (!gameOver){
+                if (player.currentAnimation != 'attack'){
+                    playerHP --;
+                    if (playerHP <= 0){
+                        killWinLose('lose');
+                    }
+                }
+                else {
+                    killWinLose('win');
+                }
+            }        
+        return;
+        }
+    }
+}
+
+function killWinLose(status, runAnimation){
+    gameOver = true;
+    if (status == 'lose' && runAnimation == true)
+    {
+        player.rotation = 0;
+        createjs.Tween.get(player, {loop:false}) 
+            .to({rotation:720, scaleX: 0.55, scaleY: 0.55}, 1000, createjs.Ease.cubicInOut)
+            .wait(400)
+            .to({rotation:-1080, scaleX:0.05, scaleY: 0.05}, 600, createjs.Ease.cubicIn)
+            .set({alpha:0})        
+    }
+    if (status == 'win' && runAnimation == true)
+    {
+        dragon.gotoAndPlay('idle');
+        createjs.Tween.get(dragon, {loop:false}) 
+            .to({scaleX:0.4, scaleY: 0.4}, 600, createjs.Ease.quadOut)
+            .wait(50)
+            .to({scaleX:1, scaleY: 1, alpha:0}, 1200, createjs.Ease.cubicIn)
+  
+    }
+    if (runAnimation == false){
+        returnHome(status);
+        return;
+    }
+    setTimeout(()=> winLoseSFX(status), 2000)
+    setTimeout(() => returnHome(status) , 2500);
 }

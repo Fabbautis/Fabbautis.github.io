@@ -67,8 +67,12 @@ function fillStart() {
     timePassed= 0;
     timeInPitcher = 0;
     pitcherChangeTime = 1.5;
+
     createjs.Ticker.reset();
+    createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
+    createjs.Ticker.framerate = 24;
     createjs.Ticker.addEventListener("tick", fillTick);
+
     
     
     //background location / scaling
@@ -156,7 +160,6 @@ testtube.on ('pressup', function (event){
     isOverPitcher = false;
 });
 
-
 function fillTick(event) {
 
     timePassed = Math.floor(createjs.Ticker.getTime()/1000)
@@ -182,7 +185,7 @@ function fillTick(event) {
         }        
         if (timeInPitcher >= pitcherChangeTime*5.5){
             if (!gameOver){
-                winLose('lose'); 
+                fillWinLose('lose'); 
             }
         }
     }        
@@ -193,31 +196,28 @@ function fillTick(event) {
     
     if ((timePassed - lastTimer) > 3){
         if (!gameOver){
-            winLose('win'); 
+            fillWinLose('win'); 
         }
     }
     stage.update(event);
 }
 
-function winLose (status){
+function fillWinLose (status){
     switch (status)
     {
         case 'win':
             pitcher.gotoAndPlay('hurray');
             professor.gotoAndStop("hurray");
-            let gameOverSfxGoodPath = gameOverSfxPath + gameOverSfxGood[Math.floor(Math.random()*gameOverSfxGood.length)];
-            gameOverSfx.src = gameOverSfxGoodPath;      
+            
         break;
         case 'lose':
             pitcher.gotoAndStop("lose");
             professor.gotoAndStop("lose");
-            let gameOverSfxBadPath = gameOverSfxPath + gameOverSfxBad[Math.floor(Math.random()*gameOverSfxBad.length)];
-            gameOverSfx.src = gameOverSfxBadPath;
+            
         break;
     }
-        
+    winLoseSFX(status);
     gameOver = true;
-    gameOverSfx.play();  
     stage.removeChild(testtube);
     stupidTween = createjs.Tween.get(professor, {rawPosition:0}) 
         .to({x: 700 }, 400, createjs.Ease.linear)
@@ -230,27 +230,7 @@ function winLose (status){
     })
 
     
-    setTimeout(() => { returnHome(status) }, 2000);   
+    setTimeout(() => { returnHome(status) }, 2000);  
     
-}
-
-function returnHome(status){
-    switch (status)
-    {
-        case 'win':
-            console.log('good job');
-        break;
-        case 'lose':
-            health.innerText = parseInt(health.innerText)-1;
-        break;
-    }
-    stage.removeChild(background);
-    stage.removeChild(testtube);
-    stage.removeChild(pitcher);
-    stage.removeChild(professor);
-    stage.removeChild(gameBorder);
     
-    backgroundMusic.pause();
-    stage.update();
-    init();
 }
