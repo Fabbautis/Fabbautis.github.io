@@ -69,8 +69,6 @@ function fillStart() {
     pitcherChangeTime = 1.5;
 
     createjs.Ticker.reset();
-    createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
-    createjs.Ticker.framerate = 24;
     createjs.Ticker.addEventListener("tick", fillTick);
 
     
@@ -110,8 +108,7 @@ function fillStart() {
     stage.addChild(pitcher);
     stage.addChild(professor);
     stage.addChild(gameBorder);
-    backgroundMusic.currentTime = 6.3;
-    backgroundMusic.play();
+    playMusic();
     stage.update();
     
     
@@ -213,10 +210,10 @@ function fillWinLose (status){
         case 'lose':
             pitcher.gotoAndStop("lose");
             professor.gotoAndStop("lose");
-            
         break;
     }
     winLoseSFX(status);
+    backgroundMusic.volume = 0.6;
     gameOver = true;
     stage.removeChild(testtube);
     stupidTween = createjs.Tween.get(professor, {rawPosition:0}) 

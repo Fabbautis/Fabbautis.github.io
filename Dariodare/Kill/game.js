@@ -20,10 +20,13 @@ let dragonSheet = new createjs.SpriteSheet({
 
 let player = new createjs.Sprite(playerSheet, "idle");
 player.name = 'player'
+let playerTween;
+let playerHP = 10;
+let playerSpeed = 20;
+
 let dragon = new createjs.Sprite(dragonSheet, "walkcycle");
 dragon.name = 'dragon'
-
-let playerHP = 10;
+let dragonTween;
 let dragonDirection ='';
 let dragonSpeed = 15;
 let dragonStepsNumber = 20;
@@ -40,10 +43,7 @@ function killStart() {
     gameOver = false;
 
     createjs.Ticker.reset();
-    createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
-    createjs.Ticker.framerate = 24;
 
-    createjs.Ticker.addEventListener("tick", stage);
     createjs.Ticker.addEventListener("tick", killTick);
     createjs.Ticker.addEventListener("tick", checkCollision);
     createjs.Ticker.addEventListener("tick", dragonMovement);
@@ -61,18 +61,29 @@ function killStart() {
     //randomize a dragon location
     dragon.x = Math.floor(Math.random()*450) + 600; 
     dragon.y = Math.floor(Math.random()*385) + 200;
-
     dragon.scaleX = 0.6;
     dragon.scaleY = 0.6;
-
+    dragon.alpha = 1;
+    dragonTween = createjs.Tween.get(dragon, {paused:true}) 
+        .set({scaleX:0.6, scaleY: 0.6, alpha:1})
+        .to({scaleX:0.4, scaleY: 0.4}, 600, createjs.Ease.quadOut)
+        .wait(50)
+        .to({scaleX:1, scaleY: 1, alpha:0}, 1200, createjs.Ease.cubicIn)
+    dragon.gotoAndPlay('walkcycle');
+    
     //player placement
     player.x = 100;
     player.y = Math.floor(Math.random()*600) + 100;
-    console.log(player.y);
     player.scaleX = 0.45;
     player.scaleY = 0.45;
     player.rotation = 100;    
     player.direction = 0;
+    player.alpha = 1;
+    playerTween = createjs.Tween.get(player, {paused:true}) 
+                    .to({rotation:720, scaleX: 0.55, scaleY: 0.55}, 1000, createjs.Ease.cubicInOut)
+                    .wait(400)
+                    .to({rotation:-1080, scaleX:0.05, scaleY: 0.05}, 600, createjs.Ease.cubicIn)
+                    .set({alpha:0})   
 
     window.addEventListener("keydown", keysDown);
     window.addEventListener("keyup", keysUp);
@@ -83,10 +94,8 @@ function killStart() {
     stage.addChild(player);
     stage.addChild(dragon);
     stage.addChild(gameBorder);
-    backgroundMusic.currentTime = 6.3;
-    backgroundMusic.play();
-    stage.update();
-    
+    playMusic();
+    stage.update();    
 }
 
 function dragonMovement (){
@@ -223,11 +232,11 @@ function checkCollision() {
                 if (player.currentAnimation != 'attack'){
                     playerHP --;
                     if (playerHP <= 0){
-                        killWinLose('lose');
+                        killWinLose('lose', true);
                     }
                 }
                 else {
-                    killWinLose('win');
+                    killWinLose('win', true);
                 }
             }        
         return;
@@ -239,26 +248,27 @@ function killWinLose(status, runAnimation){
     gameOver = true;
     if (status == 'lose' && runAnimation == true)
     {
+        stage.removeChild(dragon);
+        stage.removeChild(background);
+
+        let deathBackground = new createjs.Shape();
+        deathBackground.graphics.beginFill('#000000').drawRect(0,0,1400,800)
+        stage.addChildAt(deathBackground, 0);
+
         player.rotation = 0;
-        createjs.Tween.get(player, {loop:false}) 
-            .to({rotation:720, scaleX: 0.55, scaleY: 0.55}, 1000, createjs.Ease.cubicInOut)
-            .wait(400)
-            .to({rotation:-1080, scaleX:0.05, scaleY: 0.05}, 600, createjs.Ease.cubicIn)
-            .set({alpha:0})        
+        playerTween.paused = false;
+
     }
     if (status == 'win' && runAnimation == true)
     {
-        dragon.gotoAndPlay('idle');
-        createjs.Tween.get(dragon, {loop:false}) 
-            .to({scaleX:0.4, scaleY: 0.4}, 600, createjs.Ease.quadOut)
-            .wait(50)
-            .to({scaleX:1, scaleY: 1, alpha:0}, 1200, createjs.Ease.cubicIn)
-  
+        dragon.gotoAndPlay('idle');  
+        dragonTween.paused = false;
     }
     if (runAnimation == false){
         returnHome(status);
         return;
     }
+    backgroundMusic.volume = 0.6;
     setTimeout(()=> winLoseSFX(status), 2000)
     setTimeout(() => returnHome(status) , 2500);
 }
