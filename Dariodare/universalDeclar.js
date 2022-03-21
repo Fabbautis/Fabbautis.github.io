@@ -52,9 +52,14 @@ let backgroundMusic = new Audio();
 let keysPressed = {};
 let gameOver = false;
 
+let globalTimer; 
+let timeStarted; //Variable used to see how much time passed since the minigame started
+let timeInMinigame;
 
 createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
 createjs.Ticker.framerate = 24;
+
+createjs.Ticker.on ('tick', function () {globalTimer = Math.floor(createjs.Ticker.getTime()/1000);});
 
 
 function keysDown(event)
@@ -86,14 +91,13 @@ function returnHome(status){
     switch (status)
     {
         case 'win':
-            console.log('good job');
         break;
         case 'lose':
             health.innerText = parseInt(health.innerText)-1;
         break;
     }
     stage.removeAllChildren(background);
-    
+    console.log(status);
     backgroundMusic.pause();
     stage.update();
     init();

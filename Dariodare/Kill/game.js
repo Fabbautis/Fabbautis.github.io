@@ -41,14 +41,6 @@ let dragonDirectionArray = [
 function killStart() {
     background.image.src = minigameObjects[1].background;
     gameOver = false;
-
-    createjs.Ticker.reset();
-
-    createjs.Ticker.addEventListener("tick", killTick);
-    createjs.Ticker.addEventListener("tick", checkCollision);
-    createjs.Ticker.addEventListener("tick", dragonMovement);
-    
-    
     
     //background location / scaling
     background.x = -50;
@@ -95,7 +87,11 @@ function killStart() {
     stage.addChild(dragon);
     stage.addChild(gameBorder);
     playMusic();
-    stage.update();    
+    stage.update();   
+
+    createjs.Ticker.addEventListener("tick", killTick);
+    createjs.Ticker.addEventListener("tick", checkCollision);
+    createjs.Ticker.addEventListener("tick", dragonMovement);
 }
 
 function dragonMovement (){
@@ -135,7 +131,7 @@ function dragonMovement (){
         }
         dragonSteps--;
         }
-    }
+}
 
 function changeDragonDirection (oldDirection, edge) {
     if (edge == false){
@@ -195,6 +191,8 @@ function rotationStuff(event){
 }
 
 function killTick (event) {
+    timeInMinigame = globalTimer - timeStarted;
+    console.log(timeInMinigame);
     if (!gameOver){ //Basically if the game isn't over, then dont move or rotate the player
         directionalMovement();
         player.rotation = (player.direction * 180 / Math.PI) +67.5;
@@ -202,9 +200,9 @@ function killTick (event) {
 
     stage.update(event);
 
-    //temporary endgame code
+    //timer if you run out of time
     if (!gameOver){
-        if (Math.floor(createjs.Ticker.getTime()/1000) >= 6){
+        if ((timeInMinigame) >= 6){
             killWinLose('lose', false)
         }
     }
@@ -220,10 +218,6 @@ function checkCollision() {
         new createjs.Point(leftX, leftY + player.hitArea - 10),
         new createjs.Point(leftX + player.hitArea - 10, leftY + player.hitArea - 10)
     ];
-
-    /*polygon.graphics.clear().beginStroke("black");
-    polygon.graphics.moveTo(points[0].x, points[0].y).lineTo(points[2].x, points[2].y).lineTo(points[3].x, points[3].y)
-    .lineTo(points[1].x, points[1].y).lineTo(points[0].x, points[0].y);*/
 
     for (let i = 0; i < playerPoints.length; i++) {
         let objects = stage.getObjectsUnderPoint(playerPoints[i].x, playerPoints[i].y);
@@ -264,11 +258,16 @@ function killWinLose(status, runAnimation){
         dragon.gotoAndPlay('idle');  
         dragonTween.paused = false;
     }
-    if (runAnimation == false){
+    if (runAnimation == false){ //Immediately go home because time ran out
         returnHome(status);
+        createjs.Ticker.removeEventListener("tick", killTick);
         return;
     }
     backgroundMusic.volume = 0.6;
-    setTimeout(()=> winLoseSFX(status), 2000)
-    setTimeout(() => returnHome(status) , 2500);
+
+    
+    createjs.Ticker.removeEventListener("tick", checkCollision);
+    createjs.Ticker.removeEventListener("tick", dragonMovement);
+    setTimeout(()=> {winLoseSFX(status);}, 2000)
+    setTimeout(() => {returnHome(status); createjs.Ticker.removeEventListener("tick", killTick); }, 2500);
 }

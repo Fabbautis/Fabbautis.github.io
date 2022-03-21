@@ -41,14 +41,14 @@ let offset;
 let fillOffset = 300;
 
 
-let isOverPitcher = false;
-let dummyFlag = true;
-let waitToWin = false;
-let lastTimer;
-let TimePitcherStart = 0;
-let timePassed= 0;
-let timeInPitcher = 0;
-let pitcherChangeTime = 1.5;
+let isOverPitcher = false; //is the testtube over the pitcher? Used to give timeInPitcherStart a value until the testtube isnt over the pitcher
+let dummyFlag = true;   //Something dumb.
+let waitToWin = false;  //Flag that activates when players get a desired amount to fill. Used to test some end game stuff
+let waitForGameToEndTimer;  //number variable thats used to see if x seconds have passed for player to win
+let timeInPitcherStart = 0; //The starting time in milliseconds when the player first put the testtube over the pitcher without dropping it
+let timeInPitcher = 0;  //How long has the testtube been over the pitcher in total
+let pitcherChangeTime = 1.5;   //Value used to change how fast the pitcher changes animations
+
 
 let stupidTween;
 
@@ -62,17 +62,11 @@ function fillStart() {
     isOverPitcher = false;
     dummyFlag = true;
     waitToWin = false;
-    lastTimer = undefined;
-    TimePitcherStart = 0;
-    timePassed= 0;
+    waitForGameToEnd = undefined;
+    timeInPitcherStart = 0;
     timeInPitcher = 0;
     pitcherChangeTime = 1.5;
-
-    createjs.Ticker.reset();
-    createjs.Ticker.addEventListener("tick", fillTick);
-
-    
-    
+   
     //background location / scaling
     background.x = -50;
     background.y = 0;
@@ -87,6 +81,8 @@ function fillStart() {
     professor.scaleX = 0.7;
     professor.scaleY = 0.7;
     professor.gotoAndStop("hurray");
+    stupidTween = createjs.Tween.get(professor, {paused: true}, true) 
+        .to({x: professor.x - 900 }, 400, createjs.Ease.linear)
 
     //pitcher filling up thing
     pitcher.x = 700;
@@ -110,8 +106,8 @@ function fillStart() {
     stage.addChild(gameBorder);
     playMusic();
     stage.update();
-    
-    
+
+    createjs.Ticker.addEventListener("tick", fillTick);
 }
 
 testtube.on('mousedown', function (event){
@@ -142,7 +138,7 @@ testtube.on('pressmove',function (event) {
 
     if (testtube.x > pitcher.hitboxX[0] -fillOffset && testtube.x < pitcher.hitboxX[1]-fillOffset){
         if (!isOverPitcher){
-            TimePitcherStart = timePassed
+            timeInPitcherStart = globalTimer;
         }
         isOverPitcher = true;
         
@@ -158,10 +154,11 @@ testtube.on ('pressup', function (event){
 });
 
 function fillTick(event) {
-
-    timePassed = Math.floor(createjs.Ticker.getTime()/1000)
+    timeInMinigame = globalTimer - timeStarted;
+    console.log(timeInMinigame);
+    
     if (isOverPitcher){
-        timeInPitcher += (timePassed - TimePitcherStart)/24;
+        timeInPitcher += (globalTimer - timeInPitcherStart)/24;
         if (timeInPitcher >= pitcherChangeTime && timeInPitcher < pitcherChangeTime*2){
             pitcher.gotoAndStop("25%");
         }
@@ -187,16 +184,16 @@ function fillTick(event) {
         }
     }        
     if (waitToWin) {
-        lastTimer= timePassed;
+        waitForGameToEnd= globalTimer;
         waitToWin = false;
     }
     
-    if ((timePassed - lastTimer) > 3){
+    if ((globalTimer - waitForGameToEnd) > 3){
         if (!gameOver){
             fillWinLose('win'); 
         }
     }
-    stage.update(event);
+    stage.update();
 }
 
 function fillWinLose (status){
@@ -212,22 +209,15 @@ function fillWinLose (status){
             professor.gotoAndStop("lose");
         break;
     }
+    
     winLoseSFX(status);
     backgroundMusic.volume = 0.6;
     gameOver = true;
-    stage.removeChild(testtube);
-    stupidTween = createjs.Tween.get(professor, {rawPosition:0}) 
-        .to({x: 700 }, 400, createjs.Ease.linear)
-        .set({x: 700})
-    createjs.Tween.removeTweens(stupidTween);
+    stage.removeChild(testtube);    
+    stupidTween.paused = false;
     
-
-    stupidTween.on("complete", function () {
-        professor.x = 700;
-    })
-
     
-    setTimeout(() => { returnHome(status) }, 2000);  
+    setTimeout(() => { returnHome(status); createjs.Ticker.addEventListener("tick", fillTick); }, 2000);  
     
     
 }
