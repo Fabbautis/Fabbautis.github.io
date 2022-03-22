@@ -58,7 +58,7 @@ let timeInMinigame;
 
 let gamesWon = 0;
 let gamesPassed = -1;
-let difficulty = 2;
+let difficulty = 0;
 
 createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
 createjs.Ticker.framerate = 24;
