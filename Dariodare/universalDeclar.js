@@ -18,8 +18,7 @@ let background = new createjs.Bitmap('sus.png');
 let minigameObjects = [
     {name: 'Fill', function: 'fillStart()', background: "Fill/background.png", number: 1},
     {name: 'Kill', function: 'killStart()', background: "Kill/background.png", number: 2},
-    {name: 'Fill', function: 'fillStart()', background: "Fill/background.png", number: 3},
-    {name: 'Kill', function: 'killStart()', background: "Kill/background.png", number: 4},
+    {name: 'Strum', function: 'strumStart()', background: "Strum/background.png", number: 3},
 ]
 
 

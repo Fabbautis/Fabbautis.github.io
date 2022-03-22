@@ -46,7 +46,6 @@ startButton.on ('click', () =>{
     let randomizer = minigameObjects[Math.floor(Math.random() * minigameObjects.length)]
     let chooseRandomGame = new Function(randomizer.function);
     timeStarted = globalTimer;
-    console.log(timeStarted);
     //Will have to add some code later on that ensures duplicate microgames can't be played in a row (e.g. oldMicrogame = minigameObjects[gameYou'reIn].game. If oldMicrogame = newMicrogame, then shuffle again)
     chooseRandomGame();
 });

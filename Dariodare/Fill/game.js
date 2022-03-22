@@ -217,7 +217,7 @@ function fillWinLose (status){
     stupidTween.paused = false;
     
     
-    setTimeout(() => { returnHome(status); createjs.Ticker.addEventListener("tick", fillTick); }, 2000);  
+    setTimeout(() => { createjs.Ticker.removeEventListener("tick", fillTick); returnHome(status);  }, 2000);  
     
     
 }

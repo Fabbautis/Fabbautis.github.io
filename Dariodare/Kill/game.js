@@ -194,6 +194,7 @@ function killTick (event) {
     timeInMinigame = globalTimer - timeStarted;
     console.log(timeInMinigame);
     if (!gameOver){ //Basically if the game isn't over, then dont move or rotate the player
+        console.log('kill minigame isn\'t over');
         directionalMovement();
         player.rotation = (player.direction * 180 / Math.PI) +67.5;
     }
@@ -239,6 +240,11 @@ function checkCollision() {
 }
 
 function killWinLose(status, runAnimation){
+    stage.removeEventListener("stagemousemove", rotationStuff);
+    stage.removeEventListener('mousedown', () => {if (!gameOver){player.gotoAndPlay("attack")}});
+    
+    createjs.Ticker.removeEventListener("tick", checkCollision);
+    createjs.Ticker.removeEventListener("tick", dragonMovement);
     gameOver = true;
     if (status == 'lose' && runAnimation == true)
     {
@@ -265,9 +271,6 @@ function killWinLose(status, runAnimation){
     }
     backgroundMusic.volume = 0.6;
 
-    
-    createjs.Ticker.removeEventListener("tick", checkCollision);
-    createjs.Ticker.removeEventListener("tick", dragonMovement);
     setTimeout(()=> {winLoseSFX(status);}, 2000)
-    setTimeout(() => {returnHome(status); createjs.Ticker.removeEventListener("tick", killTick); }, 2500);
+    setTimeout(() => {createjs.Ticker.removeEventListener("tick", killTick); returnHome(status);}, 2500);
 }
