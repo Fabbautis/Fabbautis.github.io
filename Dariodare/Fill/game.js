@@ -19,7 +19,7 @@ let testtubeSheet = new createjs.SpriteSheet({
     "frames": [[3,3,525,585,0,0,42.4],[3,588,525,585,0,0,42.4],[3,588,525,585,0,0,42.4],[3,1173,525,585,0,0,42.4],[3,1173,525,585,0,0,42.4],[528,3,525,585,0,0,42.4],[528,3,525,585,0,0,42.4]],
     "animations": {
         "idle": 0, 
-        "filling": [1,3, "filling", 0.8],
+        "filling": [1,3, "filling", 0.8 + 0.1 *difficulty],
     }
 });
 
@@ -47,7 +47,7 @@ let waitToWin = false;  //Flag that activates when players get a desired amount 
 let waitForGameToEndTimer;  //number variable thats used to see if x seconds have passed for player to win
 let timeInPitcherStart = 0; //The starting time in milliseconds when the player first put the testtube over the pitcher without dropping it
 let timeInPitcher = 0;  //How long has the testtube been over the pitcher in total
-let pitcherChangeTime = 1.5;   //Value used to change how fast the pitcher changes animations
+let pitcherChangeTime = 0.2 - 0.15*difficulty;   //Value used to change how fast the pitcher changes animations
 
 
 let stupidTween;
@@ -82,7 +82,7 @@ function fillStart() {
     professor.scaleY = 0.7;
     professor.gotoAndStop("hurray");
     stupidTween = createjs.Tween.get(professor, {paused: true}, true) 
-        .to({x: professor.x - 900 }, 400, createjs.Ease.linear)
+        .to({x: professor.x - 900 }, 400-60*difficulty, createjs.Ease.linear)
 
     //pitcher filling up thing
     pitcher.x = 700;
@@ -158,7 +158,7 @@ function fillTick(event) {
     console.log(timeInMinigame);
     
     if (isOverPitcher){
-        timeInPitcher += (globalTimer - timeInPitcherStart)/24;
+        timeInPitcher += (globalTimer - timeInPitcherStart)/9
         if (timeInPitcher >= pitcherChangeTime && timeInPitcher < pitcherChangeTime*2){
             pitcher.gotoAndStop("25%");
         }
@@ -188,7 +188,7 @@ function fillTick(event) {
         waitToWin = false;
     }
     
-    if ((globalTimer - waitForGameToEnd) > 3){
+    if ((globalTimer - waitForGameToEnd) > 1.5 - 0.2* difficulty){
         if (!gameOver){
             fillWinLose('win'); 
         }

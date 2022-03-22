@@ -8,6 +8,7 @@ let context = canvas.getContext('2d');
 
 
 let health = document.getElementById('health');
+let score = document.getElementById('score');
 
 let gameBorder = new createjs.Bitmap("border.png");
     gameBorder.crossOrigin = "Anonymous";
@@ -55,6 +56,10 @@ let globalTimer;
 let timeStarted; //Variable used to see how much time passed since the minigame started
 let timeInMinigame;
 
+let gamesWon = 0;
+let gamesPassed = -1;
+let difficulty = 2;
+
 createjs.Ticker.timingMode = createjs.Ticker.TIMEOUT;
 createjs.Ticker.framerate = 24;
 
@@ -87,13 +92,23 @@ function winLoseSFX(status) {
 }
 
 function returnHome(status){
+    gamesPassed++;
     switch (status)
     {
         case 'win':
+            gamesWon++;
+            score.innerHTML = parseInt(gamesWon);
         break;
         case 'lose':
             health.innerText = parseInt(health.innerText)-1;
         break;
+    }
+
+    if (gamesPassed ==5) {
+        difficulty = 1;
+    }
+    if (gamesPassed ==10) {
+        difficulty = 2;
     }
     stage.removeAllChildren(background);
     console.log(status);
@@ -106,5 +121,15 @@ function playMusic(){
     let musicToPlay = backgroundMusicPath + backgroundMusicOptions[Math.floor(Math.random()*backgroundMusicOptions.length)];
     backgroundMusic.src = musicToPlay;
     backgroundMusic.volume = 0.4;
+    if (difficulty == 1){
+        backgroundMusic.playbackRate =1.1;
+    }
+    if (difficulty == 2){
+        backgroundMusic.playbackRate =1.2;
+    }
+    backgroundMusic.addEventListener('ended', function () {
+        backgroundMusic.currentTime = 0;
+        backgroundMusic.play();
+    })
     backgroundMusic.play();
 }

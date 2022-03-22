@@ -4,8 +4,8 @@ let handSheet = new createjs.SpriteSheet({
     "frames": [[3,3,1185,1495,0,280.4,187.6],[3,1498,1185,1495,0,280.4,187.6],[1188,3,1185,1495,0,280.4,187.6],[2373,3,1185,1495,0,280.4,187.6],[2373,3,1185,1495,0,280.4,187.6],[1188,1498,1185,1495,0,280.4,187.6],[1188,1498,1185,1495,0,280.4,187.6],[3,3,1185,1495,0,280.4,187.6]],
     "animations": {
         "idle": 3, 
-        "up": [4,7, "down"],
-        "down": [0,2,"idle"],
+        "up": [4,7, "down", 1 + .15*difficulty],
+        "down": [0,2,"idle", 1+ .15*difficulty],
     }
 });
 
@@ -15,8 +15,8 @@ let stringSheet = new createjs.SpriteSheet({
     "frames": [[3,3,1482,729,0,20.95,706.3],[1485,3,1482,729,0,20.95,706.3],[2967,3,1482,729,0,20.95,706.3],[4449,3,1482,729,0,20.95,706.3],[5931,3,1482,729,0,20.95,706.3],[3,732,1482,729,0,20.95,706.3],[1485,732,1482,729,0,20.95,706.3],[2967,732,1482,729,0,20.95,706.3],[4449,732,1482,729,0,20.95,706.3],[5931,732,1482,729,0,20.95,706.3],[3,1461,1482,729,0,20.95,706.3],[3,1461,1482,729,0,20.95,706.3],[1485,1461,1482,729,0,20.95,706.3],[1485,1461,1482,729,0,20.95,706.3],[2967,1461,1482,729,0,20.95,706.3],[2967,1461,1482,729,0,20.95,706.3],[2967,1461,1482,729,0,20.95,706.3],[4449,1461,1482,729,0,20.95,706.3],[4449,1461,1482,729,0,20.95,706.3],[5931,1461,1482,729,0,20.95,706.3],[3,2190,1482,729,0,20.95,706.3],[1485,2190,1482,729,0,20.95,706.3],[2967,2190,1482,729,0,20.95,706.3],[2967,2190,1482,729,0,20.95,706.3],[4449,2190,1482,729,0,20.95,706.3],[4449,2190,1482,729,0,20.95,706.3],[5931,2190,1482,729,0,20.95,706.3],[3,2919,1482,729,0,20.95,706.3],[3,2919,1482,729,0,20.95,706.3],[1485,2919,1482,729,0,20.95,706.3],[1485,2919,1482,729,0,20.95,706.3],[1485,2919,1482,729,0,20.95,706.3],[2967,2919,1482,729,0,20.95,706.3],[2967,2919,1482,729,0,20.95,706.3],[2967,2919,1482,729,0,20.95,706.3],[4449,2919,1482,729,0,20.95,706.3],[4449,2919,1482,729,0,20.95,706.3],[4449,2919,1482,729,0,20.95,706.3],[4449,2919,1482,729,0,20.95,706.3]],
     "animations": {
         "idle": 0, 
-        "play": [1,6, "idle"],
-        "break": [7,38, 'breakidle'],
+        "play": [1,6, "idle", 1 + .15*difficulty],
+        "break": [7,38, 'breakidle', 1 + .15*difficulty],
         'breakidle': 38,
     }
 });
@@ -37,7 +37,7 @@ function strumStart() {
     background.image.src = minigameObjects[2].background;
     gameOver = false;
     canStrum = true;
-    strumsLeft = 4;
+    strumsLeft = 4 + difficulty;
     
     //background location / scaling
     background.x = 0;
@@ -112,7 +112,7 @@ function stringClick(stringClicked){
             hand.gotoAndPlay("up");
             let guitarInitialRotate = guitar.rotation
             createjs.Tween.get(guitar)
-                .to({rotation: guitarInitialRotate - 0.6}, 50, createjs.Ease.quadIn())
+                .to({rotation: guitarInitialRotate - 0.6}, 50-7*difficulty, createjs.Ease.quadIn())
                 .to({rotation: guitarInitialRotate}, 100, createjs.Ease.quadOut())
             if (stringClicked == stringToPress-1){
                 strumsLeft--;
@@ -123,6 +123,7 @@ function stringClick(stringClicked){
                 canStrum = false;
                 changeStringNumber(false);
             }
+            console.log(strumsLeft);
         }
     }
 }
@@ -130,6 +131,14 @@ function stringClick(stringClicked){
 function changeStringNumber(status){
     if (status == true){
         switch (strumsLeft){
+            case 6:
+                circleString.graphics.setStrokeStyle(12,"round").beginStroke("#430725");
+                circleString.graphics.beginFill("#260515").drawCircle(1100,550, 100);  
+                break;
+            case 5:
+                circleString.graphics.setStrokeStyle(12,"round").beginStroke("#550E2C");
+                circleString.graphics.beginFill("#3B0C1E").drawCircle(1100,550, 100);  
+                break;
             case 4:
                 circleString.graphics.setStrokeStyle(12,"round").beginStroke("#651531");
                 circleString.graphics.beginFill("#4A1524").drawCircle(1100,550, 100);  

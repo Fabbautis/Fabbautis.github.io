@@ -14,7 +14,7 @@ let dragonSheet = new createjs.SpriteSheet({
     "frames": [[3,3,1092,576,0,573.65,280],[1095,3,1092,576,0,573.65,280],[2187,3,1092,576,0,573.65,280],[3,579,1092,576,0,573.65,280],[1095,579,1092,576,0,573.65,280],[2187,579,1092,576,0,573.65,280],[3,1155,1092,576,0,573.65,280],[3,1731,1092,576,0,573.65,280],[3,2307,1092,576,0,573.65,280],[3,2883,1092,576,0,573.65,280],[3,3459,1092,576,0,573.65,280],[1095,1155,1092,576,0,573.65,280],[2187,1155,1092,576,0,573.65,280],[1095,1731,1092,576,0,573.65,280],[2187,1731,1092,576,0,573.65,280],[1095,2307,1092,576,0,573.65,280],[1095,2883,1092,576,0,573.65,280],[1095,3459,1092,576,0,573.65,280],[2187,2307,1092,576,0,573.65,280],[2187,2883,1092,576,0,573.65,280]],
     "animations": {
         "idle": 0, 
-        "walkcycle": [1,19, "walkcycle", 0.8],
+        "walkcycle": [1,19, "walkcycle", 0.8 + 0.15 *difficulty],
     }
 });
 
@@ -28,7 +28,7 @@ let dragon = new createjs.Sprite(dragonSheet, "walkcycle");
 dragon.name = 'dragon'
 let dragonTween;
 let dragonDirection ='';
-let dragonSpeed = 15;
+let dragonSpeed = 15 + 6.5*(difficulty);
 let dragonStepsNumber = 20;
 let dragonSteps = dragonStepsNumber;
 let dragonDirectionArray = [
@@ -53,14 +53,13 @@ function killStart() {
     //randomize a dragon location
     dragon.x = Math.floor(Math.random()*450) + 600; 
     dragon.y = Math.floor(Math.random()*385) + 200;
-    dragon.scaleX = 0.6;
-    dragon.scaleY = 0.6;
+    dragon.scaleX = 0.6 - 0.1*(difficulty);
+    dragon.scaleY = 0.6 - 0.1*(difficulty);
     dragon.alpha = 1;
     dragonTween = createjs.Tween.get(dragon, {paused:true}) 
-        .set({scaleX:0.6, scaleY: 0.6, alpha:1})
-        .to({scaleX:0.4, scaleY: 0.4}, 600, createjs.Ease.quadOut)
-        .wait(50)
-        .to({scaleX:1, scaleY: 1, alpha:0}, 1200, createjs.Ease.cubicIn)
+        .to({scaleX:dragon.scaleX-0.2, scaleY: dragon.scaleY-0.2}, 600 - 100*(difficulty), createjs.Ease.quadOut)
+        .wait(50 - 5* (difficulty))
+        .to({scaleX:dragon.scaleX, scaleY: dragon.scaleY, alpha:0}, 1200 - 200*(difficulty), createjs.Ease.cubicIn)
     dragon.gotoAndPlay('walkcycle');
     
     //player placement
@@ -72,9 +71,9 @@ function killStart() {
     player.direction = 0;
     player.alpha = 1;
     playerTween = createjs.Tween.get(player, {paused:true}) 
-                    .to({rotation:720, scaleX: 0.55, scaleY: 0.55}, 1000, createjs.Ease.cubicInOut)
-                    .wait(400)
-                    .to({rotation:-1080, scaleX:0.05, scaleY: 0.05}, 600, createjs.Ease.cubicIn)
+                    .to({rotation:720, scaleX: 0.55, scaleY: 0.55}, 1000- 130*difficulty, createjs.Ease.cubicInOut)
+                    .wait(400-30*difficulty)
+                    .to({rotation:-1080, scaleX:0.05, scaleY: 0.05}, 600 - 100*difficulty, createjs.Ease.cubicIn)
                     .set({alpha:0})   
 
     window.addEventListener("keydown", keysDown);
@@ -140,6 +139,8 @@ function changeDragonDirection (oldDirection, edge) {
         let newDragonDirectionArray = dragonDirectionArray.filter(word => word != oldDirection)
         dragonDirection = newDragonDirectionArray[Math.floor(Math.random()*dragonDirectionArray.length)]
     }
+    if (Math.floor(Math.random()*6)/difficulty <=1)
+        dragonDirection = 'left';
     switch (dragonDirection){
         case 'left':
             dragon.rotation = 0;
@@ -194,7 +195,6 @@ function killTick (event) {
     timeInMinigame = globalTimer - timeStarted;
     console.log(timeInMinigame);
     if (!gameOver){ //Basically if the game isn't over, then dont move or rotate the player
-        console.log('kill minigame isn\'t over');
         directionalMovement();
         player.rotation = (player.direction * 180 / Math.PI) +67.5;
     }
