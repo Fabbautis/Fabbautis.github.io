@@ -8,7 +8,7 @@ let context = canvas.getContext('2d');
 
 
 let health = document.getElementById('health');
-let score = document.getElementById('score');
+let scoreHTML = document.getElementById('score');
 
 let gameBorder = new createjs.Bitmap("border.png");
     gameBorder.crossOrigin = "Anonymous";
@@ -97,7 +97,7 @@ function returnHome(status){
     {
         case 'win':
             gamesWon++;
-            score.innerHTML = parseInt(gamesWon);
+            scoreHTML.innerHTML = parseInt(gamesWon);
         break;
         case 'lose':
             health.innerText = parseInt(health.innerText)-1;
@@ -111,21 +111,19 @@ function returnHome(status){
         difficulty = 2;
     }
     stage.removeAllChildren(background);
-    console.log(status);
+
     backgroundMusic.pause();
     stage.update();
-    init();
+    elevatorStart(status);
 }
 
 function playMusic(){
     let musicToPlay = backgroundMusicPath + backgroundMusicOptions[Math.floor(Math.random()*backgroundMusicOptions.length)];
     backgroundMusic.src = musicToPlay;
     backgroundMusic.volume = 0.4;
-    if (difficulty == 1){
-        backgroundMusic.playbackRate =1.1;
-    }
-    if (difficulty == 2){
-        backgroundMusic.playbackRate =1.2;
+    backgroundMusic.playbackRate = 1.01 + 0.01 * gamesPassed 
+    if (backgroundMusic.playbackRate >= 1.5) {
+        backgroundMusic.playbackRate = 1.5;
     }
     backgroundMusic.addEventListener('ended', function () {
         backgroundMusic.currentTime = 0;
