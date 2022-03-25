@@ -42,10 +42,10 @@ for (let i = 0; i < 4; i++){
     thisTorch.y = 500;
 }
 
-let removeOneOnly = true;
 let backgroundElevator = new createjs.Container;
 let score = new createjs.Text("", "80px Arial", "#000000");
 let scoreTween; 
+let gameLost = false;
 
 function elevatorStart(status) {
     let blueBG = new createjs.Shape();
@@ -65,17 +65,14 @@ function elevatorStart(status) {
     score.x = document.getElementById('demoCanvas').attributes.width.value/2;
     score.y = 50;
     
-    if (gamesPassed < 0){
-        score.text = 0;
-    } else{
-        scoreTween = createjs.Tween.get(score, {paused: true})
-                        .set({font: '150px Arial', x: score.x - 20, y: score.y-30 })
-                        .wait(500 - 1 * gamesPassed)
-                        .set({text: gamesPassed + 1})
-                        .wait(500 - 1 * gamesPassed)
-                        .set({font: '80px Arial', x: score.x, y: score.y})
-                        .wait(500 - 1 * gamesPassed)
-    }
+    scoreTween = createjs.Tween.get(score, {paused: true})
+        .set({font: '150px Arial', x: score.x - 20, y: score.y-30 })
+        .wait(500 - 1 * gamesPassed)
+        .set({text: gamesPassed + 2})
+        .wait(500 - 1 * gamesPassed)
+        .set({font: '80px Arial', x: score.x, y: score.y})
+        .wait(500 - 1 * gamesPassed)
+
 
     
         
@@ -90,14 +87,10 @@ function elevatorStart(status) {
     stage.addChild(score);
     createjs.Ticker.addEventListener('tick', elevatorTick);
 
-    if (gamesPassed < 0){
-        returnElevator();
-    } else {
-        returnElevator(status)
-        console.log(status);
-    }
-    stage.update();
+    returnElevator(status);
+    playMusic(true);
 
+    stage.update();
 }
 
 function elevatorTick (event) {
@@ -113,44 +106,46 @@ function returnElevator(status) {
                    torchesOnScreen[i].gotoAndPlay('win');
                    torchesOnScreen[i].on('animationend', () => {frame.gotoAndPlay('idle');})
                 }
-                break;
+            break;
             case 'lose': 
+                gameLost = true;
                 frame.gotoAndPlay('lose');
+                
                 for(let i = 0; i < torchesOnScreen.length; i++){
                     torchesOnScreen[i].gotoAndPlay('lose');
-                    if (i = (torchesOnScreen.length-1)) //this means if the loop is on the last torch
+                    if (i == (torchesOnScreen.length-1)) //this means if the loop is on the last torch
                     { 
+                        
                         torchesOnScreen[i].gotoAndPlay('losedie');
                         torchesOnScreen[i].on('animationend', () =>
                         {
-                            let removeTorch = createjs.Tween.get(torchesOnScreen[i])
+                            createjs.Tween.get(torchesOnScreen[i])
                                 .to({y:torchesOnScreen[i].y + 1000}, 1000 - 25*gamesPassed, createjs.Ease.quadInOut);
-    
-                            removeTorch.on('complete', () => {
-                                if (removeOneOnly){
-                                    stage.removeChild(torchesOnScreen[i]);
-                                    torchesOnScreen.pop();
-                                }
-                            });
-                        })    
+                        }); 
                     }
                 }
-                break;                
+            break;                
         }
         setTimeout(startNewGame, 2000 - 5 * gamesPassed)
     }, 500 - 1 * gamesPassed)
 }
 
 function startNewGame () {
-    if (torchesOnScreen.length != 0) {
+    if (gamesPassed >= 0 && gameLost == true){
+        stage.removeChild(torchesOnScreen[torchesOnScreen.length-1]);
+        torchesOnScreen.pop();
+        gameLost = false;
+    }
+    
+    if (torchesOnScreen.length !== 0) {
+        scoreTween.paused = false;
         frame.gotoAndPlay('idle');
         for (let i = 0; i < torchesOnScreen.length; i++){
             torchesOnScreen[i].gotoAndPlay('idle');
         }
-        if (gamesPassed >= 0)
-        scoreTween.paused = false;
 
         setTimeout(() => {
+            stage.removeAllChildren();
             let randomizer = minigameObjects[Math.floor(Math.random() * minigameObjects.length)]
             let chooseRandomGame = new Function(randomizer.function);
             timeStarted = globalTimer;
@@ -158,6 +153,10 @@ function startNewGame () {
         }, 2500 - 10 * gamesPassed); //hopefully people don't play beyond 150. I should also make a function that just returns a value to subtract after x games
     } else { //game over. there should be no more torches on screen and frame is at sad pose
         score.text = 'Game Over'
+        score.x -=200;
+        backgroundMusic.src = backgroundMusicPath + backgroundMusicOptions[backgroundMusicOptions.length-1];
+        backgroundMusic.playbackRate = 1.0;
+        backgroundMusic.play();
     }
     
     

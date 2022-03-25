@@ -41,9 +41,11 @@ let gameOverSfx = new Audio();
 
 let backgroundMusicOptions = [
     '1037421_URBAN-CELERY.mp3',
-    '1100571_decay.mp3', //Will probably have this track be exclusive to the guitar microgame
-    '1105612_stalemate.mp3',
+    '1100571_decay.mp3',
+    '1064418_vix.mp3',
     '1113343_CYBERCONXTRUCT.mp3',
+    '1022229_03-friend-or-foe---matthie.mp3',
+    '1105612_stalemate.mp3',
 ]
 let backgroundMusicPath = 'Audio/matthieumusic/'
 let backgroundMusic = new Audio();
@@ -110,15 +112,21 @@ function returnHome(status){
     if (gamesPassed ==10) {
         difficulty = 2;
     }
-    stage.removeAllChildren(background);
+    stage.removeAllChildren();
 
     backgroundMusic.pause();
     stage.update();
     elevatorStart(status);
 }
 
-function playMusic(){
-    let musicToPlay = backgroundMusicPath + backgroundMusicOptions[Math.floor(Math.random()*backgroundMusicOptions.length)];
+function playMusic(elevator){
+    let musicToPlay;
+    let randomizer2 = Math.floor(Math.random()*(backgroundMusicOptions.length-2));
+    if (!elevator) {
+        musicToPlay = backgroundMusicPath + backgroundMusicOptions[randomizer2];
+    } else {
+        musicToPlay = backgroundMusicPath + backgroundMusicOptions[backgroundMusicOptions.length-2];
+    }
     backgroundMusic.src = musicToPlay;
     backgroundMusic.volume = 0.4;
     backgroundMusic.playbackRate = 1.01 + 0.01 * gamesPassed 

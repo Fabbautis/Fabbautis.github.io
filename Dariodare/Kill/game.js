@@ -41,7 +41,8 @@ let dragonDirectionArray = [
 function killStart() {
     background.image.src = minigameObjects[1].background;
     gameOver = false;
-    
+    playerHP = 10;
+
     //background location / scaling
     background.x = -50;
     background.y = 0;
@@ -108,6 +109,7 @@ function dragonMovement (){
 
                 if (dragon.x > rect.width)
                     changeDragonDirection(dragonDirection, true);
+                    dragon.x = rect.width;
                 break;
             case 'up':
                 dragon.y -=dragonSpeed
@@ -163,21 +165,33 @@ function directionalMovement(event) {
 
     if (keysPressed['87']||keysPressed['38'])
         player.y -= playerSpeed;
+        if (player.y < 100) {
+            player.y = 100
+        }
     else 
         player.y -= 0;
 
     if (keysPressed['83'] ||keysPressed['40'])
         player.y += playerSpeed;
+        if (player.y > 700) {
+            player.y = 700
+        }
     else 
         player.y += 0;
 
     if (keysPressed['65'] ||keysPressed['37'])
         player.x -= playerSpeed;
+        if (player.x < 70) {
+            player.x = 70
+        }
     else 
         player.x -= 0;
 
     if (keysPressed['68'] ||keysPressed['39'])
         player.x += playerSpeed;
+        if (player.x > 1300) {
+            player.x = 1300
+        }
     else 
         player.x += 0;
 
@@ -193,7 +207,6 @@ function rotationStuff(event){
 
 function killTick (event) {
     timeInMinigame = globalTimer - timeStarted;
-    console.log(timeInMinigame);
     if (!gameOver){ //Basically if the game isn't over, then dont move or rotate the player
         directionalMovement();
         player.rotation = (player.direction * 180 / Math.PI) +67.5;
@@ -248,12 +261,13 @@ function killWinLose(status, runAnimation){
     gameOver = true;
     if (status == 'lose' && runAnimation == true)
     {
+        let deathBackground = new createjs.Shape();
+        deathBackground.graphics.beginFill('#000000').drawRect(0,0,1400,800)
+        
+        stage.addChildAt(deathBackground, background.getChildIndex + 1);
         stage.removeChild(dragon);
         stage.removeChild(background);
 
-        let deathBackground = new createjs.Shape();
-        deathBackground.graphics.beginFill('#000000').drawRect(0,0,1400,800)
-        stage.addChildAt(deathBackground, 0);
 
         player.rotation = 0;
         playerTween.paused = false;

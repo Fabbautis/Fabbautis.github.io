@@ -123,7 +123,6 @@ function stringClick(stringClicked){
                 canStrum = false;
                 changeStringNumber(false);
             }
-            console.log(strumsLeft);
         }
     }
 }

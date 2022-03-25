@@ -155,7 +155,6 @@ testtube.on ('pressup', function (event){
 
 function fillTick(event) {
     timeInMinigame = globalTimer - timeStarted;
-    console.log(timeInMinigame);
     
     if (isOverPitcher){
         timeInPitcher += (globalTimer - timeInPitcherStart)/9
