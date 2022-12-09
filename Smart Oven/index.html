@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+        <style>
+            label 
+            {
+              margin-top: 5%;
+            }
+        </style>
+    </head>
+    <body style = "background-color: aquamarine" onload = 'init();'>      
+        <canvas id="demoCanvas" width= "1400" height = "800">
+            alternate content
+        </canvas>
+        <form>
+                <label>Oven on?</label>
+                    <input type= 'checkbox' id = 'isOnUser' required>
+            <br>
+                <label>Light on?</label>
+                    <input type = 'checkbox' id = 'lightUser' required>
+            <br>
+                <label>Temperature</label>
+                    <input type = 'text' id = 'tempUser' required>
+            <br>
+                <label>Timer</label>
+                    <input type = 'text' id = 'timerUser' required>
+            <br>
+                <label>Food</label>
+                    <select id = 'foodUser' required>
+                        <option value = '' selected></option>
+                        <option value = '0' >Pizza</option>
+                        <option value = '1' >Lasagna</option>
+                        <option value = '2' >Meatloaf</option>
+                        <option value = '3' >Casserole</option>
+                        <option value = '4' >Pork Chops</option>
+                        <option value = '5' >Chicken</option>
+                        <option value = '6' >Bake</option>
+                    </select>
+            <br>
+
+            <input type = 'button' value="Submit" onclick="updateOven()">
+            
+        </form>
+
+        <a href="../index.html"><button>Home Page</button></a>
+        <script>
+            let stage = new createjs.Stage("demoCanvas");
+
+            let oven = new createjs.Container();
+            let ovenRectangle = new createjs.Shape();
+                ovenRectangle.graphics.beginFill("#c9c5db").drawRect(0, 0, 100,100);
+            let ovenTimerThingy = new createjs.Shape();
+                ovenTimerThingy.graphics.beginFill("#b9b2cf").drawRect(5,-10,30,10);
+            let ovenGlass = new createjs.Shape();
+                ovenGlass.graphics.beginFill("white").drawRect(10,50,80,40);
+                ovenGlass.alpha = 0.5;
+            let ovenTimerLabel = new createjs.Text("Timer", "10px Arial","#25252e");
+                ovenTimerLabel.x = 10;
+                ovenTimerLabel.y = 5;
+            let ovenTimer = new createjs.Text("12:24", "10px Arial", "#25252e");
+                ovenTimer.x = 10;
+                ovenTimer.y = 20;
+            let ovenTemperatureLabel = new createjs.Text("Temp", "10px Arial","#25252e");
+                ovenTemperatureLabel.x = 60;
+                ovenTemperatureLabel.y = 5;
+            let ovenTemperature = new createjs.Text("350F", "10px Arial", "#25252e");
+                ovenTemperature.x = 60;
+                ovenTemperature.y = 20;
+            let ovenFoodSheet = new createjs.SpriteSheet({
+                images: ["foods.png"], 
+                frames: [[3,3,518,319,0,248,166.3],[521,3,542,268,0,270,145.3],[562,271,427,333,0,179,202.3],[457,839,511,208,0,250,101.30000000000001],[457,604,473,235,0,248,112.30000000000001],[3,322,559,275,0,259,155.3],[3,597,454,303,0,227,200.3]],
+                animations: {
+                    pizza: 0,
+                    lasagna:1,
+                    meatloaf:2,
+                    casserole:3,
+                    porkchops:4,
+                    chicken:5,
+                    bake:6,
+
+                },
+            });
+            let ovenFood = new createjs.Sprite(ovenFoodSheet, "pizza"); //change to sprite
+                ovenFood.x = 47.5;
+                ovenFood.y = 71.25;
+                ovenFood.scaleX = .1;
+                ovenFood.scaleY = .1;
+            let ovenFoodJSON = [
+            {name: "pizza", id:0}, 
+            {name: "lasagna", id:1}, 
+            {name: "meatloaf", id:2}, 
+            {name: "casserole", id:3}, 
+            {name: "porkchops", id:4}, 
+            {name: "chicken", id:5}, 
+            {name: "bake", id:6}, 
+            ] 
+            
+            
+                
+            function init() {
+                oven.addChild(ovenRectangle, ovenTimerThingy, ovenFood, ovenGlass, ovenTimerLabel, ovenTemperatureLabel, ovenTimer, ovenTemperature)
+                oven.scaleX = 5;
+                oven.scaleY = 5;
+                oven.y=50;
+                stage.addChild(oven);
+                ovenFood.gotoAndPlay(ovenFoodJSON[Math.floor(Math.random()*ovenFoodJSON.length)].name);
+                stage.update();
+
+                createjs.Ticker.addEventListener("tick", tick);
+            }
+
+            function tick(e){
+                stage.update(e);
+            }
+            function updateOven(){
+                //check to see if necessary information is filled out
+                if (isNaN(document.getElementById("tempUser").value)||document.getElementById("tempUser").value == '' ||(isNaN(document.getElementById("timerUser").value)||document.getElementById("timerUser").value == '')){
+                    alert("Please input appropriate data");
+                    return;
+                }
+                if (document.getElementById("foodUser").value == ''){
+                    alert("Please specify food you want to cook");
+                    return;
+                }
+                
+                //oven manipulation
+                //oven On/Off
+                if (document.getElementById("isOnUser").checked){
+                    ovenRectangle.graphics.clear();
+                    ovenTimerThingy.graphics.clear();
+                    ovenRectangle.graphics.beginFill("#c9c5db").drawRect(0, 0, 100,100);
+                    ovenTimerThingy.graphics.beginFill("#b9b2cf").drawRect(5,-10,30,10);
+                } else {
+                    ovenRectangle.graphics.clear();
+                    ovenTimerThingy.graphics.clear();
+                    ovenRectangle.graphics.beginFill("#5d536e").drawRect(0, 0, 100,100);
+                    ovenTimerThingy.graphics.beginFill("#646280").drawRect(5,-10,30,10);
+                }
+                //light
+                if (document.getElementById("lightUser").checked){
+                    ovenGlass.graphics.clear();
+                    ovenGlass.graphics.beginFill("white").drawRect(10,50,80,40); //rectangle is constantly being redrawn. Find way to just change the color as opposed to having to redraw
+                } else {
+                    ovenGlass.graphics.clear();
+                    ovenGlass.graphics.beginFill("black").drawRect(10,50,80,40);
+                }
+                //temperature
+                ovenTemperature.text = document.getElementById("tempUser").value + "F";
+                //timer
+                ovenTimer.text = document.getElementById("timerUser").value + ":00";
+                //food
+                ovenFood.gotoAndPlay(ovenFoodJSON[document.getElementById("foodUser").value].name);
+            }
+          </script>
+    </body>
+</html>
