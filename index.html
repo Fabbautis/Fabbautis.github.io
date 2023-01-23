@@ -7,6 +7,7 @@
                 background-blend-mode: darken; 
                 background-size: cover;
                 background-image: url('intro banner.png');  
+                text-align: center;
             }
             .wowza{
                 border: 20px  double #32a1ce;
@@ -16,8 +17,23 @@
             .video {
                 padding-top: 1%;
                 display: flex;
+                justify-content: center;    
+            }
+            .flex-box{
+                display: flex;
+                flex-wrap: nowrap;
+                font-size: 20px;
                 justify-content: center;
-                
+            }
+            .flex-box > a{
+                width: 5em;
+                padding: .5em 1em .5em 1em;
+                margin: 2em;
+                line-height: .75em;
+                border: .25em solid steelblue;
+                background-color:azure;
+
+
             }
         </style>
         <link>
@@ -27,24 +43,38 @@
         <div class = 'wowza'>
             <h1>Fabian's little portfolio website</h1>
             <hr>
-            <p>It's not the most appealing or responsive site yet, but I'm sure I'll update this during senior year next year</p>
-            <h3>Personal links</h3>
-            <a href ='https://www.linkedin.com/in/fabian-bautista-12571919b/'>LinkedIn</a>
-            <a href ='https://www.artstation.com/fabbaut'>ArtStation</a>
-            <a href ='https://github.com/Fabbautis'>GitHub</a>
-            <a href ='Bautista_Fabian2023.pdf'>My Resume</a>
+            <h3>It's not the most appealing or responsive site yet, but I'm sure I'll update this during senior year next year. I promise I know how to do HTML and CSS</h3>
+            <h2>Personal links</h2>
+            <nav class ="flex-box">
+                <a href ='https://www.linkedin.com/in/fabian-bautista-12571919b/'>LinkedIn</a>
+                <a href ='https://www.artstation.com/fabbaut'>ArtStation</a>
+                <a href ='https://github.com/Fabbautis'>GitHub</a>
+            </nav>
+            <nav class="flex-box">
+                <a href ='Bautista_Fabian2023.pdf'>My Resume</a>
+                <a href ="https://www.youtube.com/channel/UCTMsNx8gU4_isXiMwyQXzuQ">My School Projects</a>
+                <a href ='art.html'>My art</a>
+            </nav>            
             <hr>
-            <h3>JavaScript / createJS games</h3>
-            <a href="Dariodare/index.html">Dario's Dare</a>
-            <a href="Flockstep/index.html">Flockstep</a>
-            <a href="Smart Oven/index.html">Smart Oven</a>
-            <a href="clicker/index.html">Clicker Game</a> 
+            <h2>JavaScript / createJS games</h2>
+            <nav class="flex-box">
+                <a href="Dariodare/index.html">Dario's Dare</a>
+                <a href="Flockstep/index.html">Flockstep</a>
+                <a href="Smart Oven/index.html">Smart Oven</a>
+                <a href="clicker/index.html">Clicker Game</a> 
+            </nav>
             <hr>
         </div>
         <div class = 'video'>
             <video width = 45% height = auto controls style="border: 20px solid #262a6b;">
                 <source src = 'Videos/Animation Swipeshot_2022.mp4' type="video/mp4">
                 Animation Reel 
+            </video>
+        </div>
+        <div class = 'video'>
+            <video width = 45% height = auto controls style="border: 20px solid #262a6b;">
+                <source src = 'Videos/Live Mas.mp4' type="video/mp4">
+                All about me, aka "gassing myself up" 
             </video>
         </div>
         
