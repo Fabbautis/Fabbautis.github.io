@@ -7,7 +7,7 @@ let canvas = document.getElementById('demoCanvas');
 let context = canvas.getContext('2d');
 
 
-let health = document.getElementById('health');
+//let health = document.getElementById('health');
 let scoreHTML = document.getElementById('score');
 
 let gameBorder = new createjs.Bitmap("border.png");
@@ -102,7 +102,7 @@ function returnHome(status){
             scoreHTML.innerHTML = parseInt(gamesWon);
         break;
         case 'lose':
-            health.innerText = parseInt(health.innerText)-1;
+            //health.innerText = parseInt(health.innerText)-1;
         break;
     }
 

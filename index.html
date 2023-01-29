@@ -1,82 +1,55 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>The fun place to play games</title>
+        <meta name="viewport">
+        <title>Fabian Bautista</title>
         <style>
             body{
                 background-blend-mode: darken; 
                 background-size: cover;
-                background-image: url('intro banner.png');  
+                background-image: url('Images/Art/intro\ banner.png');  
                 text-align: center;
             }
-            .wowza{
-                border: 20px  double #32a1ce;
-                background-color: rgb(160, 160, 160);
-                padding: 5px 10px 35px 10px
-            }
-            .video {
-                padding-top: 1%;
-                display: flex;
-                justify-content: center;    
-            }
-            .flex-box{
-                display: flex;
-                flex-wrap: nowrap;
-                font-size: 20px;
-                justify-content: center;
-            }
-            .flex-box > a{
-                width: 5em;
-                padding: .5em 1em .5em 1em;
-                margin: 2em;
-                line-height: .75em;
-                border: .25em solid steelblue;
-                background-color:azure;
-
-
-            }
         </style>
-        <link>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
 
     <body>
-        <div class = 'wowza'>
-            <h1>Fabian's little portfolio website</h1>
-            <hr>
-            <h3>It's not the most appealing or responsive site yet, but I'm sure I'll update this during senior year next year. I promise I know how to do HTML and CSS</h3>
+        <br>
+        <header class = 'bg-primary-subtle border border-primary-subtle rounded-3 text-center w-75 mx-auto m-3'>
+            <section class = 'p-3'>
+                <h1>Fabian's little portfolio website</h1>
+                <hr>
+                <h3>Welcome to my Portfolio Website. Here are some links I recommend checking out!</h3>
+            </section>
+
             <h2>Personal links</h2>
-            <nav class ="flex-box">
-                <a href ='https://www.linkedin.com/in/fabian-bautista-12571919b/'>LinkedIn</a>
-                <a href ='https://www.artstation.com/fabbaut'>ArtStation</a>
-                <a href ='https://github.com/Fabbautis'>GitHub</a>
+            <nav class = "d-flex justify-content-evenly m-3">
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href ='https://www.artstation.com/fabbaut'><h3>Artstation</h3></a>
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href ='https://www.linkedin.com/in/fabian-bautista-12571919b/'><h3>LinkedIn</h3></a>
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href ='https://github.com/Fabbautis'><h3>GitHub</h3></a>
             </nav>
-            <nav class="flex-box">
-                <a href ='Bautista_Fabian2023.pdf'>My Resume</a>
-                <a href ="https://www.youtube.com/channel/UCTMsNx8gU4_isXiMwyQXzuQ">My School Projects</a>
-                <a href ='art.html'>My art</a>
-            </nav>            
+
+            <nav class = "d-flex justify-content-evenly m-3">
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href ="https://www.youtube.com/channel/UCTMsNx8gU4_isXiMwyQXzuQ"><h3>School Projects</h3></a>
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href ='Files/Bautista_Fabian2023.pdf'><h3>Resume</h3></a>
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href ='art.html'><h3>My art</h3></a>
+            </nav>   
+
             <hr>
+
             <h2>JavaScript / createJS games</h2>
-            <nav class="flex-box">
-                <a href="Dariodare/index.html">Dario's Dare</a>
-                <a href="Flockstep/index.html">Flockstep</a>
-                <a href="Smart Oven/index.html">Smart Oven</a>
-                <a href="clicker/index.html">Clicker Game</a> 
+            <nav class = "d-flex justify-content-evenly m-3">
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href="Games/Dariodare/index.html"><h3>Dario's Dare</h3></a>
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href="Games/Flockstep/index.html"><h3>Flockstep</h3></a>
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href="Games/Smart Oven/index.html"><h3>Smart Oven</h3></a>
+                <a class = "p-2 border border-4 border-primary rounded bg-info-subtle text-decoration-none" href="Games/clicker/index.html"><h3>Clicker Game</h3></a> 
             </nav>
             <hr>
-        </div>
-        <div class = 'video'>
-            <video width = 45% height = auto controls style="border: 20px solid #262a6b;">
-                <source src = 'Videos/Animation Swipeshot_2022.mp4' type="video/mp4">
-                Animation Reel 
-            </video>
-        </div>
-        <div class = 'video'>
-            <video width = 45% height = auto controls style="border: 20px solid #262a6b;">
-                <source src = 'Videos/Live Mas.mp4' type="video/mp4">
-                All about me, aka "gassing myself up" 
-            </video>
-        </div>
-        
+        </header>
+
+        <img class = 'img-fluid rounded mx-auto d-block' src = 'Images/Bautista.Fabian.jpg' alt ='Professional headshot'>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </body>
 </html>

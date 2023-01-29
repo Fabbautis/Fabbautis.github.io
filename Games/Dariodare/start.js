@@ -29,10 +29,10 @@ function init() {
     stage.addChild(backgroundMM);
     stage.addChild(introTextBackdrop)
     stage.addChild(introText);
-    if (health.innerText != 0){
+    //if (health.innerText != 0){
         stage.addChild(startButton);
         stage.addChild(startButtonText);
-    }   
+   // }   
     stage.update();
 }
 
