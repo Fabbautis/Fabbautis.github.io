@@ -1,37 +1,92 @@
-let bulletSpeed = 50;
+let projectiles = [];
 
-let bullets = [];
+let toolsAvailable = ["torch", "tablesaw", "propane"];
 
-function createProjectile(event){
-    let bullet = new createjs.Shape()
-        bullet.graphics.beginFill("#000000").drawCircle(phil.model.x,phil.model.y,5)
-        gameStage.addChild(bullet)
-
-    let changeX = event.stageX - phil.model.x;
-    let changeY = event.stageY - phil.model.y;
-    if (Math.abs(changeX) > Math.abs(changeY)){ 
-
-        bullet.deltaX = changeX / Math.abs(changeX)
-        bullet.deltaY = changeY / Math.abs(changeX)
-        //console.log("Change X is further away. Move Y by "+ changeY / Math.abs(changeY) + ". Move X by " + changeX / Math.abs(changeY))
-    } else if (Math.abs(changeX) < Math.abs(changeY)){
-        bullet.deltaX = changeX / Math.abs(changeY)
-        bullet.deltaY = changeY / Math.abs(changeY)
-        //console.log("Change Y is further away. Move X by "+ changeX / Math.abs(changeX) + ". Move Y by " + changeY / Math.abs(changeX))
-    } else {
-        bullet.deltaX = changeX / Math.abs(changeY)
-        bullet.deltaY = changeY / Math.abs(changeX)
-        //console.log("Change X and Y are equal")
+class Tool {
+    constructor(model){
+        this.model = model;
     }
 
-    bullets.push(bullet)
-    console.log(bullets)
-}
+    createProjectile(tool, event){ //create the model as well as its necessary stuff
+        let bullet = new createjs.Shape();
 
-function updateBullets(){
-    for (let i = 0; i < bullets.length; i++) {
-		let missile = bullets[i];
-		missile.x += missile.deltaX*bulletSpeed;
-		missile.y += missile.deltaY*bulletSpeed;
-	}
+        switch (tool){
+            case "torch":
+                bullet.graphics.beginFill("#FFA500").drawCircle(phil.model.x,phil.model.y,5);//get the model ready, as well as its speed and damage
+                bullet.intendedSpeed = 20;
+                
+                break;
+            case "tablesaw":
+                bullet.graphics.beginFill("#FFFFFF").drawCircle(phil.model.x,phil.model.y,5);
+                bullet.intendedSpeed = 50;
+                break;
+            case "propane":
+                bullet.graphics.beginFill("#00FF00").drawCircle(phil.model.x,phil.model.y,5);
+                bullet.intendedSpeed = 10;
+                break;
+            default:
+                bullet.graphics.beginFill("#000000").drawCircle(phil.model.x,phil.model.y,5);
+                bullet.intendedSpeed = 5;
+                break;
+        }
+
+        bullet.bulletNumber = projectiles.length; //maybe delete later and just use the projectiles array?????????
+
+        this.calculateTravelAngle(bullet, event);
+
+        projectiles.push(bullet);//push the bullet into an array that'll update all of the bullets' positions on screen
+        gameStage.addChild(bullet)
+    }
+
+    swapTool (){//push q to cycle between at most three unique tools
+        if (keysPressed['81']){
+            let toolUsing = toolsAvailable[0];
+            toolsAvailable.splice(0,1);
+            toolsAvailable.push(toolUsing);
+            toolEquipped.model = toolsAvailable[0]
+        }
+    }
+
+    calculateTravelAngle(bullet, event){ //Determine how the bullet should travel in terms of angle
+        bullet.globalX = phil.model.x; //get the bullet's global x and y positions. This'll be used for environment stuff
+        bullet.globalY = phil.model.y;
+
+        let changeX = event.stageX - phil.model.x; //distance away from the player based on where the mouse was clicked
+        let changeY = event.stageY - phil.model.y;
+
+
+        if (Math.abs(changeX) > Math.abs(changeY)){ //if the x distance is further than the y distance.
+            bullet.deltaX = changeX / Math.abs(changeX) //create a ratio determined by the x distance as the denominator
+            bullet.deltaY = changeY / Math.abs(changeX) /*/X is the demoninator because it will result in a decimal point for the shorter side 
+            instead of a number larger than 1 for the longer side (that will result in bullets that travel faster if the user tries to click
+            a 90, 180, 270, or 360° triangle/*/
+        } else if (Math.abs(changeX) < Math.abs(changeY)){
+            bullet.deltaX = changeX / Math.abs(changeY)
+            bullet.deltaY = changeY / Math.abs(changeY)   
+        } else {
+            bullet.deltaX = changeX / Math.abs(changeY)
+            bullet.deltaY = changeY / Math.abs(changeX)
+        }
+    }
+
+    updateBullets(){ //move the projectile. If they get off the intended walkarea, delete the projectile
+        for (let i = 0; i < projectiles.length; i++) {
+            let specificProjectile = projectiles[i];
+            const xIncrease = specificProjectile.deltaX * projectiles[i].intendedSpeed;//Move the bullet based on the ratio calculated in createProjectile
+            const yIncrease = specificProjectile.deltaY * projectiles[i].intendedSpeed;
+    
+            specificProjectile.x += xIncrease;
+            specificProjectile.globalX += xIncrease;//make sure to add that increase to the local and global x and y values
+    
+            specificProjectile.y += yIncrease; //specificProjectile.y moves the bullet onscreen. specificProjectile.globalY is used to see where the bullet is on the canvas
+            specificProjectile.globalY += yIncrease;
+    
+            if ((specificProjectile.globalX > walkspace.width || specificProjectile.globalX < walkspace.x)||(specificProjectile.globalY > walkspace.height || specificProjectile.globalY < walkspace.y)){
+                //if the bullet gets off the walkspace, get rid of it 
+                gameStage.removeChild(specificProjectile);
+                projectiles.splice(i, 1);
+                return;            
+            }
+        }
+    }
 }
