@@ -8,6 +8,7 @@ let keysPressed  = {}; //see keys up / down function
 
 let bg = new createjs.Shape()
     bg.graphics.beginFill("#222222").drawRect(0,0,canvas.width, canvas.height);
+    bg.aName = 'background'
 
 
 let environmentWalls = [];//Dynamically create a border wall around the playspace
@@ -30,11 +31,19 @@ for (let i = 0; i < 4; i++){
         break;
         default:
             environmentWalls[i].graphics.beginFill("#AAAAAA").drawRect((canvas.width/2)-50, (canvas.height/2)-50, wallThickness,wallThickness);
-
     }
+    environmentWalls[i].aName = 'environment wall '+i
 }
 
 let walkspace = new createjs.Rectangle(wallThickness, wallThickness, canvas.width-wallThickness, canvas.height-wallThickness);
+    walkspace.aName = 'walkspace';
+
+let testCollide = new createjs.Shape()
+    testCollide.graphics.beginFill("#888888").drawRect(0,0,30,80);
+    testCollide.x = 500;
+    testCollide.y = 500;
+    testCollide.isEnemy = true;
+    testCollide.aName = 'test';
 
    
 function init(){
@@ -42,12 +51,14 @@ function init(){
     philModel.y = canvas.height/2;
 
     gameStage.addChild(bg);
+
     for (let i = 0; i < environmentWalls.length; i++){
         gameStage.addChild(environmentWalls[i])
     }
+    gameStage.addChild(testCollide);
     gameStage.addChild(philModel);
 
-    phil = new Player(25, 100, philModel, philHitbox);
+    phil = new Player(25, 100, philModel);
     toolEquipped = new Tool("torch");
     gameStage.update();
 
@@ -73,6 +84,7 @@ function keysUp(event)
 function update(event){
     gameStage.update()
     toolEquipped.updateBullets();
+    phil.playerCollision();
 }
 
 function rotatePlayer(event){
