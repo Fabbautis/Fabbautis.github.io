@@ -6,6 +6,9 @@ canvas.height = window.innerHeight
 
 let keysPressed  = {}; //see keys up / down function
 
+let toolEquipped;
+let enemySpawnManager;
+
 let bg = new createjs.Shape()
     bg.graphics.beginFill("#222222").drawRect(0,0,canvas.width, canvas.height);
     bg.aName = 'background'
@@ -60,6 +63,7 @@ function init(){
 
     phil = new Player(25, 100, philModel);
     toolEquipped = new Tool("torch");
+    enemySpawnManager = new Enemy();
     gameStage.update();
 
     createjs.Ticker.addEventListener("tick", () => phil.playerMovement());
@@ -69,6 +73,8 @@ function init(){
     window.addEventListener("keydown", keysDown);
     window.addEventListener("keypress", toolEquipped.swapTool);
     window.addEventListener("keyup", keysUp);
+    
+   
 }
 
 function keysDown(event)//when a key is pressed, mark its keycode and set it as true or false.
