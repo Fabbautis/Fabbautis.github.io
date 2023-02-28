@@ -38,11 +38,14 @@ for (let i = 0; i < 4; i++){
     environmentWalls[i].aName = 'environment wall '+i
 }
 
+
 let walkspace = new createjs.Rectangle(wallThickness, wallThickness, canvas.width-wallThickness, canvas.height-wallThickness);
     walkspace.aName = 'walkspace';
 
 let testCollide = new createjs.Shape()
     testCollide.graphics.beginFill("#888888").drawRect(0,0,30,80);
+    testCollide.setBounds(0,0,30,30);
+
     testCollide.x = 500;
     testCollide.y = 500;
     testCollide.isEnemy = true;
@@ -65,22 +68,27 @@ function init(){
     toolEquipped = new Tool("torch");
     enemySpawnManager = new Enemy();
     gameStage.update();
+    
 
-    createjs.Ticker.addEventListener("tick", () => phil.playerMovement());
+    createjs.Ticker.addEventListener("tick", update);
     gameStage.addEventListener("stagemousemove", rotatePlayer);
     gameStage.addEventListener("click", shoot)
-    createjs.Ticker.addEventListener("tick",update);
+    
     window.addEventListener("keydown", keysDown);
     window.addEventListener("keypress", toolEquipped.swapTool);
     window.addEventListener("keyup", keysUp);
     
+    enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();
    
+
 }
 
 function keysDown(event)//when a key is pressed, mark its keycode and set it as true or false.
 //Then somewhere else in the code I can just check this array to see if the keycode is true or false for input.
 {
     keysPressed[event.keyCode] = true;
+
+
 }
 function keysUp(event)
 {
@@ -89,8 +97,10 @@ function keysUp(event)
 
 function update(event){
     gameStage.update()
-    toolEquipped.updateBullets();
-    phil.playerCollision();
+    phil.playerMovement()
+    toolEquipped.updateBullets()
+
+    enemySpawnManager.enemyIntersects(phil.model)
 }
 
 function rotatePlayer(event){

@@ -10,6 +10,7 @@ let philGun = new createjs.Shape()
 
     philModel.addChild(philGun);
     philModel.addChild(philHuman);
+    philModel.setBounds(-10,-10,20,20)
     
 
 
@@ -32,6 +33,11 @@ class Player {
     playerMovement() { //move the player based on wasd or arrow keys. Apply first comments to rest of if statements
         
         let model= this.model;
+        for (let i = 0; i < gameStage.children.length; i++){
+            if(gameStage.children[i].aName == 'powerup'){
+                this.playerIntersects(gameStage.children[i])
+            }
+        }
 
         if (keysPressed['87']||keysPressed['38'])
             model.y -= this.speed;
@@ -63,8 +69,7 @@ class Player {
                 model.x = walkspace.width;
             }
         else 
-            model.x += 0;
-       
+            model.x += 0;       
     }
 
     playerRotation(event){ //rotate the player based on the mouse. Helpful to see where the player is aiming.
@@ -75,37 +80,28 @@ class Player {
         this.model.rotation = (direction *180/Math.PI)+90
     }
 
+    playerDamage(hp){
+        console.log(hp, this.hp)
+        this.hp -= hp
+        
+        console.log(this.hp + " hp left")
+        if (hp <=0){
+            this.playerDeath();
+        }
+    }
     playerDeath(){
         console.log('dead');
     }
 
-    playerCollision(){ //see if the player hitbox goes over something important in the game and execute functions based on it
-        //collision code provided by https://www.youtube.com/watch?v=yJXVOQVYjMo&ab_channel=SyntaxByte
-
-        let baseModel = this.model.children[1].graphics.command //get the base shape of the model
-    
-        let left = baseModel.x + this.model.x; 
-        let top = baseModel.y + this.model.y;
-
-        let coordinatePoints = [
-            new createjs.Point(left, top), //top left corner
-            new createjs.Point(left + baseModel.w, top), //top right corner
-            new createjs.Point(left + baseModel.w, top + baseModel.h), //bottom right corner
-            new createjs.Point(left, top + baseModel.h), //bottom left corner
-        ];
-
-        for(let i = 0; i<coordinatePoints.length; i++) {
-            let everythingInHitbox = gameStage.getObjectsUnderPoint(coordinatePoints[i].x,coordinatePoints[i].y);
-            if (everythingInHitbox.filter((object) => object.isEnemy == true).length > 0){
-                this.hp -=1;
-                    if (this.hp <= 0){
-                        this.playerDeath();
-                        this.hp = 0;
-                    }
-                return;
-            }
-
-        }
+    playerIntersects(powerup){
+        let phil =  this.model.getTransformedBounds();
+        let secondaryObjectBounds = powerup.getTransformedBounds();
+        if (phil.intersects(secondaryObjectBounds)){
+            gameStage.removeChild(powerup);
+            console.log('collected powerup');
+            return true;
+        } else
+        return false;
     }
 }
 

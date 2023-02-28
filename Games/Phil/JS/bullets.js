@@ -14,18 +14,24 @@ class Tool {
             case "torch":
                 bullet.graphics.beginFill("#FFA500").drawRect(phil.model.x,phil.model.y,5,5);//get the model ready, as well as its speed and damage
                 bullet.intendedSpeed = 20;
-                
+                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
                 break;
             case "tablesaw":
                 bullet.graphics.beginFill("#FFFFFF").drawRect(phil.model.x,phil.model.y,5,5);
+                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
+
                 bullet.intendedSpeed = 50;
                 break;
             case "propane":
                 bullet.graphics.beginFill("#00FF00").drawRect(phil.model.x,phil.model.y,5,5);
+                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
+
                 bullet.intendedSpeed = 10;
                 break;
             default:
                 bullet.graphics.beginFill("#000000").drawRect(phil.model.x,phil.model.y,5,5);
+                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
+
                 bullet.intendedSpeed = 5;
                 break;
         }
@@ -73,9 +79,12 @@ class Tool {
     updateBullets(){ //move the projectile. If they get off the intended walkarea, delete the projectile
         for (let i = 0; i < projectiles.length; i++) {
             let specificProjectile = projectiles[i];
-            if (this.bulletCollision(specificProjectile, i) == false){//check to see if the bullet spawns on something it can kill already
-                return //if the bullet did hit something, then dont do the rest of this code so there wont be errors in console.log
-            }; 
+            for (let i = 0; i < enemies.length; i++){
+                if (this.bulletIntersects(i) == false){//check to see if the bullet spawns on something it can kill already
+                    return //if the bullet did hit something, then dont do the rest of this code so there wont be errors in console.log
+                }; 
+            }
+            
             
             const xIncrease = specificProjectile.deltaX * projectiles[i].intendedSpeed;//Move the bullet based on the ratio calculated in createProjectile
             const yIncrease = specificProjectile.deltaY * projectiles[i].intendedSpeed;
@@ -95,32 +104,19 @@ class Tool {
         }
     }
 
-    bulletCollision(specificProjectile, arrayBullet){ //see if the bullet hitbox goes over something important in the game and execute functions based on it
-        //collision code provided by https://www.youtube.com/watch?v=yJXVOQVYjMo&ab_channel=SyntaxByte
-        //get the base shape of the model
-        
-        let baseModel = specificProjectile.graphics.command //get the base shape of the model
-    
-        let left = specificProjectile.globalX; 
-        let top = specificProjectile.globalY;
-
-        let coordinatePoints = [
-            new createjs.Point(left, top), //top left corner
-            new createjs.Point(left + baseModel.w, top), //top right corner
-            new createjs.Point(left + baseModel.w, top + baseModel.h), //bottom right corner
-            new createjs.Point(left, top + baseModel.h), //bottom left corner
-        ];
-
-        for(let i = 0; i<coordinatePoints.length; i++) {
-            let everythingInHitbox = gameStage.getObjectsUnderPoint(coordinatePoints[i].x,coordinatePoints[i].y);
-
-            if (everythingInHitbox.filter((object) => object.isEnemy).length > 0){
-                console.log('you hit the thing');
-                gameStage.removeChild(specificProjectile);
-                projectiles.splice(arrayBullet, 1);
+    bulletIntersects(enemy){
+        for(let i = 0; i < projectiles.length; i++){
+            let projectile =  projectiles[i].getTransformedBounds();
+            let enemyBounds = enemies[enemy].getTransformedBounds();
+            if (projectile.intersects(enemyBounds)){
+                gameStage.removeChild(enemies[enemy]);
+                enemies.splice(enemy,1);
+                gameStage.removeChild(projectiles[i]);
+                enemies.splice(i,1);
                 return false;
             }
-
+            else{
+            }
         }
     }
 }

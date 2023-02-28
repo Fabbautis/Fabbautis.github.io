@@ -10,13 +10,16 @@ class Enemy {
         switch (this.type){
             case 'range':
                 enemy.graphics.beginFill("#25b95f").drawRect(0,0,20,20);
+                enemy.setBounds(0,0,20,20);
             break;
             case 'brute':
                 enemy.graphics.beginFill("#046137").drawRect(0,0,70,70);
+                enemy.setBounds(0,0,70,70);
             break;
             case 'normal':
             default:
-                enemy.graphics.beginFill("#269a39").drawRect(0,0,30,30);             
+                enemy.graphics.beginFill("#269a39").drawRect(0,0,30,30);      
+                enemy.setBounds(0,0,30,30);       
             break;
         }
         if (this.speed == undefined){
@@ -56,9 +59,19 @@ class Enemy {
         } else{
             enemy.aName = "normal" + enemy.enemyNumber;
         }
-        
-        enemies.push(enemy);
-        gameStage.addChild(enemy);  
-        console.log(enemies);
+        gameStage.addChild(enemy)
+        enemies.push(enemy)
+    }
+    enemyIntersects(player){
+        for(let i = 0; i < enemies.length; i++){
+            let enemy =  enemies[i].getTransformedBounds();
+            let playerBounds = player.getTransformedBounds();
+            if (enemy.intersects(playerBounds)){
+                console.log(enemies[i].aName + " is colliding with " + player.aName);
+                gameStage.removeChild(enemies[i]);
+                phil.playerDamage(10);
+                enemies.splice(i,1);
+            }
+        }
     }
 }
