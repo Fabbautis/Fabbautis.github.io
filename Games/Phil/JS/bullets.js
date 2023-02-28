@@ -84,8 +84,6 @@ class Tool {
                     return //if the bullet did hit something, then dont do the rest of this code so there wont be errors in console.log
                 }; 
             }
-            
-            
             const xIncrease = specificProjectile.deltaX * projectiles[i].intendedSpeed;//Move the bullet based on the ratio calculated in createProjectile
             const yIncrease = specificProjectile.deltaY * projectiles[i].intendedSpeed;
     
@@ -94,25 +92,28 @@ class Tool {
     
             specificProjectile.y += yIncrease; //specificProjectile.y moves the bullet onscreen. specificProjectile.globalY is used to see where the bullet is on the canvas
             specificProjectile.globalY += yIncrease;
-    
             if ((specificProjectile.globalX > walkspace.width || specificProjectile.globalX < walkspace.x)||(specificProjectile.globalY > walkspace.height || specificProjectile.globalY < walkspace.y)){
-                //if the bullet gets off the walkspace, get rid of it 
-                gameStage.removeChild(specificProjectile);
-                projectiles.splice(i, 1);
-                return;            
-            }
+                this.bulletDestroy(specificProjectile, i)
+            }   
         }
     }
 
+    bulletDestroy(specificBullet, i){
+        gameStage.removeChild(specificBullet);
+        projectiles.splice(i, 1);          
+    }
     bulletIntersects(enemy){
         for(let i = 0; i < projectiles.length; i++){
             let projectile =  projectiles[i].getTransformedBounds();
             let enemyBounds = enemies[enemy].getTransformedBounds();
             if (projectile.intersects(enemyBounds)){
-                gameStage.removeChild(enemies[enemy]);
-                enemies.splice(enemy,1);
-                gameStage.removeChild(projectiles[i]);
-                enemies.splice(i,1);
+                enemies[enemy].health--;
+                this.bulletDestroy(projectiles[i], i)
+                if (enemies[enemy].health <= 0){
+                    console.log(enemies[enemy].aName + " died")
+                    gameStage.removeChild(enemies[enemy]);
+                    enemies.splice(enemy,1);
+                }
                 return false;
             }
             else{

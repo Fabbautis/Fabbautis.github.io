@@ -78,7 +78,9 @@ function init(){
     window.addEventListener("keypress", toolEquipped.swapTool);
     window.addEventListener("keyup", keysUp);
     
-    enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();enemySpawnManager.spawnEnemy();
+    let spawningEnemyTimer = setInterval(spawnEnemies, 10000)
+    spawnEnemies()
+    spawningEnemyTimer;
    
 
 }
@@ -97,10 +99,10 @@ function keysUp(event)
 
 function update(event){
     gameStage.update()
-    phil.playerMovement()
-    toolEquipped.updateBullets()
-
-    enemySpawnManager.enemyIntersects(phil.model)
+    phil.playerMovement();
+    toolEquipped.updateBullets();
+    enemySpawnManager.enemyMovement();
+    
 }
 
 function rotatePlayer(event){
@@ -110,3 +112,12 @@ function shoot(event){
     toolEquipped.createProjectile(toolEquipped.model, event)
 }
 
+function spawnEnemies(){
+    console.log('more enemies');
+    enemySpawnManager.spawnEnemy("range", 7);
+    enemySpawnManager.spawnEnemy("brute", 5);
+    enemySpawnManager.spawnEnemy("range", 7);
+    enemySpawnManager.spawnEnemy("normal", 10);
+    enemySpawnManager.spawnEnemy("normal", 10);
+    enemySpawnManager.spawnEnemy("normal", 9);
+}

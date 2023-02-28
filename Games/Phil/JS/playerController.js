@@ -81,13 +81,13 @@ class Player {
     }
 
     playerDamage(hp){
-        console.log(hp, this.hp)
         this.hp -= hp
-        
-        console.log(this.hp + " hp left")
-        if (hp <=0){
+     
+        if (this.hp <=0){
             this.playerDeath();
+            this.hp=0
         }
+        console.log(this.hp + " hp left")
     }
     playerDeath(){
         console.log('dead');
