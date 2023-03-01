@@ -1,4 +1,6 @@
 let projectiles = [];
+let tablesawCooldown = 0;
+let propaneCooldown = 0;
 
 let toolsAvailable = ["torch", "tablesaw", "propane"];
 
@@ -8,37 +10,52 @@ class Tool {
     }
 
     createProjectile(tool, event){ //create the model as well as its necessary stuff
+
+        if (tool == 'tablesaw' && tablesawCooldown <= 40){
+            return;
+        }
+        if (tool == 'propane' && propaneCooldown <= 25){
+            return;
+        }
+        
         let bullet = new createjs.Shape();
 
         switch (tool){
             case "torch":
                 bullet.graphics.beginFill("#FFA500").drawRect(phil.model.x,phil.model.y,5,5);//get the model ready, as well as its speed and damage
                 bullet.intendedSpeed = 20;
-                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
+                bullet.setBounds(phil.model.x, phil.model.y, 5,5);
+                bullet.maxDistance = 250;
+                bullet.damage = 1;
                 break;
             case "tablesaw":
                 bullet.graphics.beginFill("#FFFFFF").drawRect(phil.model.x,phil.model.y,5,5);
-                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
-
+                bullet.setBounds(phil.model.x, phil.model.y, 5,25)
                 bullet.intendedSpeed = 50;
+                bullet.maxDistance = 10000;
+                bullet.damage = 2;
+                tablesawCooldown = 0;
                 break;
             case "propane":
-                bullet.graphics.beginFill("#00FF00").drawRect(phil.model.x,phil.model.y,5,5);
-                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
-
+                bullet.graphics.beginFill("#00FF00").drawRect(phil.model.x,phil.model.y,15,15);
+                bullet.setBounds(phil.model.x, phil.model.y, 15,15)
                 bullet.intendedSpeed = 10;
+                bullet.maxDistance = 600;
+                bullet.damage = 10;
+                propaneCooldown = 0;
                 break;
             default:
                 bullet.graphics.beginFill("#000000").drawRect(phil.model.x,phil.model.y,5,5);
                 bullet.setBounds(phil.model.x, phil.model.y, 5,5)
-
                 bullet.intendedSpeed = 5;
+                bullet.maxDistance = 250;
                 break;
         }
 
         bullet.bulletNumber = projectiles.length; //maybe delete later and just use the projectiles array?????????
         bullet.isImportant = true;
         bullet.aName = tool
+        bullet.distanceTravelled = 0;
 
         this.calculateTravelAngle(bullet, event);
         projectiles.push(bullet);//push the bullet into an array that'll update all of the bullets' positions on screen
@@ -77,6 +94,9 @@ class Tool {
     }
 
     updateBullets(){ //move the projectile. If they get off the intended walkarea, delete the projectile
+        tablesawCooldown++;
+        propaneCooldown++;
+
         for (let i = 0; i < projectiles.length; i++) {
             let specificProjectile = projectiles[i];
             for (let i = 0; i < enemies.length; i++){
@@ -92,9 +112,18 @@ class Tool {
     
             specificProjectile.y += yIncrease; //specificProjectile.y moves the bullet onscreen. specificProjectile.globalY is used to see where the bullet is on the canvas
             specificProjectile.globalY += yIncrease;
+            
+            let distanceTravelled = xIncrease*xIncrease + yIncrease*yIncrease;
+
+            specificProjectile.distanceTravelled += Math.sqrt(distanceTravelled);
+           
             if ((specificProjectile.globalX > walkspace.width || specificProjectile.globalX < walkspace.x)||(specificProjectile.globalY > walkspace.height || specificProjectile.globalY < walkspace.y)){
                 this.bulletDestroy(specificProjectile, i)
             }   
+            if (specificProjectile.distanceTravelled >= specificProjectile.maxDistance){
+                this.bulletDestroy(specificProjectile, i);
+            }
+
         }
     }
 
@@ -107,17 +136,20 @@ class Tool {
             let projectile =  projectiles[i].getTransformedBounds();
             let enemyBounds = enemies[enemy].getTransformedBounds();
             if (projectile.intersects(enemyBounds)){
-                enemies[enemy].health--;
-                this.bulletDestroy(projectiles[i], i)
+                enemies[enemy].health = enemies [enemy].health - projectiles[i].damage
+                if (projectiles[i].aName == 'torch'){ //destroy the bullet if its not a tablesaw
+                    this.bulletDestroy(projectiles[i], i);
+                }          
+                if (enemies[enemy].aName == 'brute ' + enemy){
+                    this.bulletDestroy(projectiles[i], i);
+                }         
                 if (enemies[enemy].health <= 0){
-                    console.log(enemies[enemy].aName + " died")
                     gameStage.removeChild(enemies[enemy]);
                     enemies.splice(enemy,1);
                 }
                 return false;
-            }
-            else{
-            }
+            }  
         }
     }
 }
+

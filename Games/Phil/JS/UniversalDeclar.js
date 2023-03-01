@@ -1,6 +1,26 @@
 //Make the canvas the full screen of the HTML block (which for this instance, is the size of the entire window)
 let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
+let timePassed= 0;
+let allWaves = [
+    {"wave": 0, "normal": 3, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 1, "normal": 4, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 2, "normal": 5, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 4, "normal": 7, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 5, "normal": 9, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 6, "normal": 13, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 7, "normal": 0, "ranged": 0, "brute": 0, "event": 1},
+    {"wave": 8, "normal": 6, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 9, "normal": 10, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 10, "normal": 0, "ranged": 2, "brute": 0, "event": 0},
+    {"wave": 11, "normal": 5, "ranged": 2, "brute": 0, "event": 0},
+    {"wave": 12, "normal": 9, "ranged": 4, "brute": 0, "event": 0},
+    {"wave": 13, "normal": 12, "ranged": 5, "brute": 0, "event": 0},
+    {"wave": 14, "normal": 0, "ranged": 0, "brute": 0, "event": 1},
+    {"wave": 15, "normal": 10, "ranged": 1, "brute": 0, "event": 0},
+];
+let waveCleared = false;
+let curWave = -1;
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
@@ -71,38 +91,25 @@ function init(){
     
 
     createjs.Ticker.addEventListener("tick", update);
+    createjs.Ticker.addEventListener("tick", startNextWave);
+
     gameStage.addEventListener("stagemousemove", rotatePlayer);
     gameStage.addEventListener("click", shoot)
     
     window.addEventListener("keydown", keysDown);
     window.addEventListener("keypress", toolEquipped.swapTool);
     window.addEventListener("keyup", keysUp);
-    
-    let spawningEnemyTimer = setInterval(spawnEnemies, 10000)
-    spawnEnemies()
-    spawningEnemyTimer;
-   
-
+    waveCleared = false;
 }
 
 function keysDown(event)//when a key is pressed, mark its keycode and set it as true or false.
 //Then somewhere else in the code I can just check this array to see if the keycode is true or false for input.
 {
     keysPressed[event.keyCode] = true;
-
-
 }
 function keysUp(event)
 {
     keysPressed[event.keyCode] = false;
-}
-
-function update(event){
-    gameStage.update()
-    phil.playerMovement();
-    toolEquipped.updateBullets();
-    enemySpawnManager.enemyMovement();
-    
 }
 
 function rotatePlayer(event){
@@ -112,11 +119,42 @@ function shoot(event){
     toolEquipped.createProjectile(toolEquipped.model, event)
 }
 
+function update(event){
+    gameStage.update()
+    phil.playerMovement();
+    toolEquipped.updateBullets();
+    enemySpawnManager.enemyMovement();
+}
+
+function startNextWave(){
+    if (timePassed + 5 <= Math.floor(createjs.Ticker.getTime()/1000)&& waveCleared){
+        curWave++;
+        if (allWaves[curWave].event == 1){
+            //create a powerup with powerup class
+        } else {
+            for (let i =0; i < allWaves[curWave].normal; i++){
+                enemySpawnManager.spawnEnemy('normal')
+            }
+            for (let i =0; i < allWaves[curWave].ranged; i++){
+                    enemySpawnManager.spawnEnemy('range')
+            }
+            for (let i =0; i < allWaves[curWave].brute; i++){
+                enemySpawnManager.spawnEnemy('brute')
+            }
+        }
+        
+        waveCleared = false;
+    }
+}
+
+function collectEndTime(){
+    timePassed = Math.floor(createjs.Ticker.getTime()/1000);
+    waveCleared = true;
+}
 function spawnEnemies(){
-    console.log('more enemies');
-    enemySpawnManager.spawnEnemy("range", 7);
-    enemySpawnManager.spawnEnemy("brute", 5);
-    enemySpawnManager.spawnEnemy("range", 7);
+    enemySpawnManager.spawnEnemy("range");
+    enemySpawnManager.spawnEnemy("normal");
+    enemySpawnManager.spawnEnemy("brute");
     enemySpawnManager.spawnEnemy("normal", 10);
     enemySpawnManager.spawnEnemy("normal", 10);
     enemySpawnManager.spawnEnemy("normal", 9);

@@ -39,37 +39,39 @@ class Player {
             }
         }
 
-        if (keysPressed['87']||keysPressed['38'])
+        model.y += 0;
+        phil.updown = false;
+        if (keysPressed['87']||keysPressed['38']){
             model.y -= this.speed;
+            phil.updown = true;
             if (model.y < walkspace.y) { //If the player's y value gets below the allowed walkspace's y value 
                 model.y = walkspace.y //then make their y value the allowed walkspace's y value
             }
-        else 
-            model.y -= 0; //if no keys are pressed, don't move player
-
-        if (keysPressed['83'] ||keysPressed['40'])
+        }              
+        if (keysPressed['83'] ||keysPressed['40']){
             model.y += this.speed;
+            phil.updown = true;
             if (model.y > walkspace.height) {
                 model.y = walkspace.height;
             }
-        else 
-            model.y += 0;
-
-        if (keysPressed['65'] ||keysPressed['37'])
+        }
+            
+        model.x += 0;   
+        phil.leftright = false;
+        if (keysPressed['65'] ||keysPressed['37']){
             model.x -= this.speed;
+            phil.leftright = true;
             if (model.x < walkspace.x) {
                 model.x = walkspace.x;
             }
-        else 
-            model.x -= 0;
-
-        if (keysPressed['68'] ||keysPressed['39'])
+        }         
+        if (keysPressed['68'] ||keysPressed['39']){
             model.x += this.speed;
+            phil.leftright = true;
             if (model.x > walkspace.width) {
                 model.x = walkspace.width;
             }
-        else 
-            model.x += 0;       
+        }
     }
 
     playerRotation(event){ //rotate the player based on the mouse. Helpful to see where the player is aiming.
@@ -90,6 +92,15 @@ class Player {
         console.log(this.hp + " hp left")
     }
     playerDeath(){
+        createjs.Ticker.removeEventListener("tick", update);
+        createjs.Ticker.removeEventListener("tick", startNextWave);
+
+        gameStage.removeEventListener("stagemousemove", rotatePlayer);
+        gameStage.removeEventListener("click", shoot)
+        
+        window.removeEventListener("keydown", keysDown);
+        window.removeEventListener("keypress", toolEquipped.swapTool);
+        window.removeEventListener("keyup", keysUp);
         console.log('dead');
     }
 
