@@ -1,11 +1,12 @@
 //Make the canvas the full screen of the HTML block (which for this instance, is the size of the entire window)
 let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
-let timePassed= 0;
+let timePassed= -1;
 let allWaves = [
     {"wave": 0, "normal": 3, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 1, "normal": 4, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 2, "normal": 5, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 3, "normal": 6, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 4, "normal": 7, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 5, "normal": 9, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 6, "normal": 13, "ranged": 0, "brute": 0, "event": 0},
@@ -18,6 +19,22 @@ let allWaves = [
     {"wave": 13, "normal": 12, "ranged": 5, "brute": 0, "event": 0},
     {"wave": 14, "normal": 0, "ranged": 0, "brute": 0, "event": 1},
     {"wave": 15, "normal": 10, "ranged": 1, "brute": 0, "event": 0},
+    {"wave": 16, "normal": 15, "ranged": 3, "brute": 0, "event": 0},
+    {"wave": 17, "normal": 25, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 18, "normal": 10, "ranged": 0, "brute": 1, "event": 0},
+    {"wave": 19, "normal": 16, "ranged": 6, "brute": 1, "event": 0},
+    {"wave": 20, "normal": 20, "ranged": 8, "brute": 2, "event": 0},
+    {"wave": 21, "normal": 0, "ranged": 0, "brute": 0, "event": 1},
+    {"wave": 22, "normal": 20, "ranged": 8, "brute": 2, "event": 0},
+    {"wave": 23, "normal": 24, "ranged": 10, "brute": 2, "event": 0},
+    {"wave": 24, "normal": 27, "ranged": 15, "brute": 1, "event": 0},
+    {"wave": 25, "normal": 42, "ranged": 0, "brute": 4, "event": 0},
+
+
+
+
+
+
 ];
 let waveCleared = false;
 let curWave = -1;
@@ -28,6 +45,7 @@ let keysPressed  = {}; //see keys up / down function
 
 let toolEquipped;
 let enemySpawnManager;
+let powerupSpawnManager;
 
 let bg = new createjs.Shape()
     bg.graphics.beginFill("#222222").drawRect(0,0,canvas.width, canvas.height);
@@ -87,6 +105,7 @@ function init(){
     phil = new Player(25, 100, philModel);
     toolEquipped = new Tool("torch");
     enemySpawnManager = new Enemy();
+    powerupSpawnManager = new Upgrade();
     gameStage.update();
     
 
@@ -129,8 +148,36 @@ function update(event){
 function startNextWave(){
     if (timePassed + 5 <= Math.floor(createjs.Ticker.getTime()/1000)&& waveCleared){
         curWave++;
+        if (allWaves[curWave]!== undefined){
+            createjs.Ticker.removeEventListener("tick", startNextWave);
+
+        }
+        console.log(allWaves[curWave])
         if (allWaves[curWave].event == 1){
-            //create a powerup with powerup class
+            console.log('creating a event instead')
+            if (curWave == 7 || curWave == 14){
+                powerupSpawnManager.createPowerup("tool");
+            }
+            if (curWave == 14){
+                powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup('health');
+            }
+            if (curWave == 21){
+                powerupSpawnManager.createPowerup('statBoost');
+                powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup('health');
+            }
+            if (curWave == 28){
+                powerupSpawnManager.createPowerup('statBoost');
+                powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup('health');
+            }
+            if (curWave == 35){
+                powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup('health');
+            }
+   
         } else {
             for (let i =0; i < allWaves[curWave].normal; i++){
                 enemySpawnManager.spawnEnemy('normal')
@@ -144,12 +191,16 @@ function startNextWave(){
         }
         
         waveCleared = false;
+        console.log("wave "+ curWave +"!")
     }
 }
 
 function collectEndTime(){
-    timePassed = Math.floor(createjs.Ticker.getTime()/1000);
-    waveCleared = true;
+    if (powerups.length ==0 && enemies.length ==0){
+        timePassed = Math.floor(createjs.Ticker.getTime()/1000);
+        waveCleared = true;
+    }
+    
 }
 function spawnEnemies(){
     enemySpawnManager.spawnEnemy("range");

@@ -1,8 +1,9 @@
 let projectiles = [];
 let tablesawCooldown = 0;
 let propaneCooldown = 0;
+let damageBoost = 0;
 
-let toolsAvailable = ["torch", "tablesaw", "propane"];
+let toolsAvailable = ["torch"];
 
 class Tool {
     constructor(model){
@@ -26,14 +27,14 @@ class Tool {
                 bullet.intendedSpeed = 20;
                 bullet.setBounds(phil.model.x, phil.model.y, 5,5);
                 bullet.maxDistance = 250;
-                bullet.damage = 1;
+                bullet.damage = 1 + damageBoost;
                 break;
             case "tablesaw":
-                bullet.graphics.beginFill("#FFFFFF").drawRect(phil.model.x,phil.model.y,5,5);
+                bullet.graphics.beginFill("#FFFFFF").drawRect(phil.model.x,phil.model.y,25,25);
                 bullet.setBounds(phil.model.x, phil.model.y, 5,25)
                 bullet.intendedSpeed = 50;
                 bullet.maxDistance = 10000;
-                bullet.damage = 2;
+                bullet.damage = 2 + damageBoost;
                 tablesawCooldown = 0;
                 break;
             case "propane":
@@ -41,7 +42,7 @@ class Tool {
                 bullet.setBounds(phil.model.x, phil.model.y, 15,15)
                 bullet.intendedSpeed = 10;
                 bullet.maxDistance = 600;
-                bullet.damage = 10;
+                bullet.damage = 10 + damageBoost;
                 propaneCooldown = 0;
                 break;
             default:

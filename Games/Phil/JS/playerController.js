@@ -24,17 +24,15 @@ class Player {
         this.speed = speed;//set up speed
         this.model = model;//sprite / container asset to use
     }
-    
     getPlayerInfo(){ //return all info about the player
         console.log(this);
         return this;
     }
-
     playerMovement() { //move the player based on wasd or arrow keys. Apply first comments to rest of if statements
         
         let model= this.model;
         for (let i = 0; i < gameStage.children.length; i++){
-            if(gameStage.children[i].aName == 'powerup'){
+            if(gameStage.children[i].property== 'powerup'){
                 this.playerIntersects(gameStage.children[i])
             }
         }
@@ -73,7 +71,6 @@ class Player {
             }
         }
     }
-
     playerRotation(event){ //rotate the player based on the mouse. Helpful to see where the player is aiming.
         let changeX = event.stageX - this.model.x
         let changeY = event.stageY - this.model.y//Make a right triangle based on the distance the model is away from the cursor.
@@ -81,7 +78,6 @@ class Player {
         let direction = Math.atan2(changeY, changeX); //inner angle based on the triangle
         this.model.rotation = (direction *180/Math.PI)+90
     }
-
     playerDamage(hp){
         this.hp -= hp
      
@@ -103,13 +99,43 @@ class Player {
         window.removeEventListener("keyup", keysUp);
         console.log('dead');
     }
-
     playerIntersects(powerup){
         let phil =  this.model.getTransformedBounds();
         let secondaryObjectBounds = powerup.getTransformedBounds();
         if (phil.intersects(secondaryObjectBounds)){
+            switch (powerup.aName){
+                case "tablesaw": 
+                    toolsAvailable.push('tablesaw');
+                    console.log('unlcoked tablesaw, press q to cycle between your tools')
+                break;
+                case "propane":
+                    toolsAvailable.push('propane');
+                    console.log('unlcoked propane, press q to cycle between your tools')
+
+                break;
+                case 'killAll':
+                    for (let i = 0; i < enemies.length; i++){
+                        gameStage.removeChild(enemies[i]);
+                        enemies.splice(i,1);
+                    }
+                break;
+                case 'statBoost':
+                    damageBoost++;
+                    this.speed= this.speed +5;
+                    console.log('you are now stronger and faster!');
+                break;
+                case 'health':
+                default:
+                    this.hp = this.hp + 20;
+                    if (this.hp > 100){
+                        this.hp = 100;
+                    }
+                    console.log('your hp is now ' + this.hp)
+            }
+            powerups.splice(powerup,1);
             gameStage.removeChild(powerup);
-            console.log('collected powerup');
+            
+            collectEndTime();
             return true;
         } else
         return false;
