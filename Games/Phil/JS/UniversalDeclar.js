@@ -148,9 +148,8 @@ function update(event){
 function startNextWave(){
     if (timePassed + 5 <= Math.floor(createjs.Ticker.getTime()/1000)&& waveCleared){
         curWave++;
-        if (allWaves[curWave]!== undefined){
+        if (allWaves[curWave]== undefined){
             createjs.Ticker.removeEventListener("tick", startNextWave);
-
         }
         console.log(allWaves[curWave])
         if (allWaves[curWave].event == 1){
