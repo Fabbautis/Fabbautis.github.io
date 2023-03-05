@@ -81,7 +81,7 @@ let wallThickness = 100;//Set a univeral wall thickness.
 //this will also help set up a invisible rectangle thatll prevent the player / bullets from walking offscreen (see walkspace declaration)
 for (let i = 0; i < 4; i++){
     environmentWalls.push(new createjs.Bitmap("/Animate/PNG/hedge bottom.png")) //each of the four walls are set up dynamically, only using 0, canvas width, and height
-    environmentWalls[i].scaleX = .275
+    environmentWalls[i].scaleX = .35
     environmentWalls[i].scaleY = wallThickness/environmentWalls[i].image.height + .05;
     environmentWalls[i].height = environmentWalls[i].scaleY * environmentWalls[i].image.height;
     environmentWalls[i].width = .3 * environmentWalls[i].image.width;
@@ -122,7 +122,7 @@ for (let i = 0; i < 4; i++){
 }
 for (let i = 4; i < 8; i++){
     environmentWalls.push(new createjs.Bitmap("/Animate/PNG/hedge top.png")) //each of the four walls are set up dynamically, only using 0, canvas width, and height
-    environmentWalls[i].scaleX = .275
+    environmentWalls[i].scaleX = .35
     environmentWalls[i].scaleY = wallThickness/environmentWalls[i].image.height + .05;
     environmentWalls[i].height = environmentWalls[i].scaleY * environmentWalls[i].image.height;
     environmentWalls[i].width = .3 * environmentWalls[i].image.width;

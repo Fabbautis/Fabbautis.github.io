@@ -144,7 +144,8 @@ class Tool {
                 if (enemies[enemy].aName == 'brute ' + enemy){
                     this.bulletDestroy(projectiles[i], i);
                 }         
-                if (enemies[enemy].health <= 0){
+                if (enemies[enemy].health <= 0 && enemies[enemy].isDead == false){
+                    enemies[enemy].isDead = true;
                     enemies[enemy].gotoAndPlay("dead");
                     setTimeout(function() {
                         enemySpawnManager.enemyKill(enemy);

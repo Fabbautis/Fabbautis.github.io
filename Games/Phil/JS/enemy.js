@@ -44,6 +44,7 @@ class Enemy {
 
         enemy.enemyNumber = enemies.length;
         enemy.isEnemy = true;
+        enemy.isDead = false;
         
         if (type  == undefined){
             enemy.aName = "normal " + enemy.enemyNumber;
