@@ -60,7 +60,7 @@ class Tool {
 
         this.calculateTravelAngle(bullet, event);
         projectiles.push(bullet);//push the bullet into an array that'll update all of the bullets' positions on screen
-        gameStage.addChild(bullet)
+        gameStage.addChildAt(bullet, gameStage.getChildIndex(phil.model))
     }
 
     swapTool (){//push q to cycle between at most three unique tools
@@ -145,8 +145,10 @@ class Tool {
                     this.bulletDestroy(projectiles[i], i);
                 }         
                 if (enemies[enemy].health <= 0){
-                    gameStage.removeChild(enemies[enemy]);
-                    enemies.splice(enemy,1);
+                    enemies[enemy].gotoAndPlay("dead");
+                    setTimeout(function() {
+                        enemySpawnManager.enemyKill(enemy);
+                    }, enemies[enemy].deathTime *1000);
                 }
                 return false;
             }  

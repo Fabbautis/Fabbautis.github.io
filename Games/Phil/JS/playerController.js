@@ -29,7 +29,6 @@ class Player {
         return this;
     }
     playerMovement() { //move the player based on wasd or arrow keys. Apply first comments to rest of if statements
-        
         let model= this.model;
         for (let i = 0; i < gameStage.children.length; i++){
             if(gameStage.children[i].property== 'powerup'){
