@@ -3,7 +3,7 @@ let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
 let timePassed= -1;
 let allWaves = [
-    {"wave": 0, "normal": 1, "ranged": 0, "brute": 0, "event": 0},
+    {"wave": 0, "normal": 2, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 1, "normal": 4, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 2, "normal": 5, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 3, "normal": 6, "ranged": 0, "brute": 0, "event": 0},

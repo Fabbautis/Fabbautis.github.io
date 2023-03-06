@@ -8,6 +8,7 @@ class Enemy {
         let enemy;
        switch (type){
             case "range":
+                enemy = new createjs.Shape();
                 enemy.graphics.beginFill("#25b95f").drawRect(0,0,20,20);
                 enemy.setBounds(0,0,20,20);
                 enemy.damage = 10;
@@ -17,6 +18,8 @@ class Enemy {
                 enemy.speed = Math.random() * (10-7)+7;
             break;
             case 'brute':
+                enemy = new createjs.Shape();
+                
                 enemy.graphics.beginFill("#046137").drawRect(0,0,70,70);
                 enemy.setBounds(0,0,70,70);
                 enemy.damage = 30;
@@ -24,6 +27,8 @@ class Enemy {
                 enemy.speed = Math.random() * (8-5)+5;
             break;
             case 'spit':
+                enemy = new createjs.Shape();
+
                 enemy.graphics.beginFill("#ccffcc").drawRect(0,0,10,10);
                 enemy.setBounds(0,0,10,10);
                 enemy.damage = 10;
@@ -92,7 +97,6 @@ class Enemy {
 
         gameStage.addChildAt(enemy, gameStage.getChildIndex(phil.model))
         enemies.push(enemy)
-        console.log(enemy.spriteSheet);
         waveCleared = false;
     }
     enemyIntersects(player, array){
@@ -155,11 +159,15 @@ class Enemy {
             let specificEnemy = enemies[i];
             
             if (String(specificEnemy.currentAnimation) == 'moving'){
+                
                 let changeX = phil.model.x - specificEnemy.x; //distance away from the player
                 let changeY = phil.model.y - specificEnemy.y;
         
-                let direction = Math.atan2(changeY, changeX); //inner angle based on the triangle
-                specificEnemy.rotation = (direction *180/Math.PI)+90
+                if(changeX < 0){
+                    specificEnemy.scaleX = .1
+                } else if (changeX >= 0){
+                    specificEnemy.scaleX = -.1;
+                }
     
                 if (Math.abs(changeX) > Math.abs(changeY)){ 
                     specificEnemy.deltaX = changeX / Math.abs(changeX)
@@ -178,15 +186,16 @@ class Enemy {
                 if (specificEnemy.aName == ("range " + specificEnemy.enemyNumber)){ //this code will only go for ranged enemies
                     if (changeX*changeX + changeY*changeY <=  specificEnemy.distanceAway * specificEnemy.distanceAway){ //If the enemy is within the player range
                         
-                        if (phil.leftright || phil.updown){
-                            xIncrease *=-1*(specificEnemy.speed); //go backwards in x
-                            yIncrease *=-1 *(specificEnemy.speed); //go backwards in y
+                        if (phil.leftright || phil.updown){ //if the player is moving
+                            xIncrease *=-0.33*(specificEnemy.speed); //go backwards in x
+                            yIncrease *=-0.33 *(specificEnemy.speed); //go backwards in y
                         }
                         else{
                             xIncrease = 0; //dont move, you're right where you want to be
                             yIncrease = 0;
+                            specificEnemy.cooldown++;
                         }
-                        specificEnemy.cooldown++;
+                        
                         if (specificEnemy.cooldown >=50){
                             specificEnemy.cooldown = 0;
                             this.spawnEnemy('spit', i);
