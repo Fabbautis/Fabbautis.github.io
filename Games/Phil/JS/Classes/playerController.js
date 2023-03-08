@@ -79,7 +79,7 @@ class Player {
     }
     playerDamage(hp){
         this.hp -= hp;
-        updateHealthbar(this.hp);
+        updateHealthbar(this.hp, this.speed);
 
         if (this.hp <=0){
             this.playerDeath();
@@ -121,6 +121,7 @@ class Player {
                 case 'statBoost':
                     damageBoost++;
                     this.speed= this.speed +5;
+                    updateHealthbar(this.hp, this.speed);
                 break;
                 case 'health':
                 default:
@@ -130,7 +131,7 @@ class Player {
                         this.hp = 100;
                     }
 
-                   updateHealthbar(this.hp);
+                   updateHealthbar(this.hp, this.speed);
             }
             powerups.splice(powerup,1);
             gameStage.removeChild(powerup);

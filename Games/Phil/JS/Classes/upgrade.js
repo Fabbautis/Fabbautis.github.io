@@ -32,12 +32,19 @@ class Upgrade {
             break;
         }
         powerup.property = 'powerup'
-        powerup.x = canvas.width/2;
-        powerup.y = canvas.height/2;
-        if ((phil.model.x < powerup.x +100 && phil.model.x >powerup.x-100 && (phil.model.y < powerup.y +100 && phil.model.y >powerup.y-100))){
-            powerup.x = canvas.width/3;
-            powerup.y = canvas.width/3;
+        if (powerups.length ==0){ //first powerup on screen
+            powerup.x = canvas.width/2;
+            powerup.y = canvas.height/2;
+            if ((phil.model.x < powerup.x +100 && phil.model.x >powerup.x-100 && (phil.model.y < powerup.y +100 && phil.model.y >powerup.y-100))){
+                powerup.x = canvas.width/3;
+                powerup.y = canvas.width/3;
+            }
+        } else {
+            console.log(powerups[0], powerups.length)
+            powerup.x = powerups[0].x - (50 *powerups.length);
+            powerup.y = powerups[0].y - (10 *powerups.length);
         }
+        
         gameStage.addChild(powerup);
         powerups.push(powerup);
     }

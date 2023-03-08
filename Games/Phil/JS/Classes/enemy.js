@@ -106,7 +106,6 @@ class Enemy {
             let enemy =  array[i].getTransformedBounds();
             let playerBounds = player.getTransformedBounds();
             if (enemy.intersects(playerBounds)){
-                console.log(array[i].aName + " is colliding with " + player.aName);
                 let damage = array[i].damage;
                 gameStage.removeChild(array[i]);
                 array.splice(i,1);

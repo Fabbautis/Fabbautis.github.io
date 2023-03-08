@@ -139,24 +139,30 @@ class Tool {
         for(let i = 0; i < projectiles.length; i++){
             let projectile =  projectiles[i].getTransformedBounds();
             let enemyBounds = enemies[enemy].getTransformedBounds();
-            if (projectile.intersects(enemyBounds)){
-                enemies[enemy].health = enemies [enemy].health - projectiles[i].damage
-                if (projectiles[i].aName == 'torch'){ //destroy the bullet if its a torch
-                    this.bulletDestroy(projectiles[i], i);
-                }          
-                if (enemies[enemy].aName == 'brute ' + enemy){ //or if it hits a brute
-                    this.bulletDestroy(projectiles[i], i);
-                }         
-                if (enemies[enemy].health <= 0 && enemies[enemy].isDead == false){
-                    enemies[enemy].isDead = true;
-                    enemies[enemy].gotoAndPlay("dead");
-                    setTimeout(function() {
-                        enemySpawnManager.enemyKill(enemy);
-                        console.log('enemy is dead');
-                    }, enemies[enemy].deathTime *1000);
-                }
-                return false;
-            }  
+            try{
+                if (projectile.intersects(enemyBounds) && enemies[enemy].isDead == false){
+                    console.log(projectiles[i].aName + " " + projectiles[i].bulletNumber + ' hit ' + enemies[enemy].aName)
+                    enemies[enemy].health = enemies[enemy].health - projectiles[i].damage
+                    if (projectiles[i].aName == 'torch'){ //destroy the bullet if its a torch
+                        this.bulletDestroy(projectiles[i], i);
+                    }          
+                    if (enemies[enemy].aName == 'brute ' + enemy){ //or if it hits a brute
+                        this.bulletDestroy(projectiles[i], i);
+                    }         
+                    if (enemies[enemy].health <= 0){
+                        enemies[enemy].isDead = true;
+                        console.log(enemies[enemy].aName + ' is dead');
+                        enemies[enemy].gotoAndPlay("dead");
+                        setTimeout(function() {
+                            enemySpawnManager.enemyKill(enemy);
+                        }, enemies[enemy].deathTime *1000);
+                    }
+                } 
+            }
+            catch {
+                enemySpawnManager.enemyKill(enemy);
+            }
+             
         }
     }
 }
