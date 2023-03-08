@@ -24,7 +24,7 @@ let profileCard = new createjs.Container();
     profileCard.scale = 0.2;
     profileCard.alpha = 0.9;
 
-let profileCardBG = new createjs.Bitmap("/Animate/PNG/profile card.png")
+let profileCardBG = new createjs.Bitmap("Animate/PNG/profile card.png")
     profileCard.addChild(profileCardBG);
 
 let pfp = new createjs.Sprite(portaitSpritesheet, "100") //change this later
@@ -67,7 +67,7 @@ let waveBanner = new createjs.Container();
     waveBanner.scale =0.25;
     waveBanner.alpha = 0.9;
 
-let waveBannerBG = new createjs.Bitmap("/Animate/PNG/wave banner.png")
+let waveBannerBG = new createjs.Bitmap("Animate/PNG/wave banner.png")
     waveBanner.addChild(waveBannerBG);
     waveBanner.x = waveBannerBG.image.width/8 + 50;
 
