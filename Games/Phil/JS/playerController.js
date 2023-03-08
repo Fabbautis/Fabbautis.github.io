@@ -79,7 +79,9 @@ class Player {
     }
     playerDamage(hp){
         this.hp -= hp
+        playerHealthGreens.graphics.command.w = this.hp / playerHealth.healthMax * playerHealthBorder.graphics.command.w
      
+        profileFadeOut.gotoAndPlay(0);
         if (this.hp <=0){
             this.playerDeath();
             this.hp=0
@@ -87,16 +89,19 @@ class Player {
         console.log(this.hp + " hp left")
     }
     playerDeath(){
-        createjs.Ticker.removeEventListener("tick", update);
-        createjs.Ticker.removeEventListener("tick", startNextWave);
-
-        gameStage.removeEventListener("stagemousemove", rotatePlayer);
-        gameStage.removeEventListener("click", shoot)
+        setTimeout(function (){
+            createjs.Ticker.removeEventListener("tick", update);
+            createjs.Ticker.removeEventListener("tick", startNextWave);
+    
+            gameStage.removeEventListener("stagemousemove", rotatePlayer);
+            gameStage.removeEventListener("click", shoot)
+            
+            window.removeEventListener("keydown", keysDown);
+            window.removeEventListener("keypress", toolEquipped.swapTool);
+            window.removeEventListener("keyup", keysUp);
+        }, 100)
         
-        window.removeEventListener("keydown", keysDown);
-        window.removeEventListener("keypress", toolEquipped.swapTool);
-        window.removeEventListener("keyup", keysUp);
-        console.log('dead');
+
     }
     playerIntersects(powerup){
         let phil =  this.model.getTransformedBounds();
@@ -105,12 +110,9 @@ class Player {
             switch (powerup.aName){
                 case "tablesaw": 
                     toolsAvailable.push('tablesaw');
-                    console.log('unlcoked tablesaw, press q to cycle between your tools')
                 break;
                 case "propane":
                     toolsAvailable.push('propane');
-                    console.log('unlcoked propane, press q to cycle between your tools')
-
                 break;
                 case 'killAll':
                     for (let i = 0; i < enemies.length; i++){
@@ -121,15 +123,18 @@ class Player {
                 case 'statBoost':
                     damageBoost++;
                     this.speed= this.speed +5;
-                    console.log('you are now stronger and faster!');
                 break;
                 case 'health':
                 default:
                     this.hp = this.hp + 20;
+                    
                     if (this.hp > 100){
                         this.hp = 100;
                     }
-                    console.log('your hp is now ' + this.hp)
+
+                    playerHealthGreens.graphics.command.w = this.hp / playerHealth.healthMax * playerHealthBorder.graphics.command.w
+     
+                    profileFadeOut.gotoAndPlay(0);
             }
             powerups.splice(powerup,1);
             gameStage.removeChild(powerup);

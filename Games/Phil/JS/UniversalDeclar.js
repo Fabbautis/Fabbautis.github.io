@@ -3,23 +3,23 @@ let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
 let timePassed= -1;
 let allWaves = [
-    {"wave": 0, "normal": 2, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 1, "normal": 4, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 2, "normal": 5, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 3, "normal": 6, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 4, "normal": 7, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 5, "normal": 9, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 6, "normal": 13, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 7, "normal": 0, "ranged": 0, "brute": 0, "event": 1},
-    {"wave": 8, "normal": 6, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 9, "normal": 10, "ranged": 0, "brute": 0, "event": 0},
-    {"wave": 10, "normal": 0, "ranged": 2, "brute": 0, "event": 0},
-    {"wave": 11, "normal": 5, "ranged": 2, "brute": 0, "event": 0},
-    {"wave": 12, "normal": 9, "ranged": 4, "brute": 0, "event": 0},
-    {"wave": 13, "normal": 12, "ranged": 5, "brute": 0, "event": 0},
-    {"wave": 14, "normal": 0, "ranged": 0, "brute": 0, "event": 1},
-    {"wave": 15, "normal": 10, "ranged": 1, "brute": 0, "event": 0},
-    {"wave": 16, "normal": 15, "ranged": 3, "brute": 0, "event": 0},
+    {"wave": 0, "normal": 2, "ranged": 0, "brute": 0, "event": 0, "description": "Welcome to the backyard!"},
+    {"wave": 1, "normal": 4, "ranged": 0, "brute": 0, "event": 1, "description": "Those things were Scrunklies. They want to kill you"},
+    {"wave": 2, "normal": 5, "ranged": 0, "brute": 0, "event": 0, "description": "The Scrunklies love this backyard and will do anything to stay"},
+    {"wave": 3, "normal": 6, "ranged": 0, "brute": 0, "event": 0, "description": "They stole your tools and you're next."},
+    {"wave": 4, "normal": 7, "ranged": 0, "brute": 0, "event": 0, "description": "Don't worry about the one in the pot, they just call in reinforcements"},
+    {"wave": 5, "normal": 9, "ranged": 0, "brute": 0, "event": 0, "description": "Every seven waves, the Scrunklies need to regroup, perfect for a break."},
+    {"wave": 6, "normal": 13, "ranged": 0, "brute": 0, "event": 0, "description": "This would be a lot easier if you had another tool"},
+    {"wave": 7, "normal": 0, "ranged": 0, "brute": 0, "event": 1, "description": "Speak of the devil..."},
+    {"wave": 8, "normal": 6, "ranged": 0, "brute": 0, "event": 0, "description": "You just got your tablesaw. Press Q and try it out!"},
+    {"wave": 9, "normal": 10, "ranged": 0, "brute": 0, "event": 0, "description": "Your tablesaw travels far! Have you tried bunching up Scrunklies?"},
+    {"wave": 10, "normal": 0, "ranged": 2, "brute": 0, "event": 0, "description": "Here comes the Slingly Scrunklies, they like to keep their distance."},
+    {"wave": 11, "normal": 5, "ranged": 2, "brute": 0, "event": 0, "description": "They FUCKING explode when they die!"},
+    {"wave": 12, "normal": 9, "ranged": 4, "brute": 0, "event": 0, "description": "Slingy Scrunklies are vulnerable while they're regrowing their seed head."},
+    {"wave": 13, "normal": 12, "ranged": 5, "brute": 0, "event": 0, "description": "They stole your tools and you're next."},
+    {"wave": 14, "normal": 0, "ranged": 0, "brute": 0, "event": 1, "description": "Wonderful, another tool AND more health"},
+    {"wave": 15, "normal": 10, "ranged": 1, "brute": 0, "event": 0, "description": "Your propane tank is a lot slower, but deals a lot more damage"},
+    {"wave": 16, "normal": 15, "ranged": 3, "brute": 0, "event": 0, "description": ""},
     {"wave": 17, "normal": 25, "ranged": 0, "brute": 0, "event": 0},
     {"wave": 18, "normal": 10, "ranged": 0, "brute": 1, "event": 0},
     {"wave": 19, "normal": 16, "ranged": 6, "brute": 1, "event": 0},
@@ -73,6 +73,7 @@ let pottedScrunkly = new createjs.Sprite(pottedScrunklySpritesheet, "idle")
 let playingPhoneAnim = true;
 let waveCurrentlyGoing = false;
 let moveEyes = false;
+
 
     
 
@@ -184,9 +185,9 @@ function init(){
     
     gameStage.addChild(patioTop);
     gameStage.addChild(pottedScrunkly);
+    gameStage.addChild(UIStuff);
 
-
-    phil = new Player(25, 100, philModel);
+    phil = new Player(25, playerHealth.healthMax, philModel);
     toolEquipped = new Tool("torch");
     enemySpawnManager = new Enemy();
     powerupSpawnManager = new Upgrade();
@@ -203,6 +204,7 @@ function init(){
     window.addEventListener("keypress", toolEquipped.swapTool);
     window.addEventListener("keyup", keysUp);
     waveCleared = false;
+
 }
 
 function keysDown(event)//when a key is pressed, mark its keycode and set it as true or false.
@@ -228,6 +230,7 @@ function update(event){
     toolEquipped.updateBullets();
     enemySpawnManager.enemyMovement();
     moveEye();
+  
 }
 
 function startNextWave(){
@@ -248,23 +251,26 @@ function startNextWave(){
             if (curWave == 7 || curWave == 14){
                 powerupSpawnManager.createPowerup("tool");
             }
-            if (curWave == 14){
+            else if (curWave == 14){
                 powerupSpawnManager.createPowerup('health');
                 powerupSpawnManager.createPowerup('health');
             }
-            if (curWave == 21){
+            else if (curWave == 21){
                 powerupSpawnManager.createPowerup('statBoost');
                 powerupSpawnManager.createPowerup('health');
                 powerupSpawnManager.createPowerup('health');
             }
-            if (curWave == 28){
+            else if (curWave == 28){
                 powerupSpawnManager.createPowerup('statBoost');
                 powerupSpawnManager.createPowerup('health');
                 powerupSpawnManager.createPowerup('health');
             }
-            if (curWave == 35){
+            else if (curWave == 35){
                 powerupSpawnManager.createPowerup('health');
                 powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup('health');
+            }
+            else {
                 powerupSpawnManager.createPowerup('health');
             }
    
@@ -282,6 +288,9 @@ function startNextWave(){
         
         waveCleared = false;
         waveCurrentlyGoing = true;
+        waveText.text = "Wave " + (curWave+1)
+        waveDescription.text = allWaves[curWave].description;
+        waveBannerAnimation.gotoAndPlay(0);
         console.log("wave "+ curWave +"!");
     }
 }

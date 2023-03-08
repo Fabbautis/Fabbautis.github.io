@@ -8,14 +8,15 @@ class Enemy {
         let enemy;
        switch (type){
             case "range":
-                enemy = new createjs.Shape();
-                enemy.graphics.beginFill("#25b95f").drawRect(0,0,20,20);
-                enemy.setBounds(0,0,20,20);
-                enemy.damage = 10;
-                enemy.health = 2;
-                enemy.distanceAway = 300;
-                enemy.cooldown = 0;
-                enemy.speed = Math.random() * (10-7)+7;
+                enemy = new createjs.Sprite(slingyScrunklySpritesheet, "spawn");
+                    enemy.scale = .12;
+                    enemy.damage = 10;
+                    enemy.health = 2;
+                    enemy.speed = Math.random() * (10-7)+7;
+                    enemy.deathTime = 14/24 //19 frames in death animation and 24 fps
+                    enemy.distanceAway = 300;
+                    enemy.cooldown = 0;
+                    enemy.isShooting = false;
             break;
             case 'brute':
                 enemy = new createjs.Shape();
@@ -158,7 +159,7 @@ class Enemy {
         for(let i = 0; i < enemies.length; i++){ //enemy movement
             let specificEnemy = enemies[i];
             
-            if (String(specificEnemy.currentAnimation) == 'moving'){
+            if (String(specificEnemy.currentAnimation) == 'moving' || String(specificEnemy.currentAnimation) == 'idle'){
                 
                 let changeX = phil.model.x - specificEnemy.x; //distance away from the player
                 let changeY = phil.model.y - specificEnemy.y;
@@ -183,22 +184,30 @@ class Enemy {
                 let xIncrease = specificEnemy.deltaX * specificEnemy.speed;
                 let yIncrease = specificEnemy.deltaY * specificEnemy.speed;
                 
-                if (specificEnemy.aName == ("range " + specificEnemy.enemyNumber)){ //this code will only go for ranged enemies
+                if (specificEnemy.aName == ("range " + specificEnemy.enemyNumber) && specificEnemy.isShooting == false){ //this code will only go for ranged enemies
                     if (changeX*changeX + changeY*changeY <=  specificEnemy.distanceAway * specificEnemy.distanceAway){ //If the enemy is within the player range
                         
                         if (phil.leftright || phil.updown){ //if the player is moving
                             xIncrease *=-0.33*(specificEnemy.speed); //go backwards in x
                             yIncrease *=-0.33 *(specificEnemy.speed); //go backwards in y
+                            specificEnemy.gotoAndPlay("moving")
                         }
                         else{
                             xIncrease = 0; //dont move, you're right where you want to be
                             yIncrease = 0;
                             specificEnemy.cooldown++;
+                            specificEnemy.gotoAndPlay('idle');
                         }
                         
                         if (specificEnemy.cooldown >=50){
-                            specificEnemy.cooldown = 0;
-                            this.spawnEnemy('spit', i);
+                            specificEnemy.isShooting = true;
+                            specificEnemy.gotoAndPlay('shooting')
+                            setTimeout(function () {
+                                enemySpawnManager.spawnEnemy('spit', i);
+                                specificEnemy.isShooting = false;
+                                specificEnemy.cooldown = 0;
+
+                            }, 600)
                         }
                     } 
                 }

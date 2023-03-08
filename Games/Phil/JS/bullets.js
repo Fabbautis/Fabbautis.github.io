@@ -68,7 +68,10 @@ class Tool {
             let toolUsing = toolsAvailable[0];
             toolsAvailable.splice(0,1);
             toolsAvailable.push(toolUsing);
-            toolEquipped.model = toolsAvailable[0]
+            toolEquipped.model = toolsAvailable[0];
+
+            toolEquippedSprite.gotoAndPlay(toolsAvailable[0])
+            toolEquippedFadeOut.gotoAndPlay(0);
         }
     }
 
@@ -138,10 +141,10 @@ class Tool {
             let enemyBounds = enemies[enemy].getTransformedBounds();
             if (projectile.intersects(enemyBounds)){
                 enemies[enemy].health = enemies [enemy].health - projectiles[i].damage
-                if (projectiles[i].aName == 'torch'){ //destroy the bullet if its not a tablesaw
+                if (projectiles[i].aName == 'torch'){ //destroy the bullet if its a torch
                     this.bulletDestroy(projectiles[i], i);
                 }          
-                if (enemies[enemy].aName == 'brute ' + enemy){
+                if (enemies[enemy].aName == 'brute ' + enemy){ //or if it hits a brute
                     this.bulletDestroy(projectiles[i], i);
                 }         
                 if (enemies[enemy].health <= 0 && enemies[enemy].isDead == false){
@@ -149,6 +152,7 @@ class Tool {
                     enemies[enemy].gotoAndPlay("dead");
                     setTimeout(function() {
                         enemySpawnManager.enemyKill(enemy);
+                        console.log('enemy is dead');
                     }, enemies[enemy].deathTime *1000);
                 }
                 return false;
