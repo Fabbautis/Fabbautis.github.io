@@ -1,5 +1,5 @@
 //Make the canvas the full screen of the HTML block (which for this instance, is the size of the entire window)
-console.log('stupid fucking dumbass')
+console.log('this is the build pushed at 8:42am');
 let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
 let timePassed= -1;
@@ -205,7 +205,6 @@ function init(){
     window.addEventListener("keypress", toolEquipped.swapTool);
     window.addEventListener("keyup", keysUp);
     waveCleared = false;
-console.log('fucker');
 }
 
 function keysDown(event)//when a key is pressed, mark its keycode and set it as true or false.
@@ -246,9 +245,7 @@ function startNextWave(){
         if (allWaves[curWave]== undefined){
             createjs.Ticker.removeEventListener("tick", startNextWave);
         }
-        console.log(allWaves[curWave])
         if (allWaves[curWave].event == 1){
-            console.log('creating a event instead')
             if (curWave == 7 || curWave == 14){
                 powerupSpawnManager.createPowerup("tool");
             }
@@ -292,7 +289,6 @@ function startNextWave(){
         waveText.text = "Wave " + (curWave+1)
         waveDescription.text = allWaves[curWave].description;
         waveBannerAnimation.gotoAndPlay(0);
-        console.log("wave dumbass!");
     }
 }
 
