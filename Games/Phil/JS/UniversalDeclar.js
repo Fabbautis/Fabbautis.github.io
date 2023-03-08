@@ -1,4 +1,5 @@
 //Make the canvas the full screen of the HTML block (which for this instance, is the size of the entire window)
+console.log('stupid fucking dumbass')
 let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
 let timePassed= -1;
