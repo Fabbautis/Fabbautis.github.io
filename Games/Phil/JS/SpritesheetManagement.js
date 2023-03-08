@@ -197,3 +197,16 @@ let toolEquippedSpritesheet = new createjs.SpriteSheet({
         "propane": [2],
     }
 })
+
+let portaitSpritesheet = new createjs.SpriteSheet({
+    framerate:24,
+    "images": ["Animate/Spritesheet/portraits.png"],
+    "frames": [[7,7,455,500,0,207.75,271.55],[7,507,455,500,0,207.75,271.55],[462,7,455,500,0,207.75,271.55],[462,507,455,500,0,207.75,271.55]],
+    "animations": {
+        "100": [0],
+        "75": [1],
+        "50": [2],
+        "25": [3],
+    }
+
+})

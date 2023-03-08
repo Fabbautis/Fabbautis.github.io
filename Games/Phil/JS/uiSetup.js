@@ -27,7 +27,7 @@ let profileCard = new createjs.Container();
 let profileCardBG = new createjs.Bitmap("/Animate/PNG/profile card.png")
     profileCard.addChild(profileCardBG);
 
-let pfp = new createjs.Bitmap("/Animate/PNG/face portrait.png") //change this later
+let pfp = new createjs.Sprite(portaitSpritesheet, "100") //change this later
     profileCard.addChild(pfp);
     pfp.x = profileCardBG.image.width * 0.1
     pfp.y = profileCardBG.image.height * 0.32

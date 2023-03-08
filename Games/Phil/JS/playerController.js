@@ -78,15 +78,13 @@ class Player {
         this.model.rotation = (direction *180/Math.PI)+90
     }
     playerDamage(hp){
-        this.hp -= hp
-        playerHealthGreens.graphics.command.w = this.hp / playerHealth.healthMax * playerHealthBorder.graphics.command.w
-     
-        profileFadeOut.gotoAndPlay(0);
+        this.hp -= hp;
+        updateHealthbar(this.hp);
+
         if (this.hp <=0){
             this.playerDeath();
             this.hp=0
         }
-        console.log(this.hp + " hp left")
     }
     playerDeath(){
         setTimeout(function (){
@@ -132,9 +130,7 @@ class Player {
                         this.hp = 100;
                     }
 
-                    playerHealthGreens.graphics.command.w = this.hp / playerHealth.healthMax * playerHealthBorder.graphics.command.w
-     
-                    profileFadeOut.gotoAndPlay(0);
+                   updateHealthbar(this.hp);
             }
             powerups.splice(powerup,1);
             gameStage.removeChild(powerup);

@@ -32,7 +32,7 @@ class Enemy {
 
                 enemy.graphics.beginFill("#ccffcc").drawRect(0,0,10,10);
                 enemy.setBounds(0,0,10,10);
-                enemy.damage = 10;
+                enemy.damage = 5;
                 enemy.health = 1;
                 enemy.speed = Math.random() * (13-7)+7;
             break;
@@ -40,7 +40,7 @@ class Enemy {
             default:
                 enemy = new createjs.Sprite(starScrunklySpritesheet, "spawn")
                     enemy.scale = .1;     
-                    enemy.damage = 20;   
+                    enemy.damage = 10;   
                     enemy.health = 2; 
                     enemy.speed = Math.random() * (13-7)+7;
                     enemy.deathTime = 19/24 //19 frames in death animation and 24 fps
