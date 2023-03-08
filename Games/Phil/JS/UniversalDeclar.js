@@ -1,5 +1,5 @@
 //Make the canvas the full screen of the HTML block (which for this instance, is the size of the entire window)
-console.log('this is the build pushed at 8:42am');
+console.log('this is the build pushed at 9:05am');
 let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
 let timePassed= -1;
