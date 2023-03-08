@@ -47,20 +47,20 @@ let toolEquipped;
 let enemySpawnManager;
 let powerupSpawnManager;
 
-let bg = new createjs.Bitmap("Animate/PNG/bg.png");
+let bg = new createjs.Bitmap("../Animate/PNG/bg.png");
     bg.scaleX = canvas.width / bg.image.width;
     bg.scaleY = canvas.height / bg.image.height;
     bg.x = 0;
     bg.y = 0;
     bg.aName = 'background'
 
-let patioBottom = new createjs.Bitmap("Animate/PNG/floor.png");
+let patioBottom = new createjs.Bitmap("../Animate/PNG/floor.png");
     patioBottom.scaleX = .2
     patioBottom.scaleY = .2
     patioBottom.x = canvas.width / 1.5;
     patioBottom.y = canvas.height / 2;
     
-let patioTop = new createjs.Bitmap("Animate/PNG/roof.png");
+let patioTop = new createjs.Bitmap("../Animate/PNG/roof.png");
     patioTop.scaleX = .2
     patioTop.scaleY = .2
     patioTop.x = patioBottom.x -30;
@@ -81,7 +81,7 @@ let environmentWalls = [];//Dynamically create a border wall around the playspac
 let wallThickness = 100;//Set a univeral wall thickness.
 //this will also help set up a invisible rectangle thatll prevent the player / bullets from walking offscreen (see walkspace declaration)
 for (let i = 0; i < 4; i++){
-    environmentWalls.push(new createjs.Bitmap("Animate/PNG/hedge bottom.png")) //each of the four walls are set up dynamically, only using 0, canvas width, and height
+    environmentWalls.push(new createjs.Bitmap("../Animate/PNG/hedge bottom.png")) //each of the four walls are set up dynamically, only using 0, canvas width, and height
     environmentWalls[i].scaleX = .35
     environmentWalls[i].scaleY = wallThickness/environmentWalls[i].image.height + .05;
     environmentWalls[i].height = environmentWalls[i].scaleY * environmentWalls[i].image.height;
@@ -122,7 +122,7 @@ for (let i = 0; i < 4; i++){
     environmentWalls[i].aName = 'environment wall '+i
 }
 for (let i = 4; i < 8; i++){
-    environmentWalls.push(new createjs.Bitmap("Animate/PNG/hedge top.png")) //each of the four walls are set up dynamically, only using 0, canvas width, and height
+    environmentWalls.push(new createjs.Bitmap("../Animate/PNG/hedge top.png")) //each of the four walls are set up dynamically, only using 0, canvas width, and height
     environmentWalls[i].scaleX = .35
     environmentWalls[i].scaleY = wallThickness/environmentWalls[i].image.height + .05;
     environmentWalls[i].height = environmentWalls[i].scaleY * environmentWalls[i].image.height;
@@ -204,7 +204,7 @@ function init(){
     window.addEventListener("keypress", toolEquipped.swapTool);
     window.addEventListener("keyup", keysUp);
     waveCleared = false;
-console.log('1')
+console.log('fucker');
 }
 
 function keysDown(event)//when a key is pressed, mark its keycode and set it as true or false.
@@ -291,7 +291,7 @@ function startNextWave(){
         waveText.text = "Wave " + (curWave+1)
         waveDescription.text = allWaves[curWave].description;
         waveBannerAnimation.gotoAndPlay(0);
-        console.log("wave "+ curWave +"!");
+        console.log("wave dumbass!");
     }
 }
 
