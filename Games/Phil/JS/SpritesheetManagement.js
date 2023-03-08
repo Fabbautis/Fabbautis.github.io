@@ -1,6 +1,6 @@
 let pottedScrunklySpritesheet = new createjs.SpriteSheet({
     framerate: 24,
-    "images": ["../Animate/Spritesheet/star scrunkly in pot.png"], 
+    "images": ["Animate/Spritesheet/star scrunkly in pot.png"], 
     "frames": [[7,234,192,150,0,2.5,3.049999999999997],[7,234,192,150,0,2.5,3.049999999999997],
     [7,234,192,150,0,2.5,3.049999999999997],[492,322,192,150,0,2.5,3.049999999999997],[492,322,192,150,0,2.5,3.049999999999997],
     [492,322,192,150,0,2.5,3.049999999999997],[684,333,192,150,0,2.5,3.049999999999997],[684,333,192,150,0,2.5,3.049999999999997],
@@ -62,7 +62,7 @@ let pottedScrunklySpritesheet = new createjs.SpriteSheet({
 
 let starScrunklySpritesheet = new createjs.SpriteSheet({
     framerate:24,
-    "images": ["../Animate/Spritesheet/star scrunkly.png"],
+    "images": ["Animate/Spritesheet/star scrunkly.png"],
     "frames": [[2396,2312,356,183,0,-83.5,-598],[2396,2312,356,183,0,-83.5,-598],[3276,3916,491,391,0,-18.5,-387],
     [1544,3576,604,391,0,60.5,-387],[1544,3967,604,391,0,60.5,-387],[3523,2151,683,366,0,93.5,-417],[3523,2517,683,366,0,93.5,-417],
     [2148,3531,564,367,0,29.5,-411],[2148,3531,564,367,0,29.5,-411],[2148,3531,564,367,0,29.5,-411],[2148,3531,564,367,0,29.5,-411],
@@ -97,7 +97,7 @@ let starScrunklySpritesheet = new createjs.SpriteSheet({
 
 let slingyScrunklySpritesheet = new createjs.SpriteSheet({
     framerate:24,
-    "images":["../Animate/Spritesheet/slingy scrunkly.png"],
+    "images":["Animate/Spritesheet/slingy scrunkly.png"],
     "frames": [[1196,7047,841,164,0,334.29999999999995,46.25],[1196,7047,841,164,0,334.29999999999995,46.25],
     [1196,7047,841,164,0,334.29999999999995,46.25],[5555,7001,894,225,0,380.29999999999995,111.25],
     [5555,7001,894,225,0,380.29999999999995,111.25],[5555,7001,894,225,0,380.29999999999995,111.25],
@@ -189,7 +189,7 @@ let slingyScrunklySpritesheet = new createjs.SpriteSheet({
 
 let toolEquippedSpritesheet = new createjs.SpriteSheet({
     framerate:24,
-    "images": ["../Animate/Spritesheet/toolCycle.png"],
+    "images": ["Animate/Spritesheet/toolCycle.png"],
     "frames": [[7,7,631,582,0,214.25,303.6],[638,7,631,564,0,214.25,303.6],[638,571,631,564,0,214.25,303.6]],
     "animations": {
         "torch": [0],
@@ -200,7 +200,7 @@ let toolEquippedSpritesheet = new createjs.SpriteSheet({
 
 let portaitSpritesheet = new createjs.SpriteSheet({
     framerate:24,
-    "images": ["../Animate/Spritesheet/portraits.png"],
+    "images": ["Animate/Spritesheet/portraits.png"],
     "frames": [[7,7,455,500,0,207.75,271.55],[7,507,455,500,0,207.75,271.55],[462,7,455,500,0,207.75,271.55],[462,507,455,500,0,207.75,271.55]],
     "animations": {
         "100": [0],

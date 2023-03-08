@@ -29,13 +29,14 @@ let profileCardBG = new createjs.Bitmap("Animate/PNG/profile card.png")
 
 let pfp = new createjs.Sprite(portaitSpritesheet, "100") //change this later
     profileCard.addChild(pfp);
-    pfp.x = profileCardBG.image.width * 0.1
-    pfp.y = profileCardBG.image.height * 0.32
+   
+    pfp.x = profileCardBG.image.width * 0.2
+    pfp.y = profileCardBG.image.height * 0.55
 
 let playerName = new createjs.Text("Phil - Unlikely Hero", "150px Tahoma", "#24221d");
     profileCard.addChild(playerName)
     playerName.x = profileCardBG.image.width * 0.4
-    playerName.y = pfp.y + 40;
+    playerName.y = pfp.y-190;
 
 let playerStats = new createjs.Text("Damage: 1. Speed: 25", "120px Tahoma", "#24221d")
 profileCard.addChild(playerStats)
@@ -69,7 +70,7 @@ let waveBanner = new createjs.Container();
 
 let waveBannerBG = new createjs.Bitmap("Animate/PNG/wave banner.png")
     waveBanner.addChild(waveBannerBG);
-    waveBanner.x = waveBannerBG.image.width/8 + 50;
+    waveBanner.x -= waveBannerBG.image.width/8
 
 let waveText = new createjs.Text("", "bold 180px Tahoma", "#042b0c")
     waveBanner.addChild(waveText);

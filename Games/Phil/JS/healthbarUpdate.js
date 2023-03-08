@@ -12,4 +12,5 @@ function updateHealthbar(health){
         pfp.gotoAndStop('25');
     }
     profileFadeOut.gotoAndPlay(0);
+    console.log(profileCardBG.image.width, profileCardBG.image.height, pfp.x, pfp.y)
 }
