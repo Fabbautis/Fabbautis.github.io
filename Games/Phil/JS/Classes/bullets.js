@@ -103,6 +103,7 @@ class Tool {
 
         for (let i = 0; i < projectiles.length; i++) {
             let specificProjectile = projectiles[i];
+
             for (let i = 0; i < enemies.length; i++){
                 if (this.bulletIntersects(i) == false){//check to see if the bullet spawns on something it can kill already
                     return //if the bullet did hit something, then dont do the rest of this code so there wont be errors in console.log
@@ -136,27 +137,29 @@ class Tool {
         projectiles.splice(i, 1);          
     }
     bulletIntersects(enemy){
+        if (enemies[enemy].getTransformedBounds() == undefined){
+            return false;
+        }
         for(let i = 0; i < projectiles.length; i++){
             let projectile =  projectiles[i].getTransformedBounds();
             let enemyBounds = enemies[enemy].getTransformedBounds();
             try{
                 if (projectile.intersects(enemyBounds) && enemies[enemy].isDead == false){
-                    console.log(projectiles[i].aName + " " + projectiles[i].bulletNumber + ' hit ' + enemies[enemy].aName)
+                    
                     enemies[enemy].health = enemies[enemy].health - projectiles[i].damage
+                    if (enemies[enemy].health <= 0){
+                        console.log(enemies[enemy].aName + " is dead")
+                        enemies[enemy].isDead = true;
+                        enemies[enemy].gotoAndPlay("dead");
+                    }
                     if (projectiles[i].aName == 'torch'){ //destroy the bullet if its a torch
                         this.bulletDestroy(projectiles[i], i);
+                        return false;
                     }          
                     if (enemies[enemy].aName == 'brute ' + enemy){ //or if it hits a brute
                         this.bulletDestroy(projectiles[i], i);
+                        return false;
                     }         
-                    if (enemies[enemy].health <= 0){
-                        enemies[enemy].isDead = true;
-                        console.log(enemies[enemy].aName + ' is dead');
-                        enemies[enemy].gotoAndPlay("dead");
-                        setTimeout(function() {
-                            enemySpawnManager.enemyKill(enemy);
-                        }, enemies[enemy].deathTime *1000);
-                    }
                 } 
             }
             catch {

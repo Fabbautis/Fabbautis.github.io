@@ -62,7 +62,6 @@ function createSpriteSheets(){
             "phoneCallEnd":[114, 121, "idle"]
         }
     });
-    console.log(pottedScrunklySpritesheet)
     
     starScrunklySpritesheet = new createjs.SpriteSheet({
         framerate:24,

@@ -35,7 +35,6 @@ function createUI(){
     
         pfp.x = profileCardBG.image.width * 0.2
         pfp.y = profileCardBG.image.height * 0.55
-        console.log(pfp);
 
     playerName = new createjs.Text("Phil - Unlikely Hero", "150px Tahoma", "#24221d");
         profileCard.addChild(playerName)

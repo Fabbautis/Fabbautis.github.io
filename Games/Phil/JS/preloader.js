@@ -29,11 +29,11 @@ queue.loadManifest(characterSpritesheets)
 
 
 function handleFileProgress(event){
-    console.log('Progress: '+ Math.floor(queue.progress*100) + "%");
+    //console.log('Progress: '+ Math.floor(queue.progress*100) + "%");
 }
 
 function handleFileLoaded(event){
-    console.log(event.item.id + " has finished loading")
+    //console.log(event.item.id + " has finished loading")
 }
 
 function handleFileComplete(){//spritesheets, then game environment, then UI, then start game

@@ -47,7 +47,11 @@ class Enemy {
 
             break;
         }
-
+        enemy.on("animationend", function(event){
+            if (event.name =='dead'){
+                enemySpawnManager.enemyKill(enemy);
+            }
+        })
         enemy.enemyNumber = enemies.length;
         enemy.isEnemy = true;
         enemy.isDead = false;
@@ -218,7 +222,13 @@ class Enemy {
         }
     }
     enemyKill(enemy){
-        gameStage.removeChild(enemies[enemy]);
-        enemies.splice(enemy,1);
+        let enemyIndex;
+        for (let i = 0; i < enemies.length; i++){
+            if (enemies[i] == enemy){
+                enemyIndex = i;
+            }
+        }
+        gameStage.removeChild(enemy);
+        enemies.splice(enemyIndex, 1);
     }
 }
