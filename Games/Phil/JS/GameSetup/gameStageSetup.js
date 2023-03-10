@@ -1,5 +1,7 @@
-let bg, patioBottom, patioTop, pottedScrunkly, playingPhoneAnim, waveCurrentlyGoing, moveEyes, environmentWalls, wallThickness, walkspace
+let bg, patioBottom, patioTop, pottedScrunkly, playingPhoneAnim, waveCurrentlyGoing, moveEyes, environmentWalls, wallThickness, walkspace,
+bgMusic, firstClick
 function createGameEnvironment(){
+    firstClick = false
     bg = new createjs.Bitmap(queue.getResult('bg'));
         bg.scaleX = canvas.width / bg.image.width;
         bg.scaleY = canvas.height / bg.image.height;
@@ -117,6 +119,14 @@ for (let i = 4; i < 8; i++){
 walkspace = new createjs.Rectangle(wallThickness, wallThickness, canvas.width-wallThickness, canvas.height-wallThickness);
     walkspace.aName = 'walkspace';
 
+
+backgroundMusic = new Audio();
+    backgroundMusic.src = "75 & Lower - DJ Williams.mp3"
+
+    backgroundMusic.addEventListener('ended', function () {
+        backgroundMusic.currentTime = 0;
+        backgroundMusic.play();
+    })
 
     console.log('environment loaded')
     createUI();

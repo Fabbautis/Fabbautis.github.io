@@ -21,7 +21,8 @@ let characterSpritesheets = [
 let onScreenItemAssets = [
     {id: "projectiles", src: "Animate/Spritesheet/projectiles.png"},
     {id: "powerups", src: "Animate/Spritesheet/powerups.png"},
-    {id: "powerupHalo", src: "Animate/PNG/powerup hover.png"}
+    {id: "powerupHalo", src: "Animate/PNG/powerup hover.png"},
+    {id: "bgMusic", src: "75 & Lower - DJ Williams.mp3"}
 ]
 
 queue.on("progress", handleFileProgress)

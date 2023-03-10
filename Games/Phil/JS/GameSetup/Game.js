@@ -50,6 +50,11 @@ function rotatePlayer(event){
     phil.playerRotation(event)
 }
 function shoot(event){
+    if(!firstClick){
+        firstClick = true;
+        backgroundMusic.play();
+        console.log(backgroundMusic);
+    }
     toolEquipped.createProjectile(toolEquipped.model, event)
 }
 
@@ -78,6 +83,10 @@ function startNextWave(){
             if (curWave == 7 || curWave == 14){
                 powerupSpawnManager.createPowerup("tool");
             }
+            if (curWave == 7){
+                powerupSpawnManager.createPowerup("statBoost");
+                powerupSpawnManager.createPowerup("health");
+            }
             else if (curWave == 14){
                 powerupSpawnManager.createPowerup('health');
                 powerupSpawnManager.createPowerup('health');
@@ -85,17 +94,12 @@ function startNextWave(){
             else if (curWave == 21){
                 powerupSpawnManager.createPowerup('statBoost');
                 powerupSpawnManager.createPowerup('health');
-                powerupSpawnManager.createPowerup('health');
             }
             else if (curWave == 28){
-                powerupSpawnManager.createPowerup('statBoost');
-                powerupSpawnManager.createPowerup('health');
                 powerupSpawnManager.createPowerup('health');
             }
             else if (curWave == 35){
-                powerupSpawnManager.createPowerup('health');
-                powerupSpawnManager.createPowerup('health');
-                powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup("tool");
             }
             else {
                 powerupSpawnManager.createPowerup('statBoost');

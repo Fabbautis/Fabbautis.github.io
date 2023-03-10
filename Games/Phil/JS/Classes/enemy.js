@@ -3,7 +3,7 @@ let spits = []; //spit will be in its own area because enemies will follow the p
 class Enemy {
     constructor(){
     }
-    spawnEnemy(type, rangeIndex){
+    spawnEnemy(type, rangeIndex, flip){
         
         let enemy;
        switch (type){
@@ -28,10 +28,11 @@ class Enemy {
                 enemy.speed = Math.random() * (8-5)+5;
             break;
             case 'spit':
-                enemy = new createjs.Shape();
-
-                enemy.graphics.beginFill("#ccffcc").drawRect(0,0,10,10);
-                enemy.setBounds(0,0,10,10);
+                enemy = new createjs.Sprite(projectileSpritesheet, "spit")
+                enemy.scale = .175; 
+                if (flip){
+                    enemy.scaleY = -0.175
+                }
                 enemy.damage = 5;
                 enemy.health = 1;
                 enemy.speed = Math.random() * (13-7)+7;
@@ -121,6 +122,9 @@ class Enemy {
         let changeX = spit.x - phil.model.x; 
         let changeY = spit.y - phil.model.y;
 
+        let direction = Math.atan2(changeY, changeX); //inner angle based on the triangle
+        spit.rotation = (direction *180/Math.PI)+180
+        
         if (Math.abs(changeX) > Math.abs(changeY)){
             spit.deltaX = changeX / Math.abs(changeX) 
             spit.deltaY = changeY / Math.abs(changeX) 
@@ -142,7 +146,6 @@ class Enemy {
             waveCurrentlyGoing = false;
             collectEndTime()
         }
-            
         for (let i = 0; i < spits.length; i++) { //spit movement
             let specificProjectile = spits[i];
             
@@ -161,7 +164,6 @@ class Enemy {
         
         for(let i = 0; i < enemies.length; i++){ //enemy movement
             let specificEnemy = enemies[i];
-            
             if (String(specificEnemy.currentAnimation) == 'moving' || String(specificEnemy.currentAnimation) == 'idle'){
                 
                 let changeX = phil.model.x - specificEnemy.x; //distance away from the player
@@ -187,36 +189,14 @@ class Enemy {
                 let xIncrease = specificEnemy.deltaX * specificEnemy.speed;
                 let yIncrease = specificEnemy.deltaY * specificEnemy.speed;
                 
-                if (specificEnemy.aName == ("range " + specificEnemy.enemyNumber) && specificEnemy.isShooting == false){ //this code will only go for ranged enemies
-                    if (changeX*changeX + changeY*changeY <=  specificEnemy.distanceAway * specificEnemy.distanceAway){ //If the enemy is within the player range
-                        
-                        if (phil.leftright || phil.updown){ //if the player is moving
-                            xIncrease *=-0.33*(specificEnemy.speed); //go backwards in x
-                            yIncrease *=-0.33 *(specificEnemy.speed); //go backwards in y
-                            specificEnemy.gotoAndPlay("moving")
-                        }
-                        else{
-                            xIncrease = 0; //dont move, you're right where you want to be
-                            yIncrease = 0;
-                            specificEnemy.cooldown++;
-                            specificEnemy.gotoAndPlay('idle');
-                        }
-                        
-                        if (specificEnemy.cooldown >=50){
-                            specificEnemy.isShooting = true;
-                            specificEnemy.gotoAndPlay('shooting')
-                            setTimeout(function () {
-                                enemySpawnManager.spawnEnemy('spit', i);
-                                specificEnemy.isShooting = false;
-                                specificEnemy.cooldown = 0;
-
-                            }, 600)
-                        }
-                    } 
+                 
+                if (specificEnemy.aName == ("range " + specificEnemy.enemyNumber) && specificEnemy.isShooting == false){
+                    this.rangedEnemyMovement(specificEnemy, xIncrease,yIncrease, i)
+                } else{
+                    specificEnemy.x += xIncrease;     
+                    specificEnemy.y += yIncrease;    
                 }
-                specificEnemy.x += xIncrease;     
-                specificEnemy.y += yIncrease;     
-                    
+                
                 this.enemyIntersects(phil.model, enemies); 
             }
         }
@@ -231,4 +211,43 @@ class Enemy {
         gameStage.removeChild(enemy);
         enemies.splice(enemyIndex, 1);
     }
+
+    rangedEnemyMovement(specificEnemy,xIncrease,yIncrease, i){
+        let changeX = phil.model.x - specificEnemy.x; //distance away from the player
+        let changeY = phil.model.y - specificEnemy.y;
+        
+        if (changeX*changeX + changeY*changeY <=  specificEnemy.distanceAway * specificEnemy.distanceAway){ //If the enemy is within the player range
+            
+            console.log('enemy is in range')
+            if (phil.leftright || phil.updown){ //if the player is moving
+                xIncrease *=-0.33*(specificEnemy.speed); //go backwards in x
+                yIncrease *=-0.33 *(specificEnemy.speed); //go backwards in y
+                specificEnemy.gotoAndPlay("moving")
+            }
+            else{
+                xIncrease = 0; //dont move, you're right where you want to be
+                yIncrease = 0;
+                specificEnemy.cooldown++;
+                specificEnemy.gotoAndPlay('idle');
+            }
+            
+            if (specificEnemy.cooldown >=50){
+                let shouldFlip = false
+                specificEnemy.isShooting = true;
+                specificEnemy.gotoAndPlay('shooting')
+                if (specificEnemy.x > phil.model.x){
+                    console.log('enemy is to the right of the player')
+                    shouldFlip = true
+                }
+                setTimeout(function () {
+                    enemySpawnManager.spawnEnemy('spit', i, shouldFlip);
+                    specificEnemy.isShooting = false;
+                    specificEnemy.cooldown = 0;
+
+                }, 600)
+            }   
+        } 
+        specificEnemy.x += xIncrease;     
+        specificEnemy.y += yIncrease;
+    } 
 }

@@ -31,26 +31,33 @@ class Tool {
                 bullet.damage = 1 + damageBoost;
                 break;
             case "tablesaw":
-                bullet.graphics.beginFill("#FFFFFF").drawRect(phil.model.x,phil.model.y,25,25);
-                bullet.setBounds(phil.model.x, phil.model.y, 5,25)
+                bullet.gotoAndPlay("tablesawLoop")
+                bullet.x = phil.model.x;
+                bullet.y = phil.model.y;
+                bullet.scale = .2
                 bullet.intendedSpeed = 50;
                 bullet.maxDistance = 10000;
                 bullet.damage = 2 + damageBoost;
                 tablesawCooldown = 0;
                 break;
             case "propane":
-                bullet.graphics.beginFill("#00FF00").drawRect(phil.model.x,phil.model.y,15,15);
-                bullet.setBounds(phil.model.x, phil.model.y, 15,15)
+                bullet.gotoAndPlay("propaneLoop")
+                bullet.x = phil.model.x;
+                bullet.y = phil.model.y;
+                bullet.scale = .2
                 bullet.intendedSpeed = 10;
                 bullet.maxDistance = 600;
                 bullet.damage = 10 + damageBoost;
                 propaneCooldown = 0;
                 break;
             default:
-                bullet.graphics.beginFill("#000000").drawRect(phil.model.x,phil.model.y,5,5);
-                bullet.setBounds(phil.model.x, phil.model.y, 5,5)
-                bullet.intendedSpeed = 5;
-                bullet.maxDistance = 120;
+                bullet.gotoAndPlay("torchIgnite")
+                bullet.x = phil.model.x;
+                bullet.y = phil.model.y;
+                bullet.scale = .2
+                bullet.intendedSpeed = 20;
+                bullet.maxDistance = 250;
+                bullet.damage = 1 + damageBoost;
                 break;
         }
 
@@ -129,8 +136,8 @@ class Tool {
                 this.bulletDestroy(specificProjectile, i) //if it goes out of bounds
             }   
             if (specificProjectile.distanceTravelled >= specificProjectile.maxDistance){ //if it goes as far as it needs to go
-                if (specificProjectile.aName == 'torch'){
-                    if (specificProjectile.torchDead == true){
+                /*/if (specificProjectile.aName === 'torch'){
+                    if (specificProjectile.torchDead === true){
                         return;
                     }
                     specificProjectile.torchDead = true;
@@ -140,9 +147,9 @@ class Tool {
                             toolEquipped.bulletDestroy(specificProjectile, i);
                         }
                     })
-                } else{
+                } else{/*/
                     this.bulletDestroy(specificProjectile, i);
-                }
+               /// }
             }
 
         }

@@ -100,7 +100,7 @@ function createSpriteSheets(){
     
     slingyScrunklySpritesheet = new createjs.SpriteSheet({
         framerate:24,
-        "images":[queue.getResult('slingyScrunkly')],
+        "images":["Animate/Spritesheet/slingy scrunkly.png"],
         "frames": [[1196,7047,841,164,0,334.29999999999995,46.25],[1196,7047,841,164,0,334.29999999999995,46.25],
         [1196,7047,841,164,0,334.29999999999995,46.25],[5555,7001,894,225,0,380.29999999999995,111.25],
         [5555,7001,894,225,0,380.29999999999995,111.25],[5555,7001,894,225,0,380.29999999999995,111.25],
