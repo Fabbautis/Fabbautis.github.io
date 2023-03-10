@@ -18,14 +18,15 @@ class Tool {
         if (tool == 'propane' && propaneCooldown <= 25){
             return;
         }
-        
-        let bullet = new createjs.Shape();
+        let bullet = new createjs.Sprite(projectileSpritesheet)
 
         switch (tool){
             case "torch":
-                bullet.graphics.beginFill("#FFA500").drawRect(phil.model.x,phil.model.y,5,5);//get the model ready, as well as its speed and damage
+                bullet.gotoAndPlay("torchIgnite")
+                bullet.x = phil.model.x;
+                bullet.y = phil.model.y;
+                bullet.scale = .2
                 bullet.intendedSpeed = 20;
-                bullet.setBounds(phil.model.x, phil.model.y, 5,5);
                 bullet.maxDistance = 250;
                 bullet.damage = 1 + damageBoost;
                 break;
@@ -49,7 +50,7 @@ class Tool {
                 bullet.graphics.beginFill("#000000").drawRect(phil.model.x,phil.model.y,5,5);
                 bullet.setBounds(phil.model.x, phil.model.y, 5,5)
                 bullet.intendedSpeed = 5;
-                bullet.maxDistance = 250;
+                bullet.maxDistance = 120;
                 break;
         }
 
@@ -82,6 +83,8 @@ class Tool {
         let changeX = event.stageX - phil.model.x; //distance away from the player based on where the mouse was clicked
         let changeY = event.stageY - phil.model.y;
 
+        let direction = Math.atan2(changeY, changeX); //inner angle based on the triangle
+        bullet.rotation = (direction *180/Math.PI)
 
         if (Math.abs(changeX) > Math.abs(changeY)){ //if the x distance is further than the y distance.
             bullet.deltaX = changeX / Math.abs(changeX) //create a ratio determined by the x distance as the denominator
@@ -123,10 +126,23 @@ class Tool {
             specificProjectile.distanceTravelled += Math.sqrt(distanceTravelled);
            
             if ((specificProjectile.globalX > walkspace.width || specificProjectile.globalX < walkspace.x)||(specificProjectile.globalY > walkspace.height || specificProjectile.globalY < walkspace.y)){
-                this.bulletDestroy(specificProjectile, i)
+                this.bulletDestroy(specificProjectile, i) //if it goes out of bounds
             }   
-            if (specificProjectile.distanceTravelled >= specificProjectile.maxDistance){
-                this.bulletDestroy(specificProjectile, i);
+            if (specificProjectile.distanceTravelled >= specificProjectile.maxDistance){ //if it goes as far as it needs to go
+                if (specificProjectile.aName == 'torch'){
+                    if (specificProjectile.torchDead == true){
+                        return;
+                    }
+                    specificProjectile.torchDead = true;
+                    specificProjectile.gotoAndPlay("torchDie");
+                    specificProjectile.on("animationend", function(event){
+                        if (event.name =='torchDie'){
+                            toolEquipped.bulletDestroy(specificProjectile, i);
+                        }
+                    })
+                } else{
+                    this.bulletDestroy(specificProjectile, i);
+                }
             }
 
         }
@@ -148,7 +164,6 @@ class Tool {
                     
                     enemies[enemy].health = enemies[enemy].health - projectiles[i].damage
                     if (enemies[enemy].health <= 0){
-                        console.log(enemies[enemy].aName + " is dead")
                         enemies[enemy].isDead = true;
                         enemies[enemy].gotoAndPlay("dead");
                     }

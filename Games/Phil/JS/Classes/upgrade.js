@@ -3,35 +3,88 @@ class Upgrade {
     constructor(){
     }
     createPowerup(type){
-        let powerup = new createjs.Shape();
+        let powerup = new createjs.Container();
+        let powerupModel = new createjs.Sprite(powerupsSpritesheet)
+        let powerupRectangle
+        let powerupHalo = new createjs.Bitmap(queue.getResult('powerupHalo'));
+            powerupHalo.regX = powerupHalo.image.width / 2;
+            powerupHalo.regy = powerupHalo.image.height / 2;
+            
+        powerup.addChild(powerupHalo)
         switch (type){
             case "tool":
-                powerup.graphics.beginFill("#FFC0CB").drawRect(0,0,30,30);
-                powerup.setBounds(0,0,50,50);
                 if (toolsAvailable.length == 1){
+                    powerupModel.gotoAndStop("tablesaw");
+
+                    powerupRectangle = powerupModel.getTransformedBounds()
+                    powerupModel.regX = powerupRectangle.width/2;
+                    powerupModel.regY = powerupRectangle.height/2;
+                    
+                    powerupModel.x = powerupHalo.x
+                    powerupModel.y = powerupHalo.y + 1180;
+
                     powerup.aName = 'tablesaw'
                 }
                 if (toolsAvailable.length == 2){
+                    powerupModel.gotoAndStop("propane");
+
+                    powerupRectangle = powerupModel.getTransformedBounds()
+                    powerupModel.regX = powerupRectangle.width/2;
+                    powerupModel.regY = powerupRectangle.height/2;
+                    powerupModel.scale = 0.9;
+                    
+                    powerupModel.x = powerupHalo.x-30;
+                    powerupModel.y = powerupHalo.y + 1400;
+
                     powerup.aName = 'propane'
                 }
                 if (toolsAvailable.length >= 3){
+                    powerupModel.gotoAndStop("killAll");
+
+                    powerupRectangle = powerupModel.getTransformedBounds()
+                    powerupModel.regX = powerupRectangle.width/2;
+                    powerupModel.regY = powerupRectangle.height/2;
+                    
+                    powerupModel.x = powerupHalo.x+200
+                    powerupModel.y = powerupHalo.y + 1240;
+
                     powerup.aName = 'killAll'
                 }
+                powerup.addChild(powerupModel);
             break;
             case "statBoost":
-                powerup.graphics.beginFill("#FF5349").drawRect(0,0,30,30);
-                powerup.setBounds(0,0,50,50);
+                powerupModel.gotoAndStop(type);
+                powerupModel.scale = 1.3
+
+                powerupRectangle = powerupModel.getTransformedBounds()
+                powerupModel.regX = powerupRectangle.width/2;
+                powerupModel.regY = powerupRectangle.height/2;
+                
+                powerupModel.x = powerupHalo.x + 50
+                powerupModel.y = powerupHalo.y + 1320;
+
+                powerup.addChild(powerupModel);
+
                 powerup.aName = type;
-                powerup.randomProperty = Math.round(Math.random()*(2) +1);
             break;
             case "health":
             default:
-                powerup.graphics.beginFill("#FE2C54").drawRect(0,0,30,30);
-                powerup.setBounds(0,0,50,50);
+                powerupModel.gotoAndStop("health");
+
+                powerupRectangle = powerupModel.getTransformedBounds()
+                powerupModel.regX = powerupRectangle.width/2;
+                powerupModel.regY = powerupRectangle.height/2;
+                
+                powerupModel.x = powerupHalo.x
+                powerupModel.y = powerupHalo.y + 1000;
+
+                powerup.addChild(powerupModel);
+
                 powerup.aName = type;
             break;
         }
         powerup.property = 'powerup'
+        powerup.scale = 0.175;
         if (powerups.length ==0){ //first powerup on screen
             powerup.x = canvas.width/2;
             powerup.y = canvas.height/2;

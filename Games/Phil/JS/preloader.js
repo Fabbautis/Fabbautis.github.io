@@ -11,11 +11,17 @@ let UIFiles = [
     {id: "toolEquippedUI", src: "Animate/Spritesheet/toolCycle.png"},
     {id: "portrait", src: "Animate/Spritesheet/portraits.png"},
     {id: "portraitCardBG", src: "Animate/PNG/profile card.png"},
-    {id: "waveBanner", src: "Animate/PNG/wave banner.png"}
+    {id: "waveBanner", src: "Animate/PNG/wave banner.png"},    
 ]
 let characterSpritesheets = [
     {id: "starScrunkly", src: "Animate/Spritesheet/star scrunkly.png"},
     {id: "slingyScrunkly", src: "Animate/Spritesheet/slingy scrunkly.png"}
+]
+
+let onScreenItemAssets = [
+    {id: "projectiles", src: "Animate/Spritesheet/projectiles.png"},
+    {id: "powerups", src: "Animate/Spritesheet/powerups.png"},
+    {id: "powerupHalo", src: "Animate/PNG/powerup hover.png"}
 ]
 
 queue.on("progress", handleFileProgress)
@@ -25,6 +31,8 @@ queue.on("complete", handleFileComplete)
 queue.loadManifest(gameEnvironmentFiles)
 queue.loadManifest(UIFiles)
 queue.loadManifest(characterSpritesheets)
+queue.loadManifest(onScreenItemAssets)
+
 
 
 

@@ -98,7 +98,8 @@ function startNextWave(){
                 powerupSpawnManager.createPowerup('health');
             }
             else {
-                powerupSpawnManager.createPowerup('health');
+                powerupSpawnManager.createPowerup('statBoost');
+                
             }
    
         } else {
