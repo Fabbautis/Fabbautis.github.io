@@ -99,5 +99,6 @@ function createUI(){
     UIStuff.addChild(toolEquippedSprite);
     UIStuff.addChild(profileCard);
     console.log("UI loaded");
+    console.log(gameStage);
     init();
 }

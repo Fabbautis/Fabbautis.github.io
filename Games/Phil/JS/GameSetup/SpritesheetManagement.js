@@ -1,4 +1,4 @@
-let pottedScrunklySpritesheet, starScrunklySpritesheet, slingyScrunklySpritesheet, toolEquippedSpritesheet, portraitSpritesheet
+let pottedScrunklySpritesheet, starScrunklySpritesheet, slingyScrunklySpritesheet, bruteScrunklySpritesheet, toolEquippedSpritesheet, portraitSpritesheet
 
 function createSpriteSheets(){
     pottedScrunklySpritesheet = new createjs.SpriteSheet({
@@ -100,7 +100,7 @@ function createSpriteSheets(){
     
     slingyScrunklySpritesheet = new createjs.SpriteSheet({
         framerate:24,
-        "images":["Animate/Spritesheet/slingy scrunkly.png"],
+        "images":[queue.getResult('slingyScrunkly')],
         "frames": [[1196,7047,841,164,0,334.29999999999995,46.25],[1196,7047,841,164,0,334.29999999999995,46.25],
         [1196,7047,841,164,0,334.29999999999995,46.25],[5555,7001,894,225,0,380.29999999999995,111.25],
         [5555,7001,894,225,0,380.29999999999995,111.25],[5555,7001,894,225,0,380.29999999999995,111.25],
@@ -190,6 +190,17 @@ function createSpriteSheets(){
         }
     })
     
+    bruteScrunklySpritesheet = new createjs.SpriteSheet({
+        framerate:24,
+        "images": [queue.getResult('bruteScrunkly')],
+        "frames": [[2635,0,1235,671,0,631.55,124.15],[1221,0,1414,638,0,683.55,59.150000000000006],[1221,638,1409,510,0,715.55,-99.85],[0,0,1221,888,0,654.55,106.15]],
+        "animations":{
+            "spawn": [0,0,"moving"],
+            "moving":[1,1,"moving"],
+            "hit":[2,2, "moving"],
+            "dead": [3,3]
+        }
+    })
     toolEquippedSpritesheet = new createjs.SpriteSheet({
         framerate:24,
         "images": [queue.getResult('toolEquippedUI')],

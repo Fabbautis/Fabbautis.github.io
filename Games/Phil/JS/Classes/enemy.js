@@ -12,20 +12,20 @@ class Enemy {
                     enemy.scale = .12;
                     enemy.damage = 10;
                     enemy.health = 2;
-                    enemy.speed = Math.random() * (10-7)+7;
+                    enemy.speed = Math.random() * (12-8)+8;
                     enemy.deathTime = 14/24 //19 frames in death animation and 24 fps
-                    enemy.distanceAway = 300;
+                    enemy.distanceAway = 450;
                     enemy.cooldown = 0;
                     enemy.isShooting = false;
             break;
             case 'brute':
-                enemy = new createjs.Shape();
-                
-                enemy.graphics.beginFill("#046137").drawRect(0,0,70,70);
-                enemy.setBounds(0,0,70,70);
-                enemy.damage = 30;
-                enemy.health = 20;
-                enemy.speed = Math.random() * (8-5)+5;
+                enemy = new createjs.Sprite(bruteScrunklySpritesheet, "spawn");
+                    enemy.scale = .1;     
+                    enemy.damage = 20;   
+                    enemy.health = 100; 
+                    enemy.deathTime = 1/24 //19 frames in death animation and 24 fps
+                    enemy.speed = Math.random() * (12-8)+8;
+                    enemy.type = 'brute'
             break;
             case 'spit':
                 enemy = new createjs.Sprite(projectileSpritesheet, "spit")
@@ -35,7 +35,7 @@ class Enemy {
                 }
                 enemy.damage = 5;
                 enemy.health = 1;
-                enemy.speed = Math.random() * (13-7)+7;
+                enemy.speed = Math.random() * (18-15)+15;
             break;
             case 'normal':
             default:
@@ -231,7 +231,7 @@ class Enemy {
                 specificEnemy.gotoAndPlay('idle');
             }
             
-            if (specificEnemy.cooldown >=50){
+            if (specificEnemy.cooldown >=25){
                 let shouldFlip = false
                 specificEnemy.isShooting = true;
                 specificEnemy.gotoAndPlay('shooting')

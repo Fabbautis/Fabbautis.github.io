@@ -3,7 +3,7 @@ let gameStage = new createjs.Stage("canvas");
 let canvas = document.getElementById('canvas');
 let timePassed= -1;
 let allWaves = [
-    {"wave": 0, "normal": 1, "ranged": 0, "brute": 0, "event": 0, "description": "Welcome to the backyard!"},
+    {"wave": 0, "normal": 1, "ranged": 0, "brute": 0, "event": 0, "description": "Welcome to the backyard! WASD to move. Click to shoot!"},//1 2 3 4 4
     {"wave": 1, "normal": 2, "ranged": 0, "brute": 0, "event": 0, "description": "That thing was a Scrunkly. They want to kill you"},
     {"wave": 2, "normal": 3, "ranged": 0, "brute": 0, "event": 0, "description": "We love this backyard and will do anything to stay"},
     {"wave": 3, "normal": 4, "ranged": 0, "brute": 0, "event": 0, "description": "They stole your tools and you're next."},
@@ -21,13 +21,13 @@ let allWaves = [
     {"wave": 15, "normal": 8, "ranged": 2, "brute": 0, "event": 0, "description": "Your propane tank is a lot slower, but is a lot wider"},
     {"wave": 16, "normal": 12, "ranged": 2, "brute": 0, "event": 0, "description": "You might've noticed that it also takes time to throw your tank"},
     {"wave": 17, "normal": 0, "ranged": 4, "brute": 0, "event": 0, "description": "You might've ALSO noticed the tanks can hit Slingy Scrunklies"},
-    {"wave": 18, "normal": 15, "ranged": 0, "brute": 0, "event": 0, "description": "Here is where a new scrunkly would be introduced, IF THERE WAS MORE TIME"},
-    {"wave": 19, "normal": 12, "ranged": 2, "brute": 0, "event": 0, "description": "Fun Fact: we are all mutated weeds!"},
-    {"wave": 20, "normal": 14, "ranged": 3, "brute": 0, "event": 0, "description": "We were given caffine stimulated supplements and gained consciousness"},
-    {"wave": 21, "normal": 0, "ranged": 0, "brute": 0, "event": 1, "description": "Just 5 more waves to go..."},
-    {"wave": 22, "normal": 20, "ranged": 4, "brute": 0, "event": 0, "description": "I can't believe you're almost done with us"},
-    {"wave": 23, "normal": 30, "ranged": 0, "brute": 0, "event": 0, "description": "It was fun watching you run around like a chicken without a head"},
-    {"wave": 24, "normal": 0, "ranged": 10, "brute": 0, "event": 0, "description": "I hope you can come back and fight us for this backyard"},
+    {"wave": 18, "normal": 15, "ranged": 0, "brute": 1, "event": 0, "description": "Woah, here comes a slithery scrunkly. Good luck with that..."},
+    {"wave": 19, "normal": 12, "ranged": 2, "brute": 1, "event": 0, "description": "The slithery scrunklies will destroy torches and tablesaws"},
+    {"wave": 20, "normal": 14, "ranged": 3, "brute": 1, "event": 0, "description": "Have you tried using a propane tank on them?"},
+    {"wave": 21, "normal": 0, "ranged": 0, "brute": 0, "event": 1, "description": "Fun Fact: we are all mutated weeds!"},
+    {"wave": 22, "normal": 20, "ranged": 4, "brute": 1, "event": 0, "description": "We were given caffine stimulated supplements and gained consciousness"},
+    {"wave": 23, "normal": 30, "ranged": 0, "brute": 2, "event": 0, "description": "It was fun watching you run around like a chicken without a head"},
+    {"wave": 24, "normal": 0, "ranged": 10, "brute": 3, "event": 0, "description": "I hope you can come back and fight us for this backyard"},
     {"wave": 25, "normal": 0, "ranged": 0, "brute": 0, "event": 1, "description": "-the potted Scrunkly"},
 
 ];

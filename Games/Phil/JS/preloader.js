@@ -15,7 +15,8 @@ let UIFiles = [
 ]
 let characterSpritesheets = [
     {id: "starScrunkly", src: "Animate/Spritesheet/star scrunkly.png"},
-    {id: "slingyScrunkly", src: "Animate/Spritesheet/slingy scrunkly.png"}
+    {id: "slingyScrunkly", src: "Animate/Spritesheet/slingy scrunkly.png"},
+    {id: "bruteScrunkly", src: "Animate/Spritesheet/brute.png"},
 ]
 
 let onScreenItemAssets = [

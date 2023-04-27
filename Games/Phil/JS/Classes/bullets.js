@@ -3,7 +3,7 @@ let tablesawCooldown = 0;
 let propaneCooldown = 0;
 let damageBoost = 0;
 
-let toolsAvailable = ["torch"];
+let toolsAvailable = ["torch","tablesaw","propane"];
 
 class Tool {
     constructor(model){
@@ -12,10 +12,10 @@ class Tool {
 
     createProjectile(tool, event){ //create the model as well as its necessary stuff
 
-        if (tool == 'tablesaw' && tablesawCooldown <= 40){
+        if (tool == 'tablesaw' && tablesawCooldown <= 50){
             return;
         }
-        if (tool == 'propane' && propaneCooldown <= 25){
+        if (tool == 'propane' && propaneCooldown <= 30){
             return;
         }
         let bullet = new createjs.Sprite(projectileSpritesheet)
@@ -47,7 +47,7 @@ class Tool {
                 bullet.scale = .2
                 bullet.intendedSpeed = 10;
                 bullet.maxDistance = 600;
-                bullet.damage = 10 + damageBoost;
+                bullet.damage = 1 + damageBoost;
                 propaneCooldown = 0;
                 break;
             default:
@@ -115,7 +115,7 @@ class Tool {
             let specificProjectile = projectiles[i];
 
             for (let i = 0; i < enemies.length; i++){
-                if (this.bulletIntersects(i) == false){//check to see if the bullet spawns on something it can kill already
+                if (this.bulletIntersects(i) == false && specificProjectile.aName == "torch"){//check to see if the bullet spawns on something it can kill already. This does not apply to propane tanks 
                     return //if the bullet did hit something, then dont do the rest of this code so there wont be errors in console.log
                 }; 
             }
@@ -167,20 +167,34 @@ class Tool {
             let projectile =  projectiles[i].getTransformedBounds();
             let enemyBounds = enemies[enemy].getTransformedBounds();
             try{
-                if (projectile.intersects(enemyBounds) && enemies[enemy].isDead == false){
-                    
-                    enemies[enemy].health = enemies[enemy].health - projectiles[i].damage
-                    if (enemies[enemy].health <= 0){
-                        enemies[enemy].isDead = true;
-                        enemies[enemy].gotoAndPlay("dead");
+                if (projectile.intersects(enemyBounds) && enemies[enemy].isDead == false){//if this bullet intersects a non-dead enemy
+                    let myEnemy = enemies[enemy];
+                    let myProjectile = projectiles[i];
+
+                    if (myEnemy.hitBullet == true && myProjectile.hitEnemy == true){//if the bullet has already hit a specific enemy
+                        //this makes it so that you can't deal double or triple damage to big enemies if it takes a couple of ticks
+                        //for a projectile to cross through an enemy
+                        return false;
+                    } 
+                    else {
+                        myEnemy.hitBullet = true
+                        myProjectile.hitEnemy = true
+                        myEnemy.health -= myProjectile.damage //deal damage based on the projectile damage and enemy health
                     }
-                    if (projectiles[i].aName == 'torch'){ //destroy the bullet if its a torch
-                        this.bulletDestroy(projectiles[i], i);
+
+                    if (myEnemy.health <= 0){//if the enemy's health is 0, kill it. Bullet deletion is independent of killing an enemy
+                        myEnemy.isDead = true;
+                        myEnemy.gotoAndPlay("dead");
+                    }
+
+                    //The bullet is only deleted if...
+                    //its a torch OR its a tablesaw AND it hits a brute
+                    if ((myProjectile.aName == 'torch') || (myProjectile.aName == 'tablesaw' && myEnemy.type == 'brute')){ //destroy the bullet if its a torch. They will die on impact, no exceptions
+                        this.bulletDestroy(myProjectile, i);
                         return false;
                     }          
-                    if (enemies[enemy].aName == 'brute ' + enemy){ //or if it hits a brute
-                        this.bulletDestroy(projectiles[i], i);
-                        return false;
+                    if (myEnemy.type == 'brute'){ //play hit animation for brute 
+                        myEnemy.gotoAndPlay("hit")
                     }         
                 } 
             }
