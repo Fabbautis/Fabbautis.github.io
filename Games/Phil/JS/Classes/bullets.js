@@ -1,7 +1,7 @@
 let projectiles = [];
 let tablesawCooldown = 0;
 let propaneCooldown = 0;
-let damageBoost = 0;
+let damageBoost = 2;
 
 let toolsAvailable = ["torch","tablesaw","propane"];
 
