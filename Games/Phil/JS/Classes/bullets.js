@@ -3,7 +3,7 @@ let tablesawCooldown = 0;
 let propaneCooldown = 0;
 let damageBoost = 2;
 
-let toolsAvailable = ["torch","tablesaw","propane"];
+let toolsAvailable = ["torch"];
 
 class Tool {
     constructor(model){

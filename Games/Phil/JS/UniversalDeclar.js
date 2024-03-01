@@ -33,7 +33,7 @@ let allWaves = [
 ];
 
 let waveCleared = false;
-let curWave = 15; //set to -1 later on
+let curWave = -1; //set to -1 later on
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
