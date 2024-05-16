@@ -1,5 +1,7 @@
-Amaranth Pink - #E08DAC
-Glaucous - #6A7FDB
-Indigo - #4A0D67
-Emerald - #45CB85
-Gunmetal - #153131
+Everescent Cyan - #1a3638
+Emerald Green - #0c8a83
+Seaweed Green - #13b586
+White - #000000
+Ice Blue - #b2e0f5
+Feather Light Blue - #40bdea
+Deep Sea Blue - #254b9c

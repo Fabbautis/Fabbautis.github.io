@@ -1,0 +1,12 @@
+@font-face {
+    font-family: SourceSans;
+    src: url(../Fonts/SourceSansPro-Black.otf);
+  }
+  @font-face {
+    font-family: Kristen;
+    src: url(../Fonts/kristen.TTF);
+  }
+  @font-face {
+    font-family: BubblegumSans;
+    src: url(../Fonts/BubblegumSans-Regular.ttf);
+  }

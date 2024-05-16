@@ -1,12 +1,15 @@
 <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../CSS/allPages.css">
+<link rel="stylesheet" href="../CSS/Fonts.css">
 
+
+<!--This code here is the HTML for the nav bar-->
 <div class="topnav" id="myTopnav">
-  <a href="../index.html" class="active">Home</a>
-  <a href="#About">About Me</a>
-  <a href="#Resume">Resume</a>
-  <a href="../HTML/art.html">Portfolio</a> <!--This will have art, animation, video editing, video games, and other selectables-->
+  <a id="AboutNav" href="../index.html">About Me</a>
+  <a id="GamesNav" href="../HTML/games.html">Javascript Games</a>
+  <a id="ResumeNav" href="../HTML/resume.html">Resume</a>
+  <a id="PortNav" href="../HTML/art.html">Portfolio</a> <!--This will have art, animation, video editing, video games, and other selectables-->
   <a href="javascript:void(0);" class="icon" onclick="hideResponsiveBar()">
     <i class="fa fa-bars"></i>
   </a>
@@ -14,41 +17,44 @@
 
 <style>
 
+
+
+/**This code is for the visual styling of the nav bar. It has stuff like the colors and font and all that **/
 .topnav {
-  background-color: #2e6b64;
+  width: 90%;
+  background-color: #40bdea;
   overflow: hidden;
-  border: groove #153131;
+  border: 10px solid #254b9c;
   border-radius: 5px;
   margin:auto;
+  margin-top: 1%;
   display: flex;
   justify-content: center;
 }
-
 .topnav a {
   float: left;
+  font-family: SourceSans;
   display: block;
-  color: #45CB85;
+  color: #254b9c;
   text-align: center;
-  padding: 14px 16px;
+  padding: 14px 9.7%;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 1.2rem;
 }
-
 .topnav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #b2e0f5;
   animation: expandSelection .1s  forwards;
 }
-
 .topnav a:not(:hover){
     animation: shrinkSelection .1s forwards
 }
-
 .topnav a.active {
-  background-color: #04AA6D;
-  color: white;
+  color:white;
 }
 
+
+
+/**This code is for additional responsiveness**/
 .topnav .icon {
   display: none;
 }
@@ -71,6 +77,9 @@
   }
 }
 
+
+
+/**Animations for the nav bar**/
 @keyframes expandSelection{
     from {transform: scale(1.0)}
     to{transform: scale(1.1)}
@@ -81,6 +90,9 @@
 }
 </style>
 
+
+
+<!--Hide the nav bar icon if the screen is too big-->
 <script>
 function hideResponsiveBar() {
   var x = document.getElementById("myTopnav");
