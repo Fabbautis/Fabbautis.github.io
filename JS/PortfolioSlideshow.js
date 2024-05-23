@@ -12,7 +12,7 @@ function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE
                   '<div class="text">'+portfolioJSON[location].captions[i-1]+'</div></div>'
   }
 
-  htmlToAdd += '<a class="prev" onclick="plusSlides(-1)"></a> <a class="next" onclick="plusSlides(1)"></a>';
+  htmlToAdd += '<a class="prev" onclick="plusSlides(-1)">&larr;</a> <a class="next" onclick="plusSlides(1)">&rarr;</a>';
   document.getElementById("slideshow-container").innerHTML = htmlToAdd;
 
   document.getElementById("portfolioTitle").textContent = portfolioJSON[location].actualname;
