@@ -3,6 +3,7 @@ body {
     background-color: #13b586 !important;
     font-family: Kristen;
     color:#1a3638;
+    overflow-x: hidden;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -27,4 +28,32 @@ h4{
 
 p{
     font-size: 1.5rem;
+}
+
+hr{
+    border: 10px solid black;
+    border-radius: 10px;
+    width:95%;
+    margin: 0 auto;
+}
+
+#artSection img{
+    max-width: 31%;
+    margin: 1%;
+    height: auto;
+  
+}
+
+#portfolioTitle{
+    text-align: center;
+}
+
+button{
+    color:#254b9c;
+    background-color:#40bdea;
+    padding:5px;
+    font-size: larger;
+    border: 5px solid #254b9c;
+    border-radius: 5px;
+    font-family: SourceSans
 }
