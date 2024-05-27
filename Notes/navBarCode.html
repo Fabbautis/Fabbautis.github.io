@@ -5,11 +5,12 @@
 
 
 <!--This code here is the HTML for the nav bar-->
+<a href="../index.html"><img class = "logoImage" src="../Images/Various Assets/Logo.png"></a>
 <div class="topnav" id="myTopnav">
-  <a id="AboutNav" href="../index.html">About Me</a>
+  <a id="PortNav" href="../HTML/art.html">Portfolio</a> <!--This will have art, animation, video editing, video games, and other selectables-->
   <a id="GamesNav" href="../HTML/games.html">Javascript Games</a>
   <a id="ResumeNav" href="../HTML/resume.html">Resume</a>
-  <a id="PortNav" href="../HTML/art.html">Portfolio</a> <!--This will have art, animation, video editing, video games, and other selectables-->
+  <a id="AboutNav" href="../HTML/aboutme.html">About Me</a>
   <a href="javascript:void(0);" class="icon" onclick="hideResponsiveBar()">
     <i class="fa fa-bars"></i>
   </a>
@@ -52,7 +53,15 @@
   color:white;
 }
 
-
+.logoImage{
+  display: block;
+  margin:auto;
+  padding-top:1%;
+  margin-left: 8%;
+  min-width: 300px;
+  max-width: 25%;
+  height: auto;
+}
 
 /**This code is for additional responsiveness**/
 .topnav .icon {

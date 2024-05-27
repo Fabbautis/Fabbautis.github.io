@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Resume" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1206">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0c8a83;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="circles">
+    <circle class="cls-1" cx="206" cy="221" r="199"/>
+    <circle class="cls-1" cx="1335" cy="620.67" r="119.36"/>
+    <circle class="cls-1" cx="133.76" cy="1133.61" r="61.51"/>
+    <circle class="cls-1" cx="370.67" cy="740.33" r="119.36"/>
+    <circle class="cls-1" cx="1810.91" cy="136.52" r="61.51"/>
+    <circle class="cls-1" cx="1682" cy="960" r="199"/>
+  </g>
+</svg>

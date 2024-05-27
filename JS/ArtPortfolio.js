@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function(){
 function changeContent(media) //This code changes what media you are looking at on the portfolio page
 {
     let oldSelectedMedia = selectedMedia
+    if (oldSelectedMedia == media){ //If the button you pressed is the same thing, then don't reload the page
+        return;
+    }
     switch (media){
         case 'Illustration':
             selectedMedia = "Illustration"
@@ -24,9 +27,6 @@ function changeContent(media) //This code changes what media you are looking at 
         default:
             selectedMedia = "Illustration"
             break;
-    }
-    if (oldSelectedMedia == selectedMedia){ //If the button you pressed is the same thing, then don't reload the page
-        return;
     }
     sessionStorage.setItem("chosenMedia", selectedMedia);
     displayOneMedia()

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 789 609.17">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1a3638;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-width: 0px;
+      }
+
+      .cls-5, .cls-6 {
+        stroke: #1a3638;
+        stroke-width: 6px;
+      }
+
+      .cls-5, .cls-6, .cls-7, .cls-8 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-5, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-6, .cls-7, .cls-4 {
+        fill: #b2e0f5;
+      }
+
+      .cls-7, .cls-8 {
+        stroke: #fff;
+        stroke-width: 10px;
+      }
+
+      .cls-2, .cls-8 {
+        fill: #40bdea;
+      }
+    </style>
+  </defs>
+  <g id="Javascript">
+    <g id="andkon">
+      <g id="Left_half">
+        <g id="Hand">
+          <path class="cls-3" d="M219,301.17C160,301.17,0,400.17,0,400.17c0,0,152,78,219,78"/>
+        </g>
+        <g id="body">
+          <path class="cls-7" d="M395,5.17c-67,0-160.38,33-178.69,101s-17.69,298,0,365,61.69,133,178.69,133"/>
+        </g>
+        <g id="eye">
+          <path id="eyelid" class="cls-3" d="M380.67,194.17c0-127-123.67-125-123.67,0,0,0,3.67-29.67,61.83-29.67s61.83,29.67,61.83,29.67Z"/>
+          <circle id="eyeball" class="cls-2" cx="319" cy="132.17" r="32"/>
+          <circle id="pupil" class="cls-1" cx="319" cy="147.17" r="13"/>
+        </g>
+        <g id="mouth">
+          <path class="cls-5" d="M395,365.17c-122,0-123-129-123-129,0,0,21,43.16,123,43.16v85.84Z"/>
+          <line class="cls-6" x1="325.31" y1="270.57" x2="311.66" y2="334.52"/>
+        </g>
+      </g>
+      <g id="right_half">
+        <path class="cls-3" d="M570.37,301c58.9,0,218.63,99,218.63,99,0,0-151.74,78-218.63,78"/>
+        <path class="cls-8" d="M394.67,5c66.89,0,160.11,33,178.39,101,18.28,68,17.66,298,0,365-17.66,67-61.59,133-178.39,133"/>
+        <path id="eyelid-2" data-name="eyelid" class="cls-3" d="M408.98,194c0-127,123.46-125,123.46,0,0,0-3.66-29.67-61.73-29.67s-61.73,29.67-61.73,29.67Z"/>
+        <ellipse id="eyeball-2" data-name="eyeball" class="cls-4" cx="470.54" cy="132" rx="31.95" ry="32"/>
+        <ellipse id="pupil-2" data-name="pupil" class="cls-1" cx="470.54" cy="147" rx="12.98" ry="13"/>
+        <path class="cls-5" d="M394.67,365c121.79,0,122.79-129,122.79-129,0,0-20.96,43.16-122.79,43.16v85.84Z"/>
+        <line class="cls-6" x1="464.24" y1="270.4" x2="477.87" y2="334.35"/>
+      </g>
+    </g>
+  </g>
+</svg>

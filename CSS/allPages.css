@@ -28,6 +28,7 @@ h4{
 
 p{
     font-size: 1.5rem;
+    font-weight: 5000;
 }
 
 hr{
@@ -41,6 +42,7 @@ hr{
     max-width: 31%;
     margin: 1%;
     height: auto;
+    border: 15px solid #254b9c;
   
 }
 
@@ -56,4 +58,11 @@ button{
     border: 5px solid #254b9c;
     border-radius: 5px;
     font-family: SourceSans
+}
+
+.unique-variety-picture{ /*Remnant of a unique quirky thing I wanted to do with background images. maybe I can find out how to do what I wanted to do one day*/
+    width: 100%;
+    height:auto;
+    position:relative;
+    top: 100px;
 }

@@ -7,7 +7,13 @@ img {vertical-align: middle;}
   position: relative;
   margin: auto;
   border:  2vh,solid,#1a3638;
+  background-color: #1a3638;
 
+}
+
+#portfolioDescription{
+  margin:  auto;
+  width: 70%;
 }
 
 /* Next & previous buttons */
@@ -75,9 +81,14 @@ img {vertical-align: middle;}
   background-color: #ffffff;
 }
 
-
+.captions{
+  user-select: none;
+}
+.captions:hover{
+  display: none;
+}
 
 /* On smaller screens, decrease text size */
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
   .prev, .next,.text {font-size: 11px}
 }
