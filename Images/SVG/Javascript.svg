@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Javascript" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1206">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0c8a83;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="circles-2" data-name="circles">
+    <circle class="cls-1" cx="1408" cy="316" r="199"/>
+    <circle class="cls-1" cx="1518.17" cy="707.82" r="119.36"/>
+    <circle class="cls-1" cx="1270.86" cy="962.75" r="61.51"/>
+    <circle class="cls-1" cx="464.83" cy="371.48" r="119.36"/>
+    <circle class="cls-1" cx="838.81" cy="160.69" r="61.51"/>
+    <circle class="cls-1" cx="531" cy="827" r="199"/>
+  </g>
+</svg>

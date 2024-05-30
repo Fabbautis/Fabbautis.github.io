@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Portfolio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1206">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0c8a83;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <circle class="cls-1" cx="1117" cy="786" r="199"/>
+  <circle class="cls-1" cx="1715.33" cy="786.44" r="119.36"/>
+  <circle class="cls-1" cx="412.55" cy="941.75" r="61.51"/>
+  <circle class="cls-1" cx="221" cy="347.11" r="119.36"/>
+  <circle class="cls-1" cx="1641.63" cy="285.69" r="61.51"/>
+  <circle class="cls-1" cx="808" cy="319" r="199"/>
+</svg>

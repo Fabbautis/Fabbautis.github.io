@@ -136,7 +136,7 @@ function stageUpdate(e){
         playerTurn = true;
     }
     if (playerHealth.health <0 && alertOnce){
-        alert('you lose');
+        alert('you lose. Refresh the page to play again.');
         alertOnce = false;
     }
     stage.update(e);
@@ -225,7 +225,7 @@ function takeDamage(sprite, character, damage){
         if (character.children[1].graphics.command.w < 0){
             character.children[1].graphics.command.w = 0;
             if (sprite == enemy) {
-                alert('you win')
+                alert('you win! Refresh the page to play again.')
                 alertOnce = false;
             }
             createjs.Tween.get(sprite)
