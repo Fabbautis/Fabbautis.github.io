@@ -1,5 +1,5 @@
 
-body {
+body{
     background-color: #13b586 !important;
     font-family: Kristen;
     color:#1a3638;
@@ -39,7 +39,7 @@ hr{
 }
 
 #artSection img{
-    max-width: 31%;
+    max-width: 30%;
     margin: 1%;
     height: auto;
     border: 15px solid #254b9c;
@@ -65,4 +65,79 @@ button{
     height:auto;
     position:relative;
     top: 100px;
+}
+
+.email:link{
+    color:#254b9c;
+}
+a:link{
+    color:#254b9c; 
+}
+.email:hover{
+    color:#b2e0f5;
+}
+a:hover{
+    color:white;
+}
+.email:visited{
+    color:#254b9c;
+}
+a:active{
+    color:#181f72;
+}
+a:visited{
+    color:#265353;
+}
+.scroll{
+    height: 40em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color:#50ba9c;
+    border: 10px solid #1a3638;
+    border-radius: 15px;
+}
+
+.review{
+    height: 40em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #b2e0f5;
+    border: 10px solid #1a3638;
+    border-radius: 15px;
+}
+
+.scrollContent{
+    margin-left: 3%;
+    line-height: 1;
+}
+#fakeContent{
+    margin-top: 30%;
+}
+.scrollContent p{
+    font-size: 1.1em;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #044130; 
+    border-radius: 10px;
+    background: #60cd9c;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #254b9c;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #212774;
+}
+
+.resumeImage{
+    
+    width: 100%;
+    min-width: 50px;
+    height: auto;
 }

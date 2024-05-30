@@ -1,7 +1,7 @@
 let slideIndex = 1;
 
 function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE SLIDESHOW
-  let location = sessionStorage.getItem("portfolioNumber"); //Load the correct folder information
+  let location = sessionStorage.getItem("portfolioNumber"); //Load the correct folder information PORTFOLIONUMBER IS BASED ON THE INDEX
   let htmlToAdd = "";
 
 
@@ -47,7 +47,7 @@ function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE
   document.getElementById("slideshow-container").innerHTML = htmlToAdd; //Add all of the slides
 
   document.getElementById("portfolioTitle").textContent = portfolioJSON[location].actualname; //Load the other text information
-  document.getElementById("portfolioDescription").textContent = portfolioJSON[location].description;
+  document.getElementById("portfolioDescription").innerHTML = portfolioJSON[location].description;
   showSlides(slideIndex);
 }
 
