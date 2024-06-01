@@ -125,7 +125,8 @@ portfolioJSON =
         "description":"This piece was made in reflection of my time as a college student compared to my high school years. I've been a lot more open general. "+
         "Open to sharing more about myself, open to being more vulnerable, open to finding value in things I normally wouldn't. This piece serves as a reminder "+
         "of the person I once was",
-        "captions":[""
+        "captions":["",
+        ""
         ],
         "onlyImages":true
     },
@@ -237,11 +238,12 @@ portfolioJSON =
     "undoubtly a certain animal only to label it something else in order for others to feel the frustration and confusion I felt before. This piece was handselected by Emily Somoskey "+
     "for Blue Gallaries' 2024 Annual Student Juried Exhibition!",
     "captions":["The ceramic coil vase took me about a month to complete",
+    "",
     "I drew the vase design on Photoshop, stretched the image to match the curved nature of the vase, printed and cut out the figures, and traced them onto the sculpture! This design" +
     " was inspired by Ancient Minoan depictions of sealife"
     ],
     "onlyImages":false,
-    "videoNumbers":[1]
+    "videoNumbers":[1,2]
     },
     { "id": 24, "media": "3D", "name":"4", "location":"../Portfolio/3D/Clobberfuck",
     "actualname":"Clobberfuck 3D Model",
