@@ -1,5 +1,5 @@
 let portfolioJSON
-//Add newer projects on the bottom
+//Add newer projects on the bottom. Also add a "display" check so I can turn on or off displays for artpieces
 //Current Illustration name = 12, Current Animation name = 6, Current Video name = 5, Current 3D name = 4
 portfolioJSON = 
 [
@@ -282,5 +282,77 @@ portfolioJSON =
     "onlyImages":false,
     "videoNumbers":[1]
     },
-    
+    { "id": 27, "media": "Illustration", "name":"13", "location":"../Portfolio/Illustration/Revolution",
+        "actualname":"Red Revolution",
+        "description": "I swear I am not like racist I just wanted to make a pastel drawing with red and yellow and also with an" +
+        " interesting perspective",
+        "captions":[""
+        ],
+        "onlyImages":true,
+    },
+    { "id": 28, "media": "Illustration", "name":"14", "location":"../Portfolio/Illustration/NPC Behavior",
+        "actualname":"NPC Behavior Comic",
+        "description": "This is a small comic series I made after beating Paper Mario: The Thousand Year Door and realizing that a lot"+
+        " of RPG protagonists just barge into NPC houses and do whatever they want.",
+        "captions":["",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "The designs for Zombie Ghost and Maggie",
+            "Design exploration for MYASS (previously called Scott)",
+            "Thumbnail example for the comic panels"
+        ],
+        "onlyImages":true,
+    },
+    { "id": 29, "media": "Illustration", "name":"15", "location":"../Portfolio/Illustration/Doug",
+        "actualname":"Doug Art",
+        "description": "Just some fanart of a character from Brawl Stars. This was my first illustration on my new tablet",
+        "captions":["",
+            ""
+        ],
+        "onlyImages":true,
+    },
+    { "id": 30, "media": "Illustration", "name":"16", "location":"../Portfolio/Illustration/Electricn",
+        "actualname":"Origin Story",
+        "description": "I wanted to try my hand at making a story illustration, so I painted the moment Lenard, one of my penguin "+
+        "OCs discovered their love for electronic music",
+        "captions":["",
+            ""
+        ],
+        "onlyImages":true,
+    },
+    { "id": 31, "media": "Illustration", "name":"17", "location":"../Portfolio/Illustration/Mailet",
+        "actualname":"Dont Walk at Night",
+        "description": "The harvester of souls, the bringer of death... is on vacation, so heres their replacement",
+        "captions":["",
+            ""
+        ],
+        "onlyImages":true,
+    },
+    { "id": 32, "media": "Illustration", "name":"18", "location":"../Portfolio/Illustration/Pastel",
+        "actualname":"Pastel Sketches",
+        "description": "Here are some pastel still lifes I painted just for fun!",
+        "captions":["",
+            ""
+        ],
+        "onlyImages":true,
+    },
+    { "id": 33, "media": "Illustration", "name":"19", "location":"../Portfolio/Illustration/Rev Carts",
+        "actualname":"Taco Bell Foundation Revolution Carts Project",
+        "description": "I had the chance to work with The Sheppard and Taco Bell Foundation to design illustrations for" +
+        " Los Angeles street vendors. Being able to give back to a community I grew up in was a dream come true!",
+        "captions":["The final cart design for 'Reina's Cocina.'",
+        "An older design that led to a more focused Virgin Mary in the final",
+        "The cart design printed out",
+        "The final cart design for 'Voodoo Vegan'",
+        "Branding already existed for this vendor, so I tried incorporating new elements into the cart while staying faithful to the initial design",
+        "The cart design printed out"
+        ],
+        "onlyImages":true,
+    },
 ]
