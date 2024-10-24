@@ -67,6 +67,20 @@ function displayOneMedia(){ //This code updates the page content to actually hav
                         'onclick="sessionStorage.setItem("portfolioNumber","'+ selectedOptions[i].name +'")></a>';
         }
         
+        if (i+1 < selectedOptions.length){
+            i++;
+            HTMLToAdd+= '<a href="../HTML/specificart.html">'+
+                        '<img id="'+ selectedOptions[i].name +'" src="../Portfolio/'+selectedMedia+'/Thumbnail/'+selectedOptions[i].name+'.png" '+
+                        'onclick="sessionStorage.setItem("portfolioNumber","'+ selectedOptions[i].name +'")></a>';
+        }
+
+        if (i+1 < selectedOptions.length){
+            i++;
+            HTMLToAdd+= '<a href="../HTML/specificart.html">'+
+                        '<img id="'+ selectedOptions[i].name +'" src="../Portfolio/'+selectedMedia+'/Thumbnail/'+selectedOptions[i].name+'.png" '+
+                        'onclick="sessionStorage.setItem("portfolioNumber","'+ selectedOptions[i].name +'")></a>';
+        }
+
         HTMLToAdd+= '</div><div class ="col"></div></div>';
     }
     artSection.innerHTML = HTMLToAdd;
