@@ -156,7 +156,7 @@ portfolioJSON =
         ],
         "onlyImages":true
     },
-    { "id": 16, "media":"Video", "name":"1", "location":"../Portfolio/Video/RRR1 Mini",
+    { "id": 16, "media":"Video", "name":"1", "location":"https://www.youtube.com/embed/SUnuHRBRS3A", //Rabbids
         "actualname":"Rayman Raving Rabbids 1 Quick Review",
         "description":"I decided to make a small little review of a childhood game. I wanted to test my hand at making a video that's more akin to commentary-esque"+
         "style videos I watch on my own time",
@@ -190,7 +190,7 @@ portfolioJSON =
     "onlyImages":false,
     "videoNumbers":[1,2,3,4]
 },
-    { "id": 19, "media":"Video", "name":"4", "location":"../Portfolio/Video/Onramp",
+    { "id": 19, "media":"Video", "name":"4", "location":"https://www.youtube.com/embed/WN1kyUBQr6o?si=wZg5M5kq4lDx0sz1", //Onramp
         "actualname":"K-12 ONRAMP AR Application",
         "description":"During senior year, I was the project manager for an AR Application and created this video summarizing our progress to give other members a portfolio "+
         "artifact to share on their portfolio",
