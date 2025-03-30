@@ -384,4 +384,10 @@ portfolioJSON =
         "captions":[""],
         "onlyImages":true,
     },
+    { "id": 39, "media": "Illustration", "name":"21", "display": true, "location":"../Portfolio/Illustration/Flowers",
+        "actualname":"Thank You Flowers Card Design",
+        "description": "My family members asked me to make a thank you card design to give to coworkers, so I thought this was a perfect excuse to make it with vector software!",
+        "captions":["","I usually print out designs on 8.5x11 cardstock which allows for two card designs of roughly A6 papersize to be printed","Concept process"],
+        "onlyImages":true,
+    },
 ]
