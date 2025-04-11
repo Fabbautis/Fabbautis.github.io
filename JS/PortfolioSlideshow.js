@@ -10,10 +10,25 @@ function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE
 
     for (let i=1; i < portfolioJSON[location].captions.length+1; i++){
       if (portfolioJSON[location].videoNumbers[videoIndex] == i){//check if this is a video
-        htmlToAdd +=  '<div class="mySlides">' +
-                      '<div class="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
-                      '<video id="video_'+ i +'" width=100% height:auto; controls><source src="'+(portfolioJSON[location].location)+'/'+i+'.mp4" type="video/mp4">Please use a different browser</video></div>'
-                      //'<div  class="text captions">'+portfolioJSON[location].captions[i-1]+'</div></div>' Need to find a better way to have captions work since they cover video controls
+        if ((portfolioJSON[location].location).includes('youtube') || (portfolioJSON[location].location).includes('youtu.be')) //If the video is a youtube video
+          {
+            htmlToAdd +=  '<div class="mySlides">' +
+            '<div class="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
+            '<iframe width="100%" height="750"' +
+            'id="video_' + i + '"' +
+            'src="' + portfolioJSON[location].location + '"' +
+            'title="YouTube video player" frameborder="0"' +
+            'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"' +
+            'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>' +
+            'Please use a different browser</iframe></div>';
+          }
+          else{
+            htmlToAdd +=  '<div class="mySlides">' +
+            '<div class="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
+            '<video id="video_'+ i +'" width=100% height:auto; controls><source src="'+(portfolioJSON[location].location)+'/'+i+'.mp4" type="video/mp4">Please use a different browser</video></div>'
+            //'<div class="text captions">'+portfolioJSON[location].captions[i-1]+'</div></div>' Need to find a better way to have captions work since they cover video controls
+          }
+       
         document.getElementById("circleButtons").innerHTML+= '<span class="dot" onclick="currentSlide('+ i +')"></span>';
       }
       else {
