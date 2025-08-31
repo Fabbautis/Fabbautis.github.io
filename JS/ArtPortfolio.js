@@ -15,6 +15,9 @@ function changeContent(media) //This code changes what media you are looking at 
         case 'Illustration':
             selectedMedia = "Illustration"
             break;
+        case 'Sketch':
+            selectedMedia = "Sketch"
+            break;
         case 'Animation':
             selectedMedia = "Animation"
             break;
@@ -40,8 +43,10 @@ function displayOneMedia(){ //This code updates the page content to actually hav
         selectedMedia = "Illustration";
     }
     for(let i = portfolioJSON.length-1; i>=0; i--){ //Check which parts of my portfolio coorelate with my media type
-        if (portfolioJSON[i].media == selectedMedia)
+        if (portfolioJSON[i].media == selectedMedia){
+            if (portfolioJSON[i].display == true) //Check if you also want to show this specific portfolio artifact on your website
             selectedOptions.push(portfolioJSON[i]);
+        }
     }
 
     let HTMLToAdd = "";
@@ -67,6 +72,20 @@ function displayOneMedia(){ //This code updates the page content to actually hav
                         'onclick="sessionStorage.setItem("portfolioNumber","'+ selectedOptions[i].name +'")></a>';
         }
         
+        if (i+1 < selectedOptions.length){
+            i++;
+            HTMLToAdd+= '<a href="../HTML/specificart.html">'+
+                        '<img id="'+ selectedOptions[i].name +'" src="../Portfolio/'+selectedMedia+'/Thumbnail/'+selectedOptions[i].name+'.png" '+
+                        'onclick="sessionStorage.setItem("portfolioNumber","'+ selectedOptions[i].name +'")></a>';
+        }
+
+        if (i+1 < selectedOptions.length){
+            i++;
+            HTMLToAdd+= '<a href="../HTML/specificart.html">'+
+                        '<img id="'+ selectedOptions[i].name +'" src="../Portfolio/'+selectedMedia+'/Thumbnail/'+selectedOptions[i].name+'.png" '+
+                        'onclick="sessionStorage.setItem("portfolioNumber","'+ selectedOptions[i].name +'")></a>';
+        }
+
         HTMLToAdd+= '</div><div class ="col"></div></div>';
     }
     artSection.innerHTML = HTMLToAdd;

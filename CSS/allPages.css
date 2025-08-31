@@ -39,10 +39,10 @@ hr{
 }
 
 #artSection img{
-    max-width: 30%;
+    max-width: 17.73%;
     margin: 1%;
     height: auto;
-    border: 15px solid #254b9c;
+    outline: .6rem solid #254b9c;
   
 }
 
