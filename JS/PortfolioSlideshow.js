@@ -3,17 +3,22 @@ let slideIndex = 1;
 function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE SLIDESHOW
   let location = sessionStorage.getItem("portfolioNumber"); //Load the correct folder information PORTFOLIONUMBER IS BASED ON THE INDEX
   let htmlToAdd = "";
+  document.getElementById("portfolioDescription").innerHTML = ""
+
 
 
   if (portfolioJSON[location].onlyImages!== true){//If you have videos, add the videos first
     let videoIndex = 0;
 
     for (let i=1; i < portfolioJSON[location].captions.length+1; i++){
-      if (portfolioJSON[location].videoNumbers[videoIndex] == i){//check if this is a video
+      if (portfolioJSON[location].videoNumbers[videoIndex] == i){//check if this is a video+
+        console.log(document.getElementById("portfolioDescription"));
+        document.getElementById("portfolioDescription").innerHTML = '<div class = "row"><div class = "col"><p style="font-size:2rem;"><i>Click the video to play!</i> </p></div></div>';
+        console.log(document.getElementById("portfolioDescription"));
         if ((portfolioJSON[location].location).includes('youtube') || (portfolioJSON[location].location).includes('youtu.be')) //If the video is a youtube video
           {
             htmlToAdd +=  '<div class="mySlides">' +
-            '<div class="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
+            '<div id="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
             '<iframe width="100%" height="750"' +
             'id="video_' + i + '"' +
             'src="' + portfolioJSON[location].location + '"' +
@@ -24,7 +29,7 @@ function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE
           }
           else{
             htmlToAdd +=  '<div class="mySlides">' +
-            '<div class="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
+            '<div id="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
             '<video id="video_'+ i +'" width=100% height:auto; controls><source src="'+(portfolioJSON[location].location)+'/'+i+'.mp4" type="video/mp4">Please use a different browser</video></div>'
             //'<div class="text captions">'+portfolioJSON[location].captions[i-1]+'</div></div>' Need to find a better way to have captions work since they cover video controls
           }
@@ -43,7 +48,7 @@ function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE
     if (portfolioJSON[location].videoNumbers !== undefined && portfolioJSON[location].videoNumbers[videoIndex] == i){//If this specific project has videos and this specific artifact is a video
     } else{
       htmlToAdd +=  '<div class="mySlides">' +
-        '<div class="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
+        '<div id="numbertext">' + i + ' / ' + portfolioJSON[location].captions.length + '</div>'+
         '<img src="'+(portfolioJSON[location].location)+'/'+i+'.png" style="max-width:100%; max-height: 55rem; height:auto; display: block; margin-left: auto; margin-right: auto;">'
         if(portfolioJSON[location].captions[i-1] ==""){ //If there is nothing in captions, dont show the captions
           htmlToAdd+= '<div class="text captions" style="display: none;"></div></div>'
@@ -58,11 +63,20 @@ function loadSlides() {//THIS IS CODE TO COLLECT THE DATA NEEDED TO POPULATE THE
   }
 
 
-  htmlToAdd += '<a class="prev" onclick="plusSlides(-1)">&larr;</a> <a class="next" onclick="plusSlides(1)">&rarr;</a>';//Add the left and right arrows
+  htmlToAdd += '<div id ="arrow"><a id ="arrows" class="prev" onclick="plusSlides(-1)">&larr;</a> <a id ="arrows" class="next" onclick="plusSlides(1)">&rarr;</a>';//Add the left and right arrows
   document.getElementById("slideshow-container").innerHTML = htmlToAdd; //Add all of the slides
+  
+  if (document.getElementById("numbertext").innerHTML == "1 / 1") //if there is only one image here, then just remove the arrows and circles
+  {
+    document.getElementById("numbertext").textContent="";
+    document.getElementById("arrow").textContent= "";
+    document.getElementById("circleButtons").textContent="";
+  }
+    
 
   document.getElementById("portfolioTitle").textContent = portfolioJSON[location].actualname; //Load the other text information
-  document.getElementById("portfolioDescription").innerHTML = portfolioJSON[location].description;
+  document.getElementById("portfolioDescription").innerHTML+= portfolioJSON[location].description
+
   showSlides(slideIndex);
 }
 
@@ -72,6 +86,7 @@ function showSlides(n) {//THIS IS CODE TO ACTUALLY POPULATE THE SLIDESHOW
   let i;
   let slides = document.getElementsByClassName("mySlides");
   let dots = document.getElementsByClassName("dot"); //Get all the data from the html page
+  
 
   if (n > slides.length) {//go back to the start of the index
     slideIndex = 1;
@@ -88,7 +103,12 @@ function showSlides(n) {//THIS IS CODE TO ACTUALLY POPULATE THE SLIDESHOW
   } 
 
   slides[slideIndex-1].style.display = "block";  //Choose the selected picture and change the dot color
-  dots[slideIndex-1].className += " active";
+
+  if(document.getElementsByClassName("dot").length !== 0)
+    {
+      dots[slideIndex-1].className += " active";
+    }
+  
 }
 
 

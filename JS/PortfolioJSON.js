@@ -46,9 +46,9 @@ portfolioJSON =
         "onlyImages":false,
         "videoNumbers":[1]
     },
-    { "id": 4, "media":"Animation", "name":"1", "display": true, "location":"../Portfolio/Animation/Animation Reel",
-        "actualname":"Fabian Bautista Animation and Story Reel",    
-        "description": 'This is my demo reel! Hope you enjoy.',
+    { "id": 4, "media":"Animation", "name":"1", "display": false, "location":"../Portfolio/Animation/Animation Reel",
+        "actualname":"2024 Demo Reel",    
+        "description": 'This is my 2024 demo reel! Hope you enjoy.',
         'captions':['The demo reel'],
         "onlyImages":false,
         "videoNumbers":[1]
@@ -119,7 +119,7 @@ portfolioJSON =
         ],
         "onlyImages":true
     },
-    { "id": 12, "media": "Illustration", "name": "10", "display": true, "location":"../Portfolio/Illustration/Graduation",
+    { "id": 12, "media": "Illustration", "name": "10", "display": false, "location":"../Portfolio/Illustration/Graduation",
         "actualname":"Graduation",
         "description":"This piece was made in reflection of my time as a college student compared to my high school years. I've been a lot more open general. "+
         "Open to sharing more about myself, open to being more vulnerable, open to finding value in things I normally wouldn't. This piece serves as a reminder "+
@@ -177,7 +177,7 @@ portfolioJSON =
         "onlyImages":false,
         "videoNumbers":[1,2,3,4]
     },
-    { "id": 18, "media":"Video", "name":"2", "display": true, "location":"../Portfolio/Video/ECampus COMM",
+    { "id": 18, "media":"Video", "name":"2", "display": false, "location":"../Portfolio/Video/ECampus COMM",
     "actualname":"Boise State ECampus Communication Bumpers",
     "description":"I was asked to create a new bumper that utilized Boise State's branding for the Communications department. These bumpers "+
     "would play prior to relevant course videos and recorded lectures.",
@@ -289,7 +289,7 @@ portfolioJSON =
         ],
         "onlyImages":true,
     },
-    { "id": 28, "media": "Illustration", "name":"14", "display": true, "location":"../Portfolio/Illustration/NPC Behavior",
+    { "id": 28, "media": "Illustration", "name":"14", "display": false, "location":"../Portfolio/Illustration/NPC Behavior",
         "actualname":"NPC Behavior Comic",
         "description": "This is a small comic series I made after beating Paper Mario: The Thousand Year Door and realizing that a lot"+
         " of RPG protagonists just barge into NPC houses and do whatever they want.",
@@ -316,7 +316,7 @@ portfolioJSON =
         ],
         "onlyImages":true,
     },
-    { "id": 30, "media": "Illustration", "name":"16", "display": true, "location":"../Portfolio/Illustration/Electricn",
+    { "id": 30, "media": "Illustration", "name":"16", "display": false, "location":"../Portfolio/Illustration/Electricn",
         "actualname":"Origin Story",
         "description": "I wanted to try my hand at making a story illustration, so I painted the moment Lenard, one of my penguin "+
         "OCs discovered their love for electronic music",
@@ -390,7 +390,7 @@ portfolioJSON =
         "captions":["","I usually print out designs on 8.5x11 cardstock which allows for two card designs of roughly A6 papersize to be printed","Concept process"],
         "onlyImages":true,
     },
-    { "id": 40, "media": "Sketch", "name":"10", "display": true, "location":"../Portfolio/Sketch/PenguinProject",
+    { "id": 40, "media": "Illustration", "name":"23", "display": false, "location":"../Portfolio/Sketch/PenguinProject",
         "actualname":"Penguin Project",
         "description": "An ongoing project of mine is to draw as many penguins from various media as I can in a sketched illustration! Its really fun, and it also gives me"+
         "an excuse to draw my favorite animal. These are some highlights of that project",

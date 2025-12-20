@@ -1,6 +1,8 @@
 
 body{
-    background-color: #13b586 !important;
+    
+    background-image: url(../Images/Various\ Assets/bg.png);
+    background-size: auto;
     font-family: Kristen;
     color:#1a3638;
     overflow-x: hidden;
@@ -31,6 +33,11 @@ p{
     font-weight: 5000;
 }
 
+#resumeContent{
+    font-size: 0.9rem;
+    font-weight: 5000;
+}
+
 hr{
     border: 10px solid black;
     border-radius: 10px;
@@ -52,7 +59,7 @@ hr{
 
 button{
     color:#254b9c;
-    background-color:#40bdea;
+    background-color:#b2e6fa;
     padding:5px;
     font-size: larger;
     border: 5px solid #254b9c;
@@ -74,7 +81,7 @@ a:link{
     color:#254b9c; 
 }
 .email:hover{
-    color:#b2e0f5;
+    color:#b2e6fa;
 }
 a:hover{
     color:white;
@@ -92,7 +99,7 @@ a:visited{
     height: 40em;
     overflow-y: auto;
     overflow-x: hidden;
-    background-color:#50ba9c;
+    background-color:#2cd1b9;
     border: 10px solid #1a3638;
     border-radius: 15px;
 }
@@ -101,7 +108,7 @@ a:visited{
     height: 40em;
     overflow-y: auto;
     overflow-x: hidden;
-    background-color: #b2e0f5;
+    background-color: #2cd1b9;
     border: 10px solid #1a3638;
     border-radius: 15px;
 }
