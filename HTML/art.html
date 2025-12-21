@@ -9,11 +9,6 @@
         <link rel="stylesheet" href="../CSS/allPages.css">
 
         <style>
-            body{
-                background-image:url(../Images/SVG/Portfolio.svg);
-                background-repeat: repeat-y;
-                background-size: 1920px 1080px;
-            }
             #artPortfolioOptions{
                 text-align: center;
                 user-select: none;
@@ -42,14 +37,23 @@
         <br>
 
         <!--The selector for the three portfolio options-->
-        <div class="container" id = "artPortfolioOptions">
+        <div class="container">
             <div class = "row">
+                <div class = "col text-center">
+                    <p><b>Hover your mouse over an icon to learn its title, and click to learn more!</b></p>
+                </div>
+            </div>
+            <br>
+            <div class = "row" id = "artPortfolioOptions">
                 <div class="col"></div>
                 <div id="illusSelect" class="col" onclick="changeContent('Illustration')">
                     <p>Illustration</p>
                 </div>
+               <!--<div id="SketchSelect" class="col" onclick="changeContent('Sketch')">
+                    <p>Sketch</p>
+                </div>-->
                 <div id="AnimSelect" class="col" onclick="changeContent('Animation')">
-                    <p>Animation / Storyboard</p>
+                    <p>Animation</p>
                 </div>
                 <div id="VideoSelect" class="col" onclick="changeContent('Video')">
                     <p>Video Editing</p>
@@ -67,6 +71,8 @@
         <br>
         <br>
         <br>
+
+        
         <!--This is the part of the portfolio page where you see all the work I've done-->
         <div class="container-fluid" id="artSection">
            

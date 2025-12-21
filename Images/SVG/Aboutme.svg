@@ -1,19 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="aboujt_me" data-name="aboujt me" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1206">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #0c8a83;
-        stroke-width: 0px;
-      }
-    </style>
-  </defs>
-  <g id="circles">
-    <circle class="cls-1" cx="351" cy="986" r="199"/>
-    <circle class="cls-1" cx="1698" cy="997" r="199"/>
-    <circle class="cls-1" cx="1749.64" cy="240.85" r="119.36"/>
-    <circle class="cls-1" cx="323.29" cy="228.49" r="119.36"/>
-    <circle class="cls-1" cx="98.5" cy="571.55" r="61.51"/>
-    <circle class="cls-1" cx="996.58" cy="114.53" r="61.51"/>
-  </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1920 1206" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="circles">
+        <circle cx="351" cy="986" r="199" style="fill:rgb(44,209,185);"/>
+        <circle cx="1698" cy="997" r="199" style="fill:rgb(44,209,185);"/>
+        <circle cx="1749.64" cy="240.85" r="119.36" style="fill:rgb(44,209,185);"/>
+        <circle cx="323.29" cy="228.49" r="119.36" style="fill:rgb(44,209,185);"/>
+        <circle cx="98.5" cy="571.55" r="61.51" style="fill:rgb(44,209,185);"/>
+        <circle cx="996.58" cy="114.53" r="61.51" style="fill:rgb(44,209,185);"/>
+    </g>
 </svg>
